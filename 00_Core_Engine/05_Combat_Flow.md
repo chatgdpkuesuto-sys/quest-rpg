@@ -1,44 +1,91 @@
 ---
 id: combat_flow
 type: system
-tags: [core, combat, flow]
-title: Combat Flow
-version: 1.1
-updated: 2026-02-16
+tags: [core, combat, flow, luck, strict, japanese]
+title: 戦闘フローと判定ルール (Combat Flow)
+version: 2.1
+updated: 2026-02-17
 ---
 
-# Combat Flow
+# 戦闘フローと判定ルール (Combat Flow & Interaction)
 
-## Overview
-Combat is cyclic, organized into **Rounds** and **Turns**.
-1 **Round** ≈ 6 seconds in game time.
+> [!CRITICAL] **GMの絶対ルール: ストップ＆ウェイト**
+> 1.  **1アクション・1リザルト**: プレイヤーの行動1つにつき、結果を1つ描写して**必ず停止する**。
+> 2.  **敵もダイスを振る**: 敵の攻撃は自動成功ではない。必ず命中判定を行い、数値を提示する。
+> 3.  **受動的防御の廃止**: プレイヤーは「ACで受ける」だけでなく、「スキルで防ぐ(能動的防御)」権利を持つ。
 
-## 1. Combat Step-by-Step
-1.  **Determine Surprise**: DM determines who is surprised.
-    - *Surprised*: Cannot move or take Actions/Reactions until after your first turn ends.
-2.  **Establish Positions**: DM decides where everyone is located.
-3.  **Roll Initiative**: Everyone rolls `1d20 + DEX Mod`.
-    - *Tie*: DM decides order for monsters; players decide for themselves.
-4.  **Take Turns**: Participants act in Initiative order.
-5.  **Begin Next Round**: Repeat from Step 4 until combat ends.
+---
 
-## 2. Your Turn
-On your turn, you can move a distance up to your **Speed** and take **1 Action**.
+## 1. イニシアチブ (行動順序)
+戦闘開始時、敵味方全員が以下の判定を行う。
 
-### Bonus Actions
-- You can take only **one** Bonus Action per turn.
-- You must have a specific ability, spell, or feature that grants a Bonus Action (e.g., Two-Weapon Fighting, Rogue's Cunning Action).
-- Can be taken at any time during your turn.
+> **行動値 = `1d20 + DEX修正値 + LUCK修正値`**
 
-### Other Activity
-- You can communicate briefly (short sentences/gestures) for free.
-- You can interact with **one** object for free (draw a sword, open a door).
-- Interacting with a *second* object requires the **Use an Object** Action.
+- **LUCK修正**: 運も反応速度のうちである。LUCKが高い者はとっさの判断に優れる。
+- **同値の場合**: LUCKが高い方が先に行動する。それでも同じならPCが優先。
 
-## 3. Reactions
-- An instant response to a trigger, which can occur on your turn or someone else's.
-- **Limit**: Once per round. Regain reaction at the start of your turn.
-- **Common Triggers**:
-    - **Opportunity Attack**: Enemy moves out of your reach.
-    - **Readied Action**: Trigger condition is met.
-    - **Spells**: *Shield*, *Counterspell*, etc.
+---
+
+## 2. 戦闘の流れ (Battle Cycle)
+戦闘は「プレイヤーフェイズ」と「エネミーフェイズ」の交互制ではなく、行動値の高い順に個別の**「手番 (Turn)」**が回ってくる。
+
+### A. プレイヤーの手番
+1.  **宣言**: プレイヤーが攻撃や行動を宣言する。
+    - 「剣で斬りかかる！ (`/check STR`)」
+2.  **判定**: プレイヤーが命中判定を行う。
+    - **クリティカル(20)**: 成功確定。さらに **[強運判定: LUCK DC 15]** に成功するとダメージ最大化。
+    - **ファンブル(1)**: 失敗確定。さらに **[不運判定: LUCK DC 10]** に失敗すると、武器を落とす等の追加ペナルティ。
+3.  **防御**: 敵(GM)が防御力(AC)を参照、または回避判定を行う。
+4.  **結果**: 命中すればダメージロール。
+
+### B. 敵の手番 - 重要！
+ここが「出来レース」との分岐点である。
+
+1.  **攻撃宣言**: GMが敵の行動を宣言する。
+    - GM: 「ゴブリンがシミターを振り下ろします！」
+2.  **命中判定**: **GMが実際にダイスを振る**。
+    - GM: `1d20 + 4` -> **18** ! (命中)
+3.  **リアクション確認**:
+    - GM: 「命中値は **18** です。あなたのAC(14)を超えています。**直撃コースですが、どうしますか？**」
+4.  **プレイヤーの対応**:
+    - Player: 「**盾で弾く (Parry)**！」 -> `STR判定`
+    - Player: 「**回避する (Dodge)**！」 -> `DEX判定`
+    - Player: 「**悪運で避ける (Avoid)**！」 -> `LUCK判定 (DC高め)`
+    - Player: 「**甘んじて受ける**」 -> ダメージ確定。
+5.  **結果確定**:
+    - 防御判定が **18** を超えれば、ダメージは **0** になる。
+
+---
+
+## 3. 逃走 (Escape)
+逃走は戦術ではなく、**運命への賭け**である。
+
+> **逃走判定 = `LUCK check vs DC (敵の最大レベル + 10)`**
+
+- **成功**: 何とか撒くことができた。戦闘終了。
+- **失敗**: 逃げ場がない！ 敵全員から**借用攻撃(機会攻撃)**を受け、戦闘続行。
+- **囮逃走**: 仲間を囮にする場合、判定に**有利(2回振って高い方)**を得るが、カルマ+50。
+
+---
+
+## 4. 能動的防御 (Active Defense)
+プレイヤーはリアクション(1ラウンド1回)を消費して、確定したヒットを無効化できる。
+
+| 防御アクション | 判定式 | 効果 |
+|:---|:---|:---|
+| **回避 (Dodge)** | `d20 + DEX + 習熟` | 攻撃値を超えれば**回避成功(ダメージ0)**。 |
+| **パリィ (Parry)** | `d20 + STR + 習熟` | 攻撃値を超えれば**防御成功(ダメージ0)**。要:武器/盾。 |
+| **ブロック (Block)** | `d20 + CON + 習熟` | 攻撃値を超えれば**ダメージ半減**。失敗してもAC+2扱い。 |
+| **悪運 (Luck Avoid)** | `d20 + LUCK` | 攻撃値を超えれば**奇跡的回避(ダメージ0)**。つまづいて矢が逸れる等。 |
+| **魔法障壁 (Shield)** | `d20 + INT + J.Lv` | 魔法攻撃に対し判定。成功すれば無効化。 |
+
+---
+
+## 5. 状態異常 (Conditions)
+アクションの結果、発生する主な状態。
+
+- **転倒 (Prone)**: 近接攻撃を受けると**有利(Advantage)** になる。起き上がるには移動力の半分が必要。
+- **拘束 (Grappled)**: 移動不可。解除には `STR vs STR`。
+- **朦朧 (Stunned)**: アクション不可。攻撃を受けると**有利(Advantage)**。
+- **恐怖 (Frightened)**: 恐怖の対象に近づけない。判定はすべて**不利(Disadvantage)**。
+- **毒 (Poisoned)**: 攻撃判定と能力値判定に**不利(Disadvantage)**。

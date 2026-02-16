@@ -11,8 +11,10 @@ updated: 2026-02-16
 **コンセプト**: 全員「モンスター娘」化。倒すだけでなく、口説き落とす対象。
 
 ## 001. ラット・フォーク (Rat Girl) - ♀
-- **Visual**: 小柄で大きな耳を持つ、臆病なネズミの獣人少女。
-- **Data**: AC 12 | HP 7 | XP 25
+- **Drops**:
+  - **XP**: 25 (Job XP)
+  - **Gold**: 1d4
+  - **Equip Type**: Valuables (Cheese)
 - **Social**: SAC 8 | Heart 5 | Type: 小動物
     - **Weakness**: チーズや干し肉で餌付けする。
 - **Actions**:
@@ -22,7 +24,10 @@ updated: 2026-02-16
 
 ## 002. ゴブリン娘 (Goblin Girl) - ♀
 - **Visual**: 緑肌の小悪魔系ギャル。露出度の高いぼろ布を纏っている。
-- **Data**: AC 14 | HP 7 | XP 50
+- **Drops**:
+  - **XP**: 35 (Job XP)
+  - **Gold**: 1d6
+  - **Equip Type**: Dagger, Light Armor (Leather)
 - **Social**: SAC 12 | Heart 15 | Type: ちょろイン
     - **Weakness**: 「強いオス」。強さを見せつけるとすぐ靡く。
 - **Actions**:
@@ -32,8 +37,10 @@ updated: 2026-02-16
 
 ## 003. スライム娘 (Slime Girl) - ♀
 - **Visual**: 半透明のゼリー状の少女。体内に取り込んだものが透けて見える。
-- **Data**: AC 8 | HP 22 | XP 100
-- **Social**: SAC 10 | Heart 10 | Type: 純粋
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 1d10
+  - **Equip Type**: Valuables (Slime Jelly)
     - **Action**: ハグすると喜ぶが、服が溶ける。
 - **Actions**:
   1. **溶解液**: 装備の耐久度を下げるハグ。
@@ -42,7 +49,10 @@ updated: 2026-02-16
 
 ## 004. スケルトン・ドーター (Skeleton Girl) - ♀
 - **Visual**: 骨だけの少女。リボンや可愛い服を着てオシャレしている。
-- **Data**: AC 13 | HP 13 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 1d6
+  - **Equip Type**: Scimitar, Light Armor
 - **Social**: SAC 12 | Heart 20 | Type: カタブツ
     - **Weakness**: 「カルシウム不足」。牛乳をあげると喜ぶ。
 - **Actions**:
@@ -52,7 +62,10 @@ updated: 2026-02-16
 
 ## 005. コボルド娘 (Kobold Girl) - ♀
 - **Visual**: 犬耳と尻尾を持つ、忠誠心の高いわんこ系少女。
-- **Data**: AC 12 | HP 5 | XP 25
+- **Drops**:
+  - **XP**: 25
+  - **Gold**: 1d4
+  - **Equip Type**: Dagger, Sling (Ranged)
 - **Social**: SAC 10 | Heart 10 | Type: 忠犬
     - **Weakness**: 頭を撫でる。
 - **Actions**:
@@ -62,7 +75,10 @@ updated: 2026-02-16
 
 ## 006. 女盗賊 (Bandit Girl) - ♀
 - **Visual**: スリットの入った革鎧を着た、強気な人間の女性。
-- **Data**: AC 12 | HP 11 | XP 25
+- **Drops**:
+  - **XP**: 25 (Job XP)
+  - **Gold**: 2d6
+  - **Equip Type**: Scimitar, Light Crossbow
 - **Social**: SAC 11 | Heart 20 | Type: ツンデレ
     - **Weakness**: 金、または圧倒的な武力での「お仕置き」。
 - **Actions**:
@@ -72,7 +88,10 @@ updated: 2026-02-16
 
 ## 007. ラミア (Snake Girl / Flying Snake) - ♀
 - **Visual**: 下半身が蛇で、背中に羽が生えた少女。
-- **Data**: AC 14 | HP 5 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 2d6
+  - **Equip Type**: Spear, Valuables (Snake Skin)
 - **Social**: SAC 13 | Heart 25 | Type: 束縛
     - **Weakness**: 寒さに弱い。温めると大人しくなる。
 - **Actions**:
@@ -82,7 +101,10 @@ updated: 2026-02-16
 
 ## 008. モスキート・ガール (Stirge Variety) - ♀
 - **Visual**: 蚊の羽を持つ極小の妖精サイズ少女。注射器のような針を持つ。
-- **Data**: AC 14 | HP 2 | XP 25
+- **Drops**:
+  - **XP**: 25
+  - **Gold**: 1d4
+  - **Equip Type**: Valuables (Needle)
 - **Actions**:
   1. **「ちゅーってしていい？」**: 命中すると吸血（HP吸収）。
   2. **耳元で羽音**: 精神的イライラを与える。
@@ -90,7 +112,10 @@ updated: 2026-02-16
 
 ## 009. ウェアウルフ・パピー (Wolf Girl) - ♀
 - **Visual**: 狼の耳と尻尾を持つ、野生児の少女。
-- **Data**: AC 13 | HP 11 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 1d6
+  - **Equip Type**: Valuables (Fang)
 - **Social**: SAC 9 | Heart 15 | Type: 野性
     - **Weakness**: 「お手」「お座り」。
 - **Actions**:
@@ -100,7 +125,10 @@ updated: 2026-02-16
 
 ## 010. オーク・アマゾネス (Orc Amazoness) - ♀
 - **Visual**: 筋肉質で豊満な肉体を持つ、緑肌の女戦士。
-- **Data**: AC 13 | HP 15 | XP 100
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 2d8
+  - **Equip Type**: Greataxe, Medium Armor
 - **Social**: SAC 13 | Heart 30 | Type: 姉御肌
     - **Weakness**: 自分より強い男との「濃厚なレスリング」。
 - **Actions**:
@@ -110,7 +138,10 @@ updated: 2026-02-16
 
 ## 011. キョンシー (Jiangshi / Zombie) - ♀
 - **Visual**: 中華風の服を着てお札を貼った、青白い肌の少女。
-- **Data**: AC 8 | HP 22 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 1d6
+  - **Equip Type**: Valuables (Talisman)
 - **Social**: 無効 (Undead) -> お札を剥がすと会話可能(暴走リスクあり)。
 - **Actions**:
   1. **とっしん**: 両手を前に出してジャンプ体当たり。
@@ -119,7 +150,10 @@ updated: 2026-02-16
 
 ## 012. バット・ガール (Giant Bat) - ♀
 - **Visual**: コウモリの翼をマントのように羽織った、夜行性の少女。
-- **Data**: AC 13 | HP 22 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 1d6
+  - **Equip Type**: Valuables (Wing)
 - **Actions**:
   1. **吸血**: 首筋に噛みつく。
   2. **超音波**: 「キャーーー！」と叫んで耳を塞がせる。
@@ -127,7 +161,10 @@ updated: 2026-02-16
 
 ## 013. ビー・クイーン (Insect Swarm) - ♀
 - **Visual**: 蜂の触角と羽を持つ、女王様気質の少女。無数の小さな蜂を従えている。
-- **Data**: AC 12 | HP 22 | XP 100
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 2d10
+  - **Equip Type**: Valuables (Royal Jelly)
 - **Actions**:
   1. **しもべ突撃**: 蜂の群れをけしかける。
   2. **フェロモン**: 範囲内の異性を[魅了]する香りを撒く。
@@ -135,8 +172,10 @@ updated: 2026-02-16
 
 ## 014. ダーク・シスター (Dark Acolyte) - ♀
 - **Visual**: 邪教のシスター服を着た、サディスティックな女性。
-- **Data**: AC 10 | HP 9 | XP 50
-- **Social**: SAC 14 | Heart 25 | Type: ヤンデレ予備軍
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 2d6
+  - **Equip Type**: Mace, Robe (Cloth)
     - **Weakness**: 信仰を論破し、新しい神（あなた）を崇めさせる。
 - **Actions**:
   1. **「罰を与えます」**: 鞭打ち魔法 (Necrotic damage)。
@@ -145,15 +184,20 @@ updated: 2026-02-16
 
 ## 015. マッド・ガール (Mud Mephit) - ♀
 - **Visual**: 全身が泥でできた（あるいは泥汚れの激しい）少女。
-- **Data**: AC 11 | HP 27 | XP 100
-- **Social**: SAC 8 | Heart 10 | Type: 汚れたがり
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 1d8
+  - **Equip Type**: Valuables (Clay)
 - **Actions**:
   1. **泥投げ**: 相手を泥まみれにする（精神的ダメージ＋汚れ）。
   2. **泥レスリング**: 地面に倒して泥の中に引きずり込む。
   3. **自爆**: 恥ずかしくなると爆散して周囲を泥だらけにする。
 
 ## 016. スケバン (Thug Girl) - ♀
-- **Data**: AC 11 | HP 32 | XP 100
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 2d8
+  - **Equip Type**: Club (Bat), Light Armor
 - **Social**: SAC 10 | Heart 20 | Type: 不良
     - **Weakness**: 「更生させる」。または喧嘩で勝って舎弟にする。
 - **Actions**:
@@ -163,7 +207,10 @@ updated: 2026-02-16
 
 ## 017. リザード・メイド (Lizardfolk) - ♀
 - **Visual**: 鱗と尻尾を持つが、何故かメイド服を着ている竜人少女。
-- **Data**: AC 15 | HP 22 | XP 100
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 2d6
+  - **Equip Type**: Spear, Shield
 - **Social**: SAC 13 | Heart 25 | Type: クーデレ
 - **Actions**:
   1. **お掃除**: モップ（槍）で攻撃 +4 (1d6+2)。
@@ -172,7 +219,10 @@ updated: 2026-02-16
 
 ## 018. ドラゴン・フェアリー (Pseudodragon) - ♀
 - **Visual**: 手のひらサイズのドラゴンの羽が生えた妖精。
-- **Data**: AC 15 | HP 7 | XP 50
+- **Drops**:
+  - **XP**: 50
+  - **Gold**: 1d10
+  - **Equip Type**: Valuables (Fairy Dust)
 - **Social**: SAC 14 | Heart 15 | Type: ツンデレマスコット
     - **Weakness**: 甘いお菓子。
 - **Actions**:
@@ -181,8 +231,11 @@ updated: 2026-02-16
   3. **肩乗り**: 気に入った相手の肩に乗ってAC+1の加護を与える。
 
 ## 019. シルエット・ガール (Shadow) - ♀
-- **Data**: AC 12 | HP 16 | XP 100
 - **Visual**: 影のように真っ黒だが、スタイルの良さが分かる人型。
+- **Drops**:
+  - **XP**: 100
+  - **Gold**: 1d10
+  - **Equip Type**: Valuables (Dark Essence)
 - **Actions**:
   1. **影踏み**: 相手の影を攻撃し、STRを吸収する。
   2. **同化**: 相手の影に潜り込み、次のターン奇襲する。
@@ -190,7 +243,10 @@ updated: 2026-02-16
 
 ## 020. ホブゴブリン女隊長 (Captain) - ♀
 - **Visual**: 凛々しい軍服に身を包んだ、赤肌の女騎士。
-- **Data**: AC 17 | HP 39 | XP 700
+- **Drops**:
+  - **XP**: 700
+  - **Gold**: 5d10
+  - **Equip Type**: Longsword, Heavy Armor, Shield
 - **Social**: SAC 16 | Heart 80 | Type: 騎士道
     - **Weakness**: 正々堂々とした勝負。敗北すると「殺せ…くっ杀」となる。
 - **Actions**:
