@@ -23,9 +23,11 @@ LLMの「ゆらぎ」を排除し、厳格なルールと数値に基づいた�
 ### 1. システム (System)
 - **[ルールブック (Rule System)](00_Core_Engine/04_Rule_System.md)**: 2d6ベースの判定システム。6つの基本能力値とLUCK。
 - **[ジョブ＆スキル (Job System)](00_Core_Engine/13_Job_System.md)**: SP消費型のスキルシステム。
-- **[戦闘フロー (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: 厳格なラウンド進行とアクション定義。
+- **[戦闘フロー (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: 厳格なラウンド進行とアクション定義。**屈服奥義**の実装。
+- **[おしおきリスト (Punishment List)](00_Core_Engine/20_Punishment_List.md)**: 捕獲・調教・わからせのためのデータ集。
 - **[暗黒ルール (Dark Rules)](00_Core_Engine/07_Dark_Rule_System.md)**: Sanity(正気度)、Loyalty(忠誠度)、そして「堕ちる」プロセス。
 - **[絶対エロルール (Absolute Ero Rule)](00_Core_Engine/00_Absolute_Ero_Rule.md)**: R-18コンテンツの安全かつ過激な描写ガイドライン。
+- **[生体在庫管理 (Inventory)](00_Core_Engine/19_Party_Inventory_Rules.md)**: 奴隷・捕虜の管理ルール。
 
 ### 2. 世界とデータ (World & Data)
 - **[ワールド設定 (World Overview)](01_World_Module/00_World_Overview.md)**: 世界観、歴史、地理。
@@ -47,6 +49,7 @@ LLMの「ゆらぎ」を排除し、厳格なルールと数値に基づいた�
 3.  **冒険の開始**: 「ポート・ブリーズ」の街からスタートし、クエストボード(`Standard Quests`)を確認します。
 4.  **探索と戦闘**: 
     - `Intent: Move` でダンジョンを進み、`Intent: Attack` で敵を倒します。
+    - **HPが30%以下の敵**には `Intent: Submission` (屈服奥義) が可能です。
     - `Intent: Interact_NPC` で仲間と交流し、親密度を深めます。
 5.  **成長と堕落**:
     - 経験値を得てレベルアップするか、Sanityを失い「堕ちたスキル」に目覚めるか。
@@ -55,7 +58,7 @@ LLMの「ゆらぎ」を排除し、厳格なルールと数値に基づいた�
 ---
 
 ## 🔨 更新履歴 (Update Log)
-- **v6.0**: 仲間イベント100人分実装。Anti-Gravity Mode (System Directives) の確立。
+- **v6.0**: **屈服・おしおきシステム(Submission System)** の完全実装。種族別わからせリストの追加。
 - **v5.0**: パラメータ(STR/DEX等)の6能力値化。ジョブシステム刷新。
 - **v4.0**: アイテム・ドロップシステムの完全データ化。
 
