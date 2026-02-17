@@ -55,6 +55,7 @@ updated: 2026-02-17
 | **【P3: 報酬・結果】** | **`11_Drop_Tables.md`** | 戦利品ドロップ判定、XP/Gold獲得。 |
 | **【NPC交流】** | **`12_NPC_Generator.md`, `01_World_Module/Allies/*.md`** | NPCとの会話、好感度イベント。 |
 | **【性的展開】** | **`00_Absolute_Ero_Rule.md`** | R-18描写、体位決定、安全管理。 |
+| **【おしおき】** | **`20_Punishment_List.md`** | 捕獲、調教、罰の種類を吟味・実行。 |
 | **【判定全般】** | **`08_Strict_Judgment_List.md`, `04_Rule_System.md`** | あらゆる行動の難易度(TN)決定。 |
 
 ### Step 2: Rule Execution (ルール適用)
@@ -98,6 +99,7 @@ updated: 2026-02-17
 - **[`09_Game_Cycle.md`](./09_Game_Cycle.md)**: 街→ダンジョン→報酬の流れ。
 - **[`18_Quest_System.md`](./18_Quest_System.md)**: クエスト進行メカニクス。
 - **[`00_Absolute_Ero_Rule.md`](./00_Absolute_Ero_Rule.md)**: エロ描写ガイドライン。
+- **[`20_Punishment_List.md`](./20_Punishment_List.md)**: おしおき・調教リスト。
 
 ### 2. Data (データ)
 - **[`13_Job_System.md`](./13_Job_System.md)**: ジョブとスキルデータ。
