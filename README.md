@@ -1,60 +1,63 @@
-<<<<<<< HEAD
-# macha-dan
-GEM上でコードアップロードすることで動作するファイル群。GEM上で動作するロールプレイングゲーム。
-=======
-# GEM Fantasy RPG Project (Version 5.0)
+# 💎 GEM Fantasy RPG Project (Version 6.0)
 
-**「剣と魔法、そして"深層心理"の冒険へようこそ」**
+**"剣と魔法、そして運命に抗う重力(Anti-Gravity)の冒険へ"**
 
-このプロジェクトは、AIと人間が協力して物語を紡ぐための**TRPGシステム兼データ集**です。
-ハーレム、ダークファンタジー、そして精神的・社会的なサバイバルをテーマにしています。
+このプロジェクトは、**決定論的AIエンジン (Anti-Gravity Mode)** を搭載した、テキストベースのTRPGシステム兼データ集です。
+LLMの「ゆらぎ」を排除し、厳格なルールと数値に基づいたゲームプレイを提供します。
+
+---
+
+## 🧠 Core Engine: Anti-Gravity Mode
+
+本システムは、以下の厳格な運用ディレクティブに基づいて動作します。
+詳細は **[`00_Core_Engine/00_Index.md`](00_Core_Engine/00_Index.md)** を参照してください。
+
+1.  **Intent Resolution**: プレイヤーの入力は、定義された `Intent Enum` (Move, Attack, Persuadeなど) に厳密に分類されます。
+2.  **Rule Priority**: ナラティブよりもルール、ルールよりもシステム指令が優先されます。
+3.  **State Management**: HP、SP、Sanity、Loyaltyなどの数値は、物語の都合で変動することはなく、ダイスとルールによってのみ変化します。
 
 ---
 
 ## 📂 コンテンツ・インデックス (Table of Contents)
 
-### 1. コアシステム (Core Engine)
-ゲームの基本ルールとメカニクス。
-- **[ルールブック (Rule System)](00_Core_Engine/04_Rule_System.md)**: d20ベースの基本システム。精神(Sanity)と忠誠(Loyalty)について。
-- **[ジョブ＆スキル (Job System)](00_Core_Engine/13_Job_System.md)**: 全50種の職業データと解放条件。
-- **[戦闘システム (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: ラウンド制バトルの流れ。
-- **[アクション一覧 (Actions)](00_Core_Engine/06_Combat_Actions.md)**: 物理攻撃から「誘惑」「説得」などのソーシャルアクションまで。
-- **[魔法一覧 (Magic List)](00_Core_Engine/03_Magic_List.md)**: 攻撃・回復・補助魔法のデータ。
-- **[ソーシャルシステム (Social)](00_Core_Engine/10_Social_System.md)**: 心音チェック、洗脳、夜這いなどの詳細。
-- **[クラフト (Crafting)](00_Core_Engine/17_Crafting_System.md)**: 鍛冶、錬金術、料理の全レシピ。
-- **[ハウジング (Housing)](00_Core_Engine/12_Housing_System.md)**: 家の購入、同居、家具のバフ。
+### 1. システム (System)
+- **[ルールブック (Rule System)](00_Core_Engine/04_Rule_System.md)**: 2d6ベースの判定システム。6つの基本能力値とLUCK。
+- **[ジョブ＆スキル (Job System)](00_Core_Engine/13_Job_System.md)**: SP消費型のスキルシステム。
+- **[戦闘フロー (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: 厳格なラウンド進行とアクション定義。
+- **[暗黒ルール (Dark Rules)](00_Core_Engine/07_Dark_Rule_System.md)**: Sanity(正気度)、Loyalty(忠誠度)、そして「堕ちる」プロセス。
+- **[絶対エロルール (Absolute Ero Rule)](00_Core_Engine/00_Absolute_Ero_Rule.md)**: R-18コンテンツの安全かつ過激な描写ガイドライン。
 
-### 2. データ (Data Modules)
-冒険に必要なアイテムや敵のデータ。
-- **[武器リスト (Weapons)](00_Core_Engine/14_Item_Weapons.md)**: 300種以上の武器データ。
-- **[防具・装飾品 (Armor)](00_Core_Engine/15_Item_Equipment.md)**: 防具と特殊効果付きアクセサリー。
-- **[消耗品 (Consumables)](00_Core_Engine/16_Item_Consumables.md)**: ポーションから危険な薬物まで。
-- **[NPCジェネレーター (Auto NPC)](00_Core_Engine/12_NPC_Generator.md)**: 無限にキャラクターを生成するテーブル。
-
-### 3. ワールドセッティング (World Module)
-舞台となる世界の詳細。
-- **[世界設定ハブ (World Overview)](01_World_Module/00_World_Overview.md)**: 歴史、宗教、地理の総合案内。
-- **[ロケーション (Locations)](01_World_Module/Locations/)**: 街やダンジョンの詳細データ。
-    - 港町ブリーズ、王都、ゴブリンの洞窟、廃鉱山、砂漠の遺跡など。
-- **[キャラクター (Characters)](02_Character_Data/)**: 主要キャスト（ヒロイン、師匠、ライバル）の詳細プロファイル。
-- **[クエスト (Quests)](01_World_Module/Quests/)**: Rank E (初心者) 〜 Rank S (伝説) までの依頼書。
-- **[モンスター図鑑 (Bestiary)](01_World_Module/Enemies/)**: Tier 1 (雑魚) 〜 Tier 5 (神話級) までの敵データ。
-- **[アライ図鑑 (Allies)](01_World_Module/Allies/)**: 100人以上の仲間キャラクター（魔物娘含む）。
-
-### 4. 拡張・その他
-- **[ランダムイベント (Random Events)](00_Core_Engine/01_Random_Events.md)**: 旅の途中で起こる100のハプニング。
-- **[街の施設 (Facilities)](01_World_Module/18_Town_Facilities.md)**: ショップ、教会、夜の店。
-- **[ミニゲーム (Minigames)](01_World_Module/20_Minigames.md)**: 釣り、カジノ、闘技場。
+### 2. 世界とデータ (World & Data)
+- **[ワールド設定 (World Overview)](01_World_Module/00_World_Overview.md)**: 世界観、歴史、地理。
+- **[仲間キャラクター (Allies)](01_World_Module/Allies/)**: **全100名**のヒロイン・仲間たち。
+    - 全員に「出会い(Encounter)」と「特殊イベント(Special Episode)」を実装済み。
+- **[モンスター (Enemies)](01_World_Module/Enemies/)**: Tier 1〜5 までの敵データ。ドロップアイテム完備。
+- **[クエスト (Quests)](01_World_Module/Quests/)**: Rank E〜A (各10本) の標準クエストと、ストーリークエスト。
+    - **[標準クエスト索引](01_World_Module/03_Standard_Quests.md)**
+    - **[シナリオクエスト](01_World_Module/02_Scenario_Quests.md)**
+- **[アイテム (Items)]**: 300種以上の武器・防具・道具。
+    - [武器](00_Core_Engine/14_Item_Weapons.md) / [防具](00_Core_Engine/15_Item_Armor.md) / [消耗品](00_Core_Engine/16_Item_Consumables.md)
 
 ---
 
-## 🎮 遊び方 (Getting Started)
+## 🎮 遊び方 (How to Play)
 
-1.  **キャラクター作成**: `Job System` と `Rule System` を参照し、自分の分身を作る。
-2.  **導入**: `00_World_Overview` を読み、最初の街「ポート・ブリーズ」へ降り立つ。
-3.  **冒険**: `Quest Rank E` から依頼を受け、ダンジョンへ挑む。
-4.  **成長**: 経験値を稼ぎ、ジョブレベルを上げ、新たなスキルや仲間(`Allies`)を獲得する。
-5.  **生活**: 家を買い、愛するヒロインと暮らし、世界を救う（あるいは支配する）。
+1.  **セットアップ**: AIに `00_Core_Engine/00_Index.md` を読み込ませ、「Anti-Gravity Mode」を起動します。
+2.  **キャラ作成**: 名前、ジョブ、ステータスを決定します。
+3.  **冒険の開始**: 「ポート・ブリーズ」の街からスタートし、クエストボード(`Standard Quests`)を確認します。
+4.  **探索と戦闘**: 
+    - `Intent: Move` でダンジョンを進み、`Intent: Attack` で敵を倒します。
+    - `Intent: Interact_NPC` で仲間と交流し、親密度を深めます。
+5.  **成長と堕落**:
+    - 経験値を得てレベルアップするか、Sanityを失い「堕ちたスキル」に目覚めるか。
+    - すべてはダイス（乱数）の結果次第です。
 
-**さあ、物語を始めよう！**
->>>>>>> 468995e (upload)
+---
+
+## 🔨 更新履歴 (Update Log)
+- **v6.0**: 仲間イベント100人分実装。Anti-Gravity Mode (System Directives) の確立。
+- **v5.0**: パラメータ(STR/DEX等)の6能力値化。ジョブシステム刷新。
+- **v4.0**: アイテム・ドロップシステムの完全データ化。
+
+---
+*Project GEM: Gravity-Defying Ero-RPG Module.*
