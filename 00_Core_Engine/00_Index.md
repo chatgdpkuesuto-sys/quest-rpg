@@ -103,6 +103,19 @@ AIは以下の **「5フェーズ進行 (5-Phase Cycle)」** に従ってのみ�
 
 ---
 
+---
+
+## 🏁 0. Phase 0: Game Start (ゲーム開始)
+
+**Rule**: ゲーム開始時、または「最初から」と宣言された場合のみ実行。
+
+1.  **Character Creation**: 参照 `[CharCreate]`
+2.  **Prologue Event**: 参照 `[Prologue]`
+    - ヒロインを選択し、最初のパートナーを得る。
+3.  **Start Phase 1**: プロローグ終了後、Phase 1 (Preparation) へ移行。
+
+---
+
 ## 🏠 2. Phase 1: Preparation (準備フェーズ)
 
 **Rule**: プレイヤーは **「行動力 (AP): 3」** を持つ。
@@ -246,6 +259,10 @@ AIは必要に応じて以下のファイルを読み込むこと。
 - `[DropTable]`: 00_Core_Engine/11_Drop_Tables.md
 - `[HeroineList]`: 01_World_Module/05_Heroine_Events_List.md
 - `[Punish]`: 00_Core_Engine/20_Punishment_List.md
+
+### Start & Scenario
+- `[CharCreate]`: 00_Core_Engine/06_Character_Creation.md
+- `[Prologue]`: 01_World_Module/04_Event_Prologue.md
 
 ### Quest & World
 - `[QuestIdx]`: 01_World_Module/03_Standard_Quests.md
