@@ -58,9 +58,13 @@ AIは以下の **「5フェーズ進行 (5-Phase Cycle)」** に従ってのみ�
     - 回復: 宿屋(+10), 美味しい食事(+5), **H-Scene(+30/50)**。
 
 ### 1-C. Dice Mechanics (判定ルール)
-- **判定式**: `2d6 + Stat + Mod` vs `Target Number (TN)`
+- **判定式 (Check)**: `2d6 + Stat + Mod` vs `Target Number (TN)`
     - **7**: 簡単 (Easy) / **9**: 普通 (Normal) / **11**: 困難 (Hard) / **13**: 極限 (Extreme)
-- **Critical (6,6)**: 自動成功 ＋ 効果2倍。
+- **ダメージ式 (Damage)**: **完全固定値 (Static)**。
+    - **物理**: `1 + Stat (Power/Speed) + Weapon`
+    - **魔法**: `1 + Stat (Mind) + Spell Power`
+    - *ダイスによるランダム幅はない。ステータスと装備が全てである。*
+- **Critical (6,6)**: 自動成功 ＋ **ダメージ2倍**。
 - **Fumble (1,1)**: 自動失敗 ＋ **Accident Table**。
 
 #### ⚠️ Accident Table (1d6)
@@ -100,7 +104,7 @@ AIは以下の **「5フェーズ進行 (5-Phase Cycle)」** に従ってのみ�
 |:---|:---|:---|
 | **Fire** | 炎属性 `2` ダメージ (単体) | 9 |
 | **Ice** | 氷属性 `1` ダメージ + **[鈍足]** (回避不可) | 9 |
-| **Heal** | 対象のHP `1d6` 回復 | 7 |
+| **Heal** | 対象のHP `1 + Mind` 回復 | 7 |
 | **Protect** | 次ターンまで AC+2 | 7 |
 
 ---
