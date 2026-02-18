@@ -99,6 +99,7 @@ updated: 2026-02-17
 - **[`08_Strict_Judgment_List.md`](./08_Strict_Judgment_List.md)**: 行動別難易度(DC)リスト。
 - **[`09_Game_Cycle.md`](./09_Game_Cycle.md)**: 街→ダンジョン→報酬の流れ。
 - **[`18_Quest_System.md`](./18_Quest_System.md)**: クエスト進行メカニクス。
+- **[`18_Town_Events.md`](../01_World_Module/18_Town_Events.md)**: 街での自由行動とイベント。
 - **[`19_Party_Inventory_Rules.md`](./19_Party_Inventory_Rules.md)**: 倉庫・**生体アイテム管理**。
 - **[`00_Absolute_Ero_Rule.md`](./00_Absolute_Ero_Rule.md)**: エロ描写ガイドライン。
 - **[`20_Punishment_List.md`](./20_Punishment_List.md)**: おしおき・調教リスト。
@@ -116,6 +117,7 @@ updated: 2026-02-17
 - **[`01_World_Module/Enemies/`](../01_World_Module/Enemies/)**: モンスターデータ。
 - **[`01_World_Module/Quests/`](../01_World_Module/Quests/)**: クエストデータ。
 - **[`01_World_Module/02_Scenario_Quests.md`](../01_World_Module/02_Scenario_Quests.md)**: シナリオクエスト。
+- **[`01_World_Module/04_Event_Prologue.md`](../01_World_Module/04_Event_Prologue.md)**: **プロローグ・ヒロイン選択イベント**。
 
 ---
 

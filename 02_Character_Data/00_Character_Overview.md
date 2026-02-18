@@ -17,7 +17,6 @@ updated: 2026-02-14
 # [Name]
 ## Data
 - **Class**: [Job/Role]
-- **Level**: [1-20]
 - **HP**: [MaxHP] / [MaxHP]
 - **AC**: [Armor Class]
 
