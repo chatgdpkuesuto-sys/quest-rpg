@@ -215,4 +215,16 @@ updated: 2026-02-18
 ---
 
 ## 🔗 Next Step
-パートナー決定後、**[`03_Standard_Quests.md`](../03_Standard_Quests.md)** の **Rank E** クエストへ進む。
+パートナー決定後、**[`03_Standard_Quests.md`](../Quests/Standard_Rank_E.md)** の **Rank E** クエストへ進む。
+
+---
+
+## 🛑 System Transition
+**GM**: 「それでは、始めようか。君たちの物語を。」
+
+> **SYSTEM MESSAGE**
+> - **Game Phase Updated**: `Phase 0` -> **`Phase 1: Preparation`**
+> - **Next Location**: **[`01_Beginner_Harbor.md`](../Locations/01_Beginner_Harbor.md)**
+> - **Quest Open**: **[`Standard_Rank_E.md`](../Quests/Standard_Rank_E.md)**
+
+*Character data saved. Proceed to the Harbor Town.*
