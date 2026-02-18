@@ -23,6 +23,7 @@ updated: 2026-02-17
 | **C** | 5-6 | `Quests/Standard_Rank_C.md` | 上級クエスト (10本) |
 | **B** | 7-8 | `Quests/Standard_Rank_B.md` | 英雄級クエスト (10本) |
 | **A** | 9-10 | `Quests/Standard_Rank_A.md` | 神話級クエスト (10本) |
+| **S** | 10+ | `Quests/Standard_Rank_S.md` | 伝説級クエスト (20本) |
 
 ---
 

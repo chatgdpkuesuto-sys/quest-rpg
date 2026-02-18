@@ -75,10 +75,13 @@ updated: 2026-02-17
 
 ## 1.5. 能力値 (Ability Scores & Skills)
 
-## Ability Scores
-| STR | DEX | CON | INT | WIS | CHA |
+## Ability Scores (6 Stats)
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 10 (+0) | 16 (+3) | 12 (+1) | 12 (+1) | 10 (+0) | 14 (+2) |
+| 0 | 3 | 1 | 1 | 2 | 3 |
+- **Speed**: 目にも留まらぬ早業。
+- **Skill**: 盗賊としての技術と機転。
+- **Charm**: 猫被りと愛嬌。
 
 ## Skills & Attacks
 - **Attacks**:

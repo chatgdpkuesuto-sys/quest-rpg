@@ -20,13 +20,13 @@ updated: 2026-02-16
 
 ### A. ジョブスキルによる判定 (Job Skills)
 - **医療 (Medicine)**: 脈拍や瞳孔から嘘を見抜く。
-    - 判定: `WIS + Healer Lv` vs DC 15
+    - 判定: `Skill + Healer Lv` vs DC 15
 - **洞察 (Insight)**: 表情や声のトーンから心理を読む。
-    - 判定: `WIS + Cleric/Monk Lv` vs 相手のDeception
+    - 判定: `Mind + Cleric/Monk Lv` vs 相手のDeception
 - **尋問 (Intimidation)**: 脅して無理やり吐かせる。
-    - 判定: `STR/CHA + Warrior/Rogue Lv` vs DC 12 (ただし好感度低下)
+    - 判定: `Power/Charm + Warrior/Rogue Lv` vs DC 12 (ただし好感度低下)
 - **誘惑 (Seduction)**: 酔わせたり、色仕掛けで口を割らせる。
-    - 判定: `CHA + Bard/Dancer Lv` vs DC 15
+    - 判定: `Charm + Bard/Dancer Lv` vs DC 15
 
 ### B. 催眠・アイテム (Hypnosis \u0026 Items)
 スキルがない場合、アイテムを使って強制的に深層心理にダイブする。

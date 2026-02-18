@@ -79,10 +79,13 @@ updated: 2026-02-16
 
 ## 1.5. 能力値 (Ability Scores & Skills)
 
-## Ability Scores
-| STR | DEX | CON | INT | WIS | CHA |
+## Ability Scores (6 Stats)
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 10 (+0) | 12 (+1) | 10 (+0) | 16 (+3) | 16 (+3) | 14 (+2) |
+| 0 | 1 | 0 | 3 | 3 | 3 |
+- **Mind**: 圧倒的な魔力と知識。
+- **Charm**: 母性と妖艶さ。
+- **Skill**: 長年の経験と技術。
 
 ## Skills & Attacks
 - **Attacks**:

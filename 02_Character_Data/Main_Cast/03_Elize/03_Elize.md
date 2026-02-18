@@ -79,10 +79,13 @@ updated: 2026-02-17
 ## 1.5. 能力値 (Ability Scores & Skills)
 
 ## Ability Scores
-## Ability Scores
-| STR | DEX | CON | INT | WIS | CHA |
+## Ability Scores (6 Stats)
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 10 (+0) | 14 (+2) | 12 (+1) | 16 (+3) | 10 (+0) | 14 (+2) |
+| 0 | 2 | 1 | 3 | 2 | 3 |
+- **Mind**: 生体知識と錬金術。
+- **Skill**: 手術と解剖の技術。
+- **Speed**: メス捌きの速さ。
 
 ## Skills & Attacks
 - **Attacks**:

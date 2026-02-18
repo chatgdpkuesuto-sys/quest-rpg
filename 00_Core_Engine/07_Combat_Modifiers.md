@@ -13,11 +13,11 @@ updated: 2026-02-16
 Walls, trees, creatures, and other obstacles can provide cover, making a target harder to harm.
 
 ### Half Cover
-- **Benefit**: +2 Bonus to AC and DEX Saving Throws.
+- **Benefit**: +2 Bonus to AC and Speed Saving Throws.
 - **Criteria**: Target is at least half blocked (e.g., low wall, creature in between).
 
 ### Three-Quarters Cover
-- **Benefit**: +5 Bonus to AC and DEX Saving Throws.
+- **Benefit**: +5 Bonus to AC and Speed Saving Throws.
 - **Criteria**: Target is about 3/4 blocked (e.g., arrow slit, thick tree trunk).
 
 ### Total Cover

@@ -1,4 +1,4 @@
-# 💎 GEM Fantasy RPG Project (Version 6.0)
+# 💎 GEM Fantasy RPG Project (Version 6.1)
 
 **"剣と魔法、そして運命に抗う重力(Anti-Gravity)の冒険へ"**
 
@@ -21,46 +21,44 @@ LLMの「ゆらぎ」を排除し、厳格なルールと数値に基づいた�
 ## 📂 コンテンツ・インデックス (Table of Contents)
 
 ### 1. システム (System)
-- **[ルールブック (Rule System)](00_Core_Engine/04_Rule_System.md)**: 2d6ベースの判定システム。6つの基本能力値とLUCK。
-- **[ジョブ＆スキル (Job System)](00_Core_Engine/13_Job_System.md)**: SP消費型のスキルシステム。
-- **[戦闘フロー (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: 厳格なラウンド進行とアクション定義。**屈服奥義**の実装。
-- **[おしおきリスト (Punishment List)](00_Core_Engine/20_Punishment_List.md)**: 捕獲・調教・わからせのためのデータ集。
-- **[暗黒ルール (Dark Rules)](00_Core_Engine/07_Dark_Rule_System.md)**: Sanity(正気度)、Loyalty(忠誠度)、そして「堕ちる」プロセス。
-- **[絶対エロルール (Absolute Ero Rule)](00_Core_Engine/00_Absolute_Ero_Rule.md)**: R-18コンテンツの安全かつ過激な描写ガイドライン。
-- **[生体在庫管理 (Inventory)](00_Core_Engine/19_Party_Inventory_Rules.md)**: 奴隷・捕虜の管理ルール。
+*   **[ルールブック (Rule System)](00_Core_Engine/04_Rule_System.md)**: 2d6ベースの判定システム。6つの基本能力値とLUCK。
+*   **[キャラクター作成 (Character Creation)](00_Core_Engine/06_Character_Creation.md)**: **6-Stat System (Power, Speed, Tough, Mind, Charm, Skill)** によるビルドガイド。
+*   **[戦闘フロー (Combat Flow)](00_Core_Engine/05_Combat_Flow.md)**: 厳格なラウンド進行とアクション定義。**屈服奥義**の実装。
+*   **[おしおきリスト (Punishment List)](00_Core_Engine/20_Punishment_List.md)**: 捕獲・調教・わからせのためのデータ集。
+*   **[暗黒ルール (Dark Rules)](00_Core_Engine/07_Dark_Rule_System.md)**: Sanity(正気度)、Loyalty(忠誠度)、そして「堕ちる」プロセス。
 
 ### 2. 世界とデータ (World & Data)
-- **[ワールド設定 (World Overview)](01_World_Module/00_World_Overview.md)**: 世界観、歴史、地理。
-- **[仲間キャラクター (Allies)](01_World_Module/Allies/)**: **全100名**のヒロイン・仲間たち。
-    - 全員に「出会い(Encounter)」と「特殊イベント(Special Episode)」を実装済み。
-- **[モンスター (Enemies)](01_World_Module/Enemies/)**: Tier 1〜5 までの敵データ。ドロップアイテム完備。
-- **[クエスト (Quests)](01_World_Module/Quests/)**: Rank E〜A (各10本) の標準クエストと、ストーリークエスト。
-    - **[標準クエスト索引](01_World_Module/03_Standard_Quests.md)**
-    - **[シナリオクエスト](01_World_Module/02_Scenario_Quests.md)**
-- **[アイテム (Items)]**: 300種以上の武器・防具・道具。
-    - [武器](00_Core_Engine/14_Item_Weapons.md) / [防具](00_Core_Engine/15_Item_Armor.md) / [消耗品](00_Core_Engine/16_Item_Consumables.md)
+*   **[ワールド設定 (World Overview)](01_World_Module/00_World_Overview.md)**: 世界観、歴史、地理。
+*   **[メインキャスト (Main Cast)](02_Character_Data/Main_Cast/01_Main_Cast.md)**: **全5人のヒロイン**の統合データ（ステータス・イベント）。
+    *   Aria, Zena, Elara, Elize, Yuni
+*   **[モンスター (Enemies)](01_World_Module/Enemies/)**: Tier 1〜5 までの敵データ。
+*   **[クエスト (Quests)](01_World_Module/Quests/)**: Rank E〜S の標準クエストデータ（全95本以上）。
+    *   **[標準クエスト索引](01_World_Module/03_Standard_Quests.md)**
+*   **[アイテム (Items)]**: 300種以上の武器・防具・道具。
 
 ---
 
 ## 🎮 遊び方 (How to Play)
 
 1.  **セットアップ**: AIに `00_Core_Engine/00_Index.md` を読み込ませ、「Anti-Gravity Mode」を起動します。
-2.  **キャラ作成**: 名前、ジョブ、ステータスを決定します。
-3.  **冒険の開始**: 「ポート・ブリーズ」の街からスタートし、クエストボード(`Standard Quests`)を確認します。
-4.  **探索と戦闘**: 
+2.  **キャラ作成**: 名称と職業を決定し、能力値を割り振ります。
+    *   `00_Core_Engine/06_Character_Creation.md` を参照。
+3.  **冒険の開始**: プロローグ (`04_Event_Prologue.md`) に従い、最初のパートナーを選びます。
+4.  **クエスト受注**: `Standard Quests` から自分のランクに合った依頼を受けます。
+5.  **探索と戦闘**: 
     - `Intent: Move` でダンジョンを進み、`Intent: Attack` で敵を倒します。
     - **HPが30%以下の敵**には `Intent: Submission` (屈服奥義) が可能です。
     - `Intent: Interact_NPC` で仲間と交流し、親密度を深めます。
-5.  **成長と堕落**:
-    - 経験値を得てレベルアップするか、Sanityを失い「堕ちたスキル」に目覚めるか。
-    - すべてはダイス（乱数）の結果次第です。
 
 ---
 
 ## 🔨 更新履歴 (Update Log)
-- **v6.0**: **屈服・おしおきシステム(Submission System)** の完全実装。種族別わからせリストの追加。
-- **v5.0**: パラメータ(STR/DEX等)の6能力値化。ジョブシステム刷新。
-- **v4.0**: アイテム・ドロップシステムの完全データ化。
+*   **v6.1** (Current):
+    *   **ファイル統合**: メインヒロインデータを `01_Main_Cast.md` に集約。
+    *   **クエスト統合**: クエストデータを `Standard_Rank_E〜S.md` に再編・統合。
+    *   **6-Stat System**: 全キャラクターのデータ形式を新ステータス (Power/Speed/Tough/Mind/Charm/Skill) に統一。
+*   **v6.0**: **屈服・おしおきシステム** の完全実装。
+*   **v5.0**: パラメータの6能力値化。ジョブシステム刷新。
 
 ---
 *Project GEM: Gravity-Defying Ero-RPG Module.*

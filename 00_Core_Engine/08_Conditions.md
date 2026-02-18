@@ -37,7 +37,7 @@ updated: 2026-02-16
 
 ## Paralyzed
 - Incapacitated (see above) and can't move or speak.
-- Automatically fails STR and DEX saving throws.
+- Automatically fails Power and Speed saving throws.
 - Attack rolls against the creature have **Advantage**.
 - Any attack that hits the creature is a **Critical Hit** if the attacker is within 5 feet of the creature.
 
@@ -45,7 +45,7 @@ updated: 2026-02-16
 - Transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone).
 - Incapacitated (see above), can't move or speak, and is unaware of its surroundings.
 - Attack rolls against the creature have **Advantage**.
-- Automatically fails STR and DEX saving throws.
+- Automatically fails Power and Speed saving throws.
 - Resistance to all damage.
 - Immune to Poison and Disease.
 
@@ -64,12 +64,12 @@ updated: 2026-02-16
 
 ## Stunned
 - Incapacitated (see above), can't move, and can speak only falteringly.
-- Automatically fails STR and DEX saving throws.
+- Automatically fails Power and Speed saving throws.
 - Attack rolls against the creature have **Advantage**.
 
 ## Unconscious
 - Incapacitated (see above), can't move or speak, and is unaware of its surroundings.
 - The creature drops whatever it's holding and falls prone.
-- Automatically fails STR and DEX saving throws.
+- Automatically fails Power and Speed saving throws.
 - Attack rolls against the creature have **Advantage**.
 - Any attack that hits the creature is a **Critical Hit** if the attacker is within 5 feet.

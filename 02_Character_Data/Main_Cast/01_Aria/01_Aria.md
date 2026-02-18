@@ -77,9 +77,13 @@ updated: 2026-02-16
 ## 1.5. 能力値 (Ability Scores & Skills)
 
 ## Ability Scores
-| STR | DEX | CON | INT | WIS | CHA |
+## Ability Scores (6 Stats)
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 16 (+3) | 12 (+1) | 14 (+2) | 10 (+0) | 14 (+2) | 16 (+3) |
+| 3 | 1 | 2 | 0 | 3 | 2 |
+- **Power**: 騎士としての膂力。
+- **Charm**: カリスマ性と美貌。
+- **Tough**: 頑丈な鎧と肉体。
 
 ## Skills & Attacks
 - **Attacks**:

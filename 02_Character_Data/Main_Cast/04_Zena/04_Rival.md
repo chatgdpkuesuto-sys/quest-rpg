@@ -75,10 +75,13 @@ updated: 2026-02-16
 
 ## 1.5. 能力値 (Ability Scores & Skills)
 
-## Ability Scores
-| STR | DEX | CON | INT | WIS | CHA |
+## Ability Scores (6 Stats)
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 16 (+3) | 14 (+2) | 16 (+3) | 10 (+0) | 12 (+1) | 10 (+0) |
+| 3 | 3 | 2 | 0 | 1 | 1 |
+- **Power**: 野生の力。
+- **Speed**: 獣のような俊敏性。
+- **Tough**: 打たれ強さと持久力。
 
 ## Skills & Attacks
 - **Attacks**:
