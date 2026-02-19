@@ -1,0 +1,48 @@
+/* machadun_style.css */
+/* エディタ全体のフォントを明朝体風に */
+.monaco-workbench {
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+}
+
+.editor-container {
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+}
+
+/* Markdownプレビューの官能的ダークノベル仕様 */
+.markdown-preview-enhanced.markdown-preview-enhanced {
+    background: linear-gradient(135deg, #150000 0%, #000000 100%) !important;
+    color: #e6c8c8 !important;
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+    line-height: 2.0 !important;
+    font-size: 16px !important;
+    padding: 2em !important;
+}
+
+/* ヘッダーの装飾 */
+.markdown-preview-enhanced h1,
+.markdown-preview-enhanced h2,
+.markdown-preview-enhanced h3 {
+    color: #ff3333 !important;
+    border-bottom: 1px solid #660000 !important;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    margin-top: 1.5em !important;
+    margin-bottom: 0.8em !important;
+}
+
+/* 強調表示（快感などの表現をさらに強調） */
+.markdown-preview-enhanced strong {
+    color: #ffa3f1 !important;
+    text-shadow: 0 0 5px rgba(255, 102, 204, 0.8);
+    font-weight: 900 !important;
+}
+
+/* ネオンピンククラス等の独自のクラスがあれば */
+pink {
+    color: #ff66cc !important;
+    text-shadow: 0 0 10px #ff66cc;
+}
+
+red {
+    color: #ff0000 !important;
+    text-shadow: 0 0 10px #ff0000;
+}

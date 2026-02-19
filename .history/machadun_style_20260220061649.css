@@ -1,0 +1,198 @@
+/* machadun_style.css */
+/* エディタ全体のフォントを明朝体風に */
+.monaco-workbench {
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+}
+
+.editor-container {
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+}
+
+/* Markdownプレビューの官能的ダークノベル仕様 */
+.markdown-preview-enhanced.markdown-preview-enhanced {
+    background: linear-gradient(135deg, #150000 0%, #000000 100%) !important;
+    color: #e6c8c8 !important;
+    font-family: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "MS Mincho", serif !important;
+    line-height: 2.0 !important;
+    font-size: 16px !important;
+    padding: 2em !important;
+}
+
+/* ヘッダーの装飾 */
+.markdown-preview-enhanced h1,
+.markdown-preview-enhanced h2,
+.markdown-preview-enhanced h3 {
+    color: #ff3333 !important;
+    border-bottom: 1px solid #660000 !important;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    margin-top: 1.5em !important;
+    margin-bottom: 0.8em !important;
+}
+
+/* 強調表示（快感などの表現をさらに強調） */
+.markdown-preview-enhanced strong {
+    color: #ffa3f1 !important;
+    text-shadow: 0 0 5px rgba(255, 102, 204, 0.8);
+    font-weight: 900 !important;
+}
+
+/* ネオンピンククラス等の独自のクラスがあれば */
+pink {
+    color: #ff66cc !important;
+    text-shadow: 0 0 10px #ff66cc;
+}
+
+red {
+    color: #ff0000 !important;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+/* =========================================
+   😈 究極の脳汁分泌エフェクト（アニメーション）
+   ========================================= */
+
+/* ドクンドクンと発情・心拍を示す脈打ち */
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 5px #ff66cc;
+    }
+
+    14% {
+        transform: scale(1.05);
+        text-shadow: 0 0 15px #ff33aa;
+    }
+
+    28% {
+        transform: scale(1);
+        text-shadow: 0 0 5px #ff66cc;
+    }
+
+    42% {
+        transform: scale(1.05);
+        text-shadow: 0 0 15px #ff33aa;
+    }
+
+    70% {
+        transform: scale(1);
+        text-shadow: 0 0 5px #ff66cc;
+    }
+}
+
+.heartbeat,
+heartbeat {
+    display: inline-block;
+    color: #ff99dd !important;
+    font-weight: bold;
+    animation: heartbeat 1.5s infinite;
+}
+
+/* ダメージや激しい衝撃による揺れ */
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+.shake,
+shake {
+    display: inline-block;
+    color: #ff3333 !important;
+    font-weight: 900;
+    animation: shake 0.5s infinite;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+/* 絶頂や魔法発動時の強烈な発光ループ */
+@keyframes neon-pulse {
+    0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff;
+    }
+
+    50% {
+        text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+    }
+
+    100% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff;
+    }
+}
+
+.neon-pulse,
+neon-pulse {
+    color: #ffffff !important;
+    animation: neon-pulse 1.5s infinite alternate;
+}
+
+/* 画面背景自体をピンクに染め上げる狂気のオーバーレイ（body直下などに適用） */
+body.lust-mode {
+    animation: lustOverlay 4s infinite alternate;
+}
+
+@keyframes lustOverlay {
+    0% {
+        box-shadow: inset 0 0 0px rgba(255, 0, 128, 0);
+    }
+
+    100% {
+        box-shadow: inset 0 0 150px rgba(255, 0, 128, 0.3);
+    }
+}
+
+/* =========================================
+   😈 チャットウィンドウ侵食エフェクト
+   ========================================= */
+/* VSCodeのチャット欄や全般的なマークダウンにおける ***太字斜体*** への狂気エフェクト */
+strong em,
+em strong,
+.interactive-session strong em,
+.chat-layer strong em {
+    display: inline-block;
+    color: #ff33aa !important;
+    font-weight: 900 !important;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+    animation: shake 0.3s infinite, neon-pulse 1s infinite alternate !important;
+    background-color: rgba(255, 0, 128, 0.2);
+    padding: 0 4px;
+    border-radius: 4px;
+}

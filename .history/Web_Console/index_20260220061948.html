@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Engine - Chaos Console</title>
+    <link rel="stylesheet" href="chaos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="glitch-overlay"></div>
+    <div id="blood-overlay"></div>
+
+    <div id="game-container">
+        <div id="log-window">
+            <!-- ゲームログがここに追加される -->
+            <div class="message system-message">
+                [SYSTEM BOOT] Welcome to Machadun Engine.<br>
+                >>> Initializing Chaos Protocol... <span class="neon-pink">SUCCESS</span><br>
+                >>> Loading Scenario: Prologue...
+            </div>
+            <div class="message gm-message">
+                <span class="glitch-text" data-text="「男性が絶滅した世界」。">「男性が絶滅した世界」。</span><br>
+                世界は静かな滅亡へ向かっていた。遺伝子の劣化、少子化、緩やかな死。<br>
+                そこに現れた、ただ一つの<span class="heartbeat">「希望」</span>であり、<span class="shake">「特級の獲物」</span>。<br><br>
+                それは——<strong class="neon-pink">あなた</strong>。
+            </div>
+        </div>
+        
+        <div id="input-area">
+            <span id="prompt-symbol">></span>
+            <input type="text" id="action-input" placeholder="運命の選択（行動を入力）..." autocomplete="off">
+        </div>
+    </div>
+
+    <script src="engine.js"></script>
+</body>
+</html>

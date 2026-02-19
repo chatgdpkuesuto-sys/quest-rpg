@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ -->
+    <div id="bg-container">
+        <!-- 初期画像。後で実際の画像パスに置き換わります -->
+        <img id="bg-image" src="../99_Ero_Library/Images/Placeholder_CG.jpg" alt="Current CG"
+            onerror="this.style.display='none'">
+    </div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- ステータスバー（画面下部などに配置） -->
+    <div id="status-container">
+        <div class="status-box">
+            <div class="status-label">Arousal (発情度)</div>
+            <div class="progress-bar">
+                <div id="arousal-fill" class="progress-fill arousal"></div>
+            </div>
+            <div id="arousal-value" class="status-value">0%</div>
+        </div>
+
+        <div class="status-box">
+            <div class="status-label">Despair (絶望度)</div>
+            <div class="progress-bar">
+                <div id="despair-fill" class="progress-fill despair"></div>
+            </div>
+            <div id="despair-value" class="status-value">0%</div>
+        </div>
+    </div>
+
+    <!-- BGM等制御用の初期化ボタン (ブラウザの自動再生ポリシー対策用) -->
+    <div id="init-audio" onclick="initEngine()">[CLICK TO IGNITION]</div>
+
+    <!-- プレイヤーアクションパネル (Neural Bridge) -->
+    <div id="action-panel">
+        <button class="action-btn" onclick="sendAction('服を脱がせる')">服を脱がせる</button>
+        <button class="action-btn" onclick="sendAction('媚薬を使う')">媚薬を使う</button>
+        <button class="action-btn" onclick="sendAction('力強く抱きしめる')">力強く抱きしめる</button>
+        <button class="action-btn" onclick="sendAction('放置して見守る')">放置して見守る</button>
+    </div>
+
+    <!-- Neural Bridge送信用スクリプト -->
+    <script>
+        async function sendAction(actionName) {
+            console.log("Action Sent:", actionName);
+
+            // 視覚的フィードバック（ボタンクリック時）
+            document.body.style.animation = "shake 0.2s";
+            setTimeout(() => document.body.style.animation = "none", 200);
+
+            try {
+                await fetch('http://localhost:5000/action', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: actionName, time: Date.now() })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

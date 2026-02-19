@@ -133,7 +133,7 @@ def generate_image(prompt_text, output_path=None):
                                     except Exception:
                                         status_data = {}
                                 
-                                status_data["current_image"] = "outputs/latest.png"
+                                status_data["current_image"] = "../outputs/latest.png"
                                 status_data["status"] = "updated_by_16_Illustrator"
                                 status_data["timestamp"] = int(time.time())
                                 
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         prompt_arg = sys.argv[1]
         print("🚀 Live Server Sync Mode 起動")
-        live_output = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\outputs\latest.png"
+        live_output = r"c:\Users\kuesu\GEM_Project_Root\outputs\latest.png"
         generate_image(prompt_arg, output_path=live_output)
     else:
         # 従来のバッチモード

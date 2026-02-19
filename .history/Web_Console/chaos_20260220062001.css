@@ -1,0 +1,362 @@
+/* ==============================================
+   MACHADUN ENGINE: CHAOS CSS
+============================================== */
+
+:root {
+    --bg-dark: #0a0005;
+    --text-primary: #f0d0d0;
+    --neon-pink: #ff33aa;
+    --deep-red: #cc0000;
+    --pure-white: #ffffff;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Shippori Mincho', serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- OVERLAYS --- */
+#glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px);
+    z-index: 10;
+    opacity: 0.3;
+}
+
+#blood-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 0px rgba(255, 0, 128, 0);
+    z-index: 5;
+    transition: box-shadow 0.5s ease;
+}
+
+#blood-overlay.active {
+    animation: lustOverlay 0.5s infinite alternate;
+}
+
+@keyframes lustOverlay {
+    0% {
+        box-shadow: inset 0 0 100px rgba(255, 0, 128, 0.4);
+    }
+
+    100% {
+        box-shadow: inset 0 0 300px rgba(255, 0, 50, 0.8);
+    }
+}
+
+/* --- CONTAINER --- */
+#game-container {
+    width: 90%;
+    max-width: 1000px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+    background: rgba(10, 0, 5, 0.8);
+    border: 1px solid var(--deep-red);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+#log-window {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+    font-size: 1.2rem;
+    line-height: 2.0;
+    margin-bottom: 20px;
+    scroll-behavior: smooth;
+}
+
+/* 隠しスクロールバー */
+#log-window::-webkit-scrollbar {
+    width: 5px;
+}
+
+#log-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#log-window::-webkit-scrollbar-thumb {
+    background: var(--deep-red);
+}
+
+/* --- MESSAGES --- */
+.message {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+.system-message {
+    color: #88ff88;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.gm-message {
+    border-left: 3px solid var(--neon-pink);
+    padding-left: 15px;
+}
+
+.user-message {
+    color: #aaaaaa;
+    text-align: right;
+    font-style: italic;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- INPUT --- */
+#input-area {
+    display: flex;
+    align-items: center;
+    border-top: 1px dashed var(--deep-red);
+    padding-top: 15px;
+}
+
+#prompt-symbol {
+    color: var(--neon-pink);
+    font-size: 1.5rem;
+    margin-right: 15px;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+#action-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--pure-white);
+    font-size: 1.2rem;
+    font-family: 'Shippori Mincho', serif;
+    outline: none;
+}
+
+#action-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* ==============================================
+   🔥 EXTREME TEXT ANIMATIONS
+============================================== */
+
+.neon-pink {
+    color: var(--pure-white);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+    font-weight: 800;
+}
+
+.extreme-red {
+    color: var(--pure-white);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--deep-red), 0 0 40px var(--deep-red);
+    font-weight: 800;
+    animation: shake 0.2s infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    15% {
+        transform: scale(1.1);
+        text-shadow: 0 0 30px var(--neon-pink);
+        color: #fff;
+    }
+
+    30% {
+        transform: scale(1);
+        text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    45% {
+        transform: scale(1.1);
+        text-shadow: 0 0 30px var(--neon-pink);
+        color: #fff;
+    }
+
+    70% {
+        transform: scale(1);
+        text-shadow: 0 0 10px var(--neon-pink);
+    }
+}
+
+.heartbeat {
+    display: inline-block;
+    color: var(--neon-pink);
+    font-weight: bold;
+    animation: heartbeat 1.2s infinite;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(2px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+.shake {
+    display: inline-block;
+    color: #ff3333;
+    font-weight: 900;
+    animation: shake 0.4s infinite;
+}
+
+/* GLITCH EFFECT (CYBERPUNK CHAOS) */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+    color: var(--pure-white);
+    font-weight: bold;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -2px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--neon-pink);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(20px, 9999px, 88px, 0);
+    }
+
+    20% {
+        clip: rect(65px, 9999px, 11px, 0);
+    }
+
+    40% {
+        clip: rect(98px, 9999px, 56px, 0);
+    }
+
+    60% {
+        clip: rect(10px, 9999px, 44px, 0);
+    }
+
+    80% {
+        clip: rect(82px, 9999px, 9px, 0);
+    }
+
+    100% {
+        clip: rect(32px, 9999px, 66px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(12px, 9999px, 58px, 0);
+    }
+
+    20% {
+        clip: rect(35px, 9999px, 91px, 0);
+    }
+
+    40% {
+        clip: rect(88px, 9999px, 16px, 0);
+    }
+
+    60% {
+        clip: rect(40px, 9999px, 64px, 0);
+    }
+
+    80% {
+        clip: rect(2px, 9999px, 39px, 0);
+    }
+
+    100% {
+        clip: rect(52px, 9999px, 86px, 0);
+    }
+}

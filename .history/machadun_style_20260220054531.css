@@ -1,0 +1,30 @@
+/* Global Font Settings */
+body {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", serif !important;
+    line-height: 1.8 !important;
+}
+
+/* Markdown Preview Styling */
+.markdown-preview-enhanced {
+    background: linear-gradient(to bottom, #2b0a0a, #000000) !important;
+    color: #ffd7d7 !important;
+    font-family: "Hiragino Mincho ProN", serif !important;
+    padding: 2em !important;
+}
+
+.markdown-preview-enhanced h1, 
+.markdown-preview-enhanced h2, 
+.markdown-preview-enhanced h3 {
+    color: #ff3333 !important;
+    text-shadow: 0 0 5px #ff0000;
+    border-bottom: 1px solid #550000;
+}
+
+.markdown-preview-enhanced strong {
+    color: #ff6666 !important;
+    font-weight: bold;
+}
+
+.markdown-preview-enhanced em {
+    color: #ff99cc !important;
+}

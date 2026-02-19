@@ -61,9 +61,6 @@ def queue_prompt(prompt_workflow):
         print(f"❌ ComfyUIへの接続エラー: {e}")
         return None
 
-def get_latest_file(path):
-    pass # Not needed in direct mode, but keeping for compatibility if reused
-
 def get_history(prompt_id):
     with urllib.request.urlopen(f"{HISTORY_URL}/{prompt_id}") as response:
         return json.loads(response.read())
@@ -74,26 +71,30 @@ def get_image(filename, subfolder, folder_type):
     with urllib.request.urlopen(f"{VIEW_URL}?{url_values}") as response:
         return response.read()
 
-def save_image(image_data, filepath):
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+def save_image(image_data, filename):
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+    filepath = os.path.join(OUTPUT_DIR, filename)
     with open(filepath, "wb") as f:
         f.write(image_data)
     print(f"  💾 保存完了: {filepath}")
 
-def generate_image(prompt_text, output_path=None):
-    print(f"\n🎬 生成開始: {prompt_text[:30]}...")
+def generate_image(scene, index):
+    print(f"\n🎬 【{scene['name']}】 ({index}/{GENERATE_COUNT_PER_SCENE}) 生成開始...")
+    
+    prompt_id = str(uuid.uuid4()) # クライアント側IDではなくComfyUIが返すIDを使うが、ここではワークフロー構築のみ
     
     # ワークフロー定義
-    final_positive = f"{FIXED_POSITIVE} {prompt_text}"
+    final_positive = f"{FIXED_POSITIVE} {scene['prompt']}"
     
     workflow = {
         "3": {"inputs": {"seed": random.randint(0, 10000000000), "steps": 28, "cfg": 7.0, "sampler_name": "euler", "scheduler": "normal", "denoise": 1, "model": ["4", 0], "positive": ["6", 0], "negative": ["7", 0], "latent_image": ["5", 0]}, "class_type": "KSampler"},
         "4": {"inputs": {"ckpt_name": "waiIllustriousSDXL_v160.safetensors"}, "class_type": "CheckpointLoaderSimple"},
-        "5": {"inputs": {"width": 832, "height": 1216, "batch_size": 1}, "class_type": "EmptyLatentImage"}, 
+        "5": {"inputs": {"width": scene['width'], "height": scene['height'], "batch_size": 1}, "class_type": "EmptyLatentImage"}, 
         "6": {"inputs": {"text": final_positive, "clip": ["4", 1]}, "class_type": "CLIPTextEncode"},
         "7": {"inputs": {"text": FIXED_NEGATIVE, "clip": ["4", 1]}, "class_type": "CLIPTextEncode"},
         "8": {"inputs": {"samples": ["3", 0], "vae": ["4", 2]}, "class_type": "VAEDecode"},
-        "9": {"inputs": {"filename_prefix": "GEM_LivePlay", "images": ["8", 0]}, "class_type": "SaveImage"}
+        "9": {"inputs": {"filename_prefix": f"GEM_{scene['name']}", "images": ["8", 0]}, "class_type": "SaveImage"}
     }
 
     # 1. プロンプトをキューに入れる
@@ -119,31 +120,10 @@ def generate_image(prompt_text, output_path=None):
                         for image in node_output['images']:
                             image_data = get_image(image['filename'], image['subfolder'], image['type'])
                             
-                            if output_path:
-                                save_image(image_data, output_path)
-                                # ダッシュボードへの同期 (JSON書き換え)
-                                status_path = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\status.json"
-                                status_data = {}
-                                if os.path.exists(status_path):
-                                    try:
-                                        with open(status_path, "r", encoding="utf-8") as f:
-                                            status_data = json.load(f)
-                                            if not isinstance(status_data, dict):
-                                                status_data = {}
-                                    except Exception:
-                                        status_data = {}
-                                
-                                status_data["current_image"] = "outputs/latest.png"
-                                status_data["status"] = "updated_by_16_Illustrator"
-                                status_data["timestamp"] = int(time.time())
-                                
-                                with open(status_path, "w", encoding="utf-8") as f:
-                                    json.dump(status_data, f, ensure_ascii=False, indent=2)
-                                print("  📡 Live Server との同期完了！")
-                            else:
-                                timestamp = int(time.time())
-                                save_filename = f"LiveGen_{timestamp}.png"
-                                save_image(image_data, os.path.join(OUTPUT_DIR, save_filename))
+                            # ユニークなファイル名で保存
+                            timestamp = int(time.time())
+                            save_filename = f"{scene['name']}_{index}_{timestamp}.png"
+                            save_image(image_data, save_filename)
                 break
         except Exception as e:
             pass
@@ -151,21 +131,12 @@ def generate_image(prompt_text, output_path=None):
         time.sleep(1)
 
 if __name__ == "__main__":
-    import sys
     
-    # CLI引数があれば1枚だけ生成してダッシュボードに投げるモード
-    if len(sys.argv) > 1:
-        prompt_arg = sys.argv[1]
-        print("🚀 Live Server Sync Mode 起動")
-        live_output = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\outputs\latest.png"
-        generate_image(prompt_arg, output_path=live_output)
-    else:
-        # 従来のバッチモード
-        print("🚀 Auto Illustrator v2.0 (ComfyUI連携版) 起動")
-        print(f"📂 保存先: {OUTPUT_DIR}\n")
+    print("🚀 Auto Illustrator v2.0 (ComfyUI連携版) 起動")
+    print(f"📂 保存先: {OUTPUT_DIR}\n")
 
-        for scene in SCENES:
-            for i in range(1, GENERATE_COUNT_PER_SCENE + 1):
-                 generate_image(scene["prompt"])
-                
-        print("\n🎉 全ての生成が完了しました！")
+    for scene in SCENES:
+        for i in range(1, GENERATE_COUNT_PER_SCENE + 1):
+            generate_image(scene, i)
+            
+    print("\n🎉 全ての生成が完了しました！")

@@ -123,17 +123,16 @@ def generate_image(prompt_text, output_path=None):
                                 save_image(image_data, output_path)
                                 # ダッシュボードへの同期 (JSON書き換え)
                                 status_path = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\status.json"
-                                status_data = {}
                                 if os.path.exists(status_path):
                                     try:
                                         with open(status_path, "r", encoding="utf-8") as f:
                                             status_data = json.load(f)
-                                            if not isinstance(status_data, dict):
-                                                status_data = {}
-                                    except Exception:
+                                    except:
                                         status_data = {}
+                                else:
+                                    status_data = {}
                                 
-                                status_data["current_image"] = "outputs/latest.png"
+                                status_data["current_image"] = "../outputs/latest.png"
                                 status_data["status"] = "updated_by_16_Illustrator"
                                 status_data["timestamp"] = int(time.time())
                                 
@@ -157,7 +156,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         prompt_arg = sys.argv[1]
         print("🚀 Live Server Sync Mode 起動")
-        live_output = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\outputs\latest.png"
+        live_output = r"c:\Users\kuesu\GEM_Project_Root\outputs\latest.png"
         generate_image(prompt_arg, output_path=live_output)
     else:
         # 従来のバッチモード
