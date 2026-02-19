@@ -14,19 +14,19 @@ COMFYUI_URL = "http://127.0.0.1:8188/prompt"
 FIXED_POSITIVE = "(masterpiece, best quality, highres:1.3), (extremely detailed CG Unity 8k wallpaper), (intricate details:1.2), (finely detailed eyes and face:1.2), (cinematic lighting:1.2), (ray tracing:1.1), (depth of field:1.1),"
 FIXED_NEGATIVE = "(low quality, worst quality:1.4), (bad anatomy), (extra fingers), (monochrome, grayscale), text, watermark, signature, username, error, blurry, cropped, (mutated hands and fingers:1.5), extra limbs, too many legs"
 
-# ② 【シーン設定: 出会い】
+# ② 【シーン設定: Phase 1 朝】
 SCENES = [
     {
-        "name": "Encounter_Lapis_Wide", 
+        "name": "Phase1_Inn_Morning_Wide", 
         "width": 832,
         "height": 1216,
-        "prompt": "1girl, solo, Lapis Lazura, blue slime gijinka, (translucent blue hair:1.2), golden eyes, pale skin, (slime textured skin:1.1), blue translucent dress, forming from a shimmering blue pond, (wide shot:1.2), full body, mystical glowing cavern background, stalactites, bioluminescent plants, water ripples"
+        "prompt": "1girl, solo, Yuni, (catgirl:1.2), (cat ears:1.2), (cat tail), (thief outfit:1.1), (short pink hair:1.1), green eyes, (waking up:1.1), (stretching arms:1.2), (sitting on bed:1.1), (morning light:1.2), (sun rays), wooden fictional inn room, clutter, cozy"
     },
     {
-        "name": "Encounter_Lapis_Up", 
+        "name": "Phase1_Inn_Morning_Up", 
         "width": 1024,
         "height": 1024,
-        "prompt": "1girl, solo, Lapis Lazura, blue slime gijinka, (translucent blue hair:1.2), golden eyes, (slime textured skin:1.1), (centered:1.3), upper body, face focus, curious expression, tilting head, eyes looking at viewer, soft bioluminescent lighting, glowing slime particles"
+        "prompt": "1girl, solo, Yuni, (catgirl:1.2), (cat ears:1.2), (thief outfit:1.1), (short pink hair:1.1), green eyes, (looking at viewer:1.3), (cheerful smile:1.2), (upper body), (face focus), (morning light), (dust motes), wooden wall background"
     }
 ]
 
@@ -60,18 +60,18 @@ def send_to_comfyui(prompt_text, width, height, file_prefix):
 
 if __name__ == "__main__":
     print("\n" + "="*50)
-    print("📜 遭遇ログ: Lapis Lazura (スライムの娘)")
+    print("📜 Phase 1: Preparation (朝の目覚め)")
     print("="*50)
-    print("洞窟の奥、静かに揺れる青い泉があった。")
-    print("あなたが近づくと、水面が盛り上がり、一人の少女の像を結ぶ。")
-    print("半透明の身体は光を弾き、彼女は無垢な瞳であなたを見つめていた。")
+    print("朝日が窓から差し込み、安宿の埃っぽい空気を照らしている。")
+    print("隣のベッドでは、ユニが大きなあくびをしながら伸びをしていた。")
+    print("「んん〜っ…おはよ、あなた。今日も稼ぎに行こっか！」")
     print("="*50 + "\n")
 
     print("🚀 画像生成リクエストを開始します...")
     for scene in SCENES:
         print(f"\n🎬 【シーン設定】: {scene['name']}")
         for i in range(1, GENERATE_COUNT_PER_SCENE + 1):
-            file_prefix = f"Stage1_Lapis_{scene['name']}_{i}"
+            file_prefix = f"Phase1_Yuni_{scene['name']}_{i}"
             print(f"  ⏳ 生成リクエスト送信中 ({i}/{GENERATE_COUNT_PER_SCENE})...")
             result = send_to_comfyui(scene["prompt"], scene["width"], scene["height"], file_prefix)
             if result:

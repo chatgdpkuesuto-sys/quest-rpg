@@ -113,6 +113,17 @@ AIは以下の **「5フェーズ進行 (5-Phase Cycle)」** に従ってのみ�
 
 ---
 
+### 2-D. Visual Directive (画像生成スクリプト更新)
+**Rule: ALWAYS UPDATE SCENARIO GENERATOR**
+重要なシーンやイベント描写の直後には、**必ず** `00_Core_Engine/19_Scenario_Generator.py` の内容をそのシーンに合わせて更新すること。
+- **目的**: プレイヤーがローカル環境で即座に画像生成を行えるようにするため。
+- **更新内容**:
+    1.  **Prompts**: `16_Auto_Illustrator.py` のルールに基づいた高品質なプロンプト (Wide/Up の2種)。
+    2.  **Log**: シーンの状況説明文 (コンソール出力用)。
+- **禁止事項**: AIが直接画像を生成すること (外部サーバー使用禁止)。
+
+---
+
 ## 🏁 0. Phase 0: Game Start (ゲーム開始)
 
 **Rule: MANDATORY SEQUENCE (絶対順守)**

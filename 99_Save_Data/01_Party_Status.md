@@ -7,7 +7,7 @@
 ---
 
 ## 1. 主人公 (Protagonist)
-*   **Name**: くえすと (Quest)
+*   **Name**: あなた (You)
 *   **Job**: Fighter (戦士) Lv 1
 *   **Next Exp**: 0 / 300
 *   **Condition**: 健康 (Healthy)
