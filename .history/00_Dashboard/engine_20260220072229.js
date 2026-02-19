@@ -80,7 +80,18 @@ async function pollGameState() {
         const state = await response.json();
 
         // DOM Elements
+        const arousalFill = document.getElementById('arousal-fill');
+        const arousalVal = document.getElementById('arousal-value');
+        const despairFill = document.getElementById('despair-fill');
+        const despairVal = document.getElementById('despair-value');
         const bgImage = document.getElementById('bg-image');
+
+        // Update Values smoothly
+        arousalFill.style.width = `${state.arousal}%`;
+        arousalVal.innerText = `${state.arousal}%`;
+
+        despairFill.style.width = `${state.despair}%`;
+        despairVal.innerText = `${state.despair}%`;
 
         // Update Dialogue Text
         const dialogueBox = document.getElementById('dialogue-text');
@@ -111,8 +122,10 @@ async function pollGameState() {
 
         // Arousal Effects (Visual Pulse)
         if (state.arousal >= 80) {
+            arousalFill.parentElement.parentElement.classList.add('alert-glow');
             document.body.classList.add('pulse-extreme');
         } else {
+            arousalFill.parentElement.parentElement.classList.remove('alert-glow');
             document.body.classList.remove('pulse-extreme');
         }
 

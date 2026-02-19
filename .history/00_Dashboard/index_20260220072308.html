@@ -31,14 +31,22 @@
         <div id="dialogue-text">ここにAI（りりす）からの官能テキストや悲鳴が表示されます……。アクションを選択してください。</div>
     </div>
 
+    <!-- プレイヤーアクションパネル (Neural Bridge) -->
+    <div id="action-panel">
+        <button class="action-btn" onclick="sendAction('服を脱がせる')">服を脱がせる</button>
+        <button class="action-btn" onclick="sendAction('媚薬を使う')">媚薬を使う</button>
+        <button class="action-btn" onclick="sendAction('力強く抱きしめる')">力強く抱きしめる</button>
+        <button class="action-btn" onclick="sendAction('放置して見守る')">放置して見守る</button>
+    </div>
+
     <!-- Neural Bridge送信用スクリプト -->
     <script>
         async function sendAction(actionName) {
             console.log("Action Sent:", actionName);
 
-            // 視覚的フィードバック（クリック時）
-            document.body.style.animation = "shake 0.1s";
-            setTimeout(() => document.body.style.animation = "none", 100);
+            // 視覚的フィードバック（ボタンクリック時）
+            document.body.style.animation = "shake 0.2s";
+            setTimeout(() => document.body.style.animation = "none", 200);
 
             try {
                 // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
@@ -54,24 +62,6 @@
                 console.error("Failed to send action:", e);
             }
         }
-
-        // 🌟 NEW: フルスクリーン・マウスクリック制御 🌟
-        // 右クリックのコンテキストメニューを無効化
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // 画面全体のクリックを検知
-        document.addEventListener('mousedown', (event) => {
-            // init-audio ボタンを押した時は無視する
-            if (event.target.id === 'init-audio') return;
-
-            if (event.button === 0) {
-                // 左クリック
-                sendAction("左クリック（物語を進める／肯定／愛撫する）");
-            } else if (event.button === 2) {
-                // 右クリック
-                sendAction("右クリック（拒否する／いじめる／特殊行動）");
-            }
-        });
     </script>
 
     <!-- 設定ファイル読込 -->
