@@ -13,6 +13,15 @@ updated: 2026-02-17
 
 ---
 
+## Phase 0: Game Start (導入)
+**条件**: ニューゲーム時のみ
+
+1.  **Character Creation**: キャラクター作成。
+2.  **Prologue**: パートナー選択と導入イベント。
+3.  **To Phase 1**: 全て完了後、Phase 1 へ。
+
+---
+
 ## Phase 1: Preparation (準備)
 **場所**: 街 (Town)
 

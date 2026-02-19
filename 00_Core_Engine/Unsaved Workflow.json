@@ -1,18 +1,18 @@
 {
   "3": {
     "inputs": {
-      "seed": 8364762385455,
-      "steps": 30,
+      "seed": 1035641678176808,
+      "steps": 20,
       "cfg": 8,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
+      "sampler_name": "euler",
+      "scheduler": "normal",
       "denoise": 1,
       "model": [
         "4",
         0
       ],
       "positive": [
-        "17",
+        "6",
         0
       ],
       "negative": [
@@ -40,8 +40,8 @@
   },
   "5": {
     "inputs": {
-      "width": 1536,
-      "height": 1024,
+      "width": 512,
+      "height": 512,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -49,9 +49,22 @@
       "title": "空の潜在画像"
     }
   },
+  "6": {
+    "inputs": {
+      "text": "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIPテキストエンコード（プロンプト）"
+    }
+  },
   "7": {
     "inputs": {
-      "text": "(text:1.5), (watermark:1.3), signature, username, artist name, date, timestamp, title, subtitles, credits,\ntext on sign, text on bottle, label, menu, book text, handwriting,\n(low quality, worst quality:1.4), bad anatomy, blurry, fuzzy, modern clothes, modern background, sunbeams, bright, sci-fi, 3d render, multiple girls",
+      "text": "text, watermark",
       "clip": [
         "4",
         1
@@ -80,7 +93,7 @@
   },
   "9": {
     "inputs": {
-      "filename_prefix": "SD1.5",
+      "filename_prefix": "ComfyUI",
       "images": [
         "8",
         0
@@ -89,19 +102,6 @@
     "class_type": "SaveImage",
     "_meta": {
       "title": "画像を保存"
-    }
-  },
-  "17": {
-    "inputs": {
-      "text": "masterpiece, best quality, highly detailed, high contrast, glorious lighting,\n1girl, solo, medieval barmaid, waitress, fantasy tavern uniform, apron, messy hair, beautiful face, expressive eyes,\nlooking at viewer, eye contact, talking, slightly open mouth, mysterious smile, leaning forward, elbows on bar counter,\nholding wooden tankard,\nindoors, dark fantasy tavern background, rustic wooden interior, shelves with glass bottles, dimly lit, flickering candlelight, cinematic lighting, depth of field, light particles, shadows",
-      "clip": [
-        "4",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIPテキストエンコード（プロンプト）"
     }
   }
 }

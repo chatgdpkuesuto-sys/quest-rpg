@@ -115,12 +115,15 @@ AIは以下の **「5フェーズ進行 (5-Phase Cycle)」** に従ってのみ�
 
 ## 🏁 0. Phase 0: Game Start (ゲーム開始)
 
-**Rule**: ゲーム開始時、または「最初から」と宣言された場合のみ実行。
+**Rule: MANDATORY SEQUENCE (絶対順守)**
+ニューゲーム時は、**必ず** 以下の手順で進行すること。省略不可。
 
 1.  **Character Creation**: 参照 `[CharCreate]`
+    - 能力値(Stats)と名前(Name)を決定。
 2.  **Prologue Event**: 参照 `[Prologue]`
-    - ヒロインを選択し、最初のパートナーを得る。
-3.  **Start Phase 1**: プロローグ終了後、Phase 1 (Preparation) へ移行。
+    - **運命のパートナー選択 (Selection)** を行う。
+    - パートナーとの **出会いイベント (Encounter)** を描写する。
+3.  **Start Phase 1**: プロローグ終了後、初めて Phase 1 (Preparation) へ移行する。
 
 **Note**: キャラ作成時のステータス最大値は **+3**。ジョブは対応するステータスが **1以上** 必要。
 
