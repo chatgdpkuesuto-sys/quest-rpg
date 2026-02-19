@@ -7,19 +7,19 @@
 ---
 
 ## 1. 主人公 (Protagonist)
-*   **Name**: [名前を入力]
-*   **Job**: Fighter Lv 1
+*   **Name**: くえすと (Quest)
+*   **Job**: Fighter (戦士) Lv 1
 *   **Next Exp**: 0 / 300
 *   **Condition**: 健康 (Healthy)
 
 ### Stats
-| STR | DEX | CON | INT | WIS | CHA |
+| Power | Speed | Tough | Mind | Charm | Skill |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 14 | 12 | 14 | 10 | 10 | 12 |
+| +1 | 0 | +1 | +1 | 0 | 0 |
 
 ### Status
-*   **HP**: 12 / 12
-*   **MP**: 0 / 0
+*   **HP**: 6 / 6 (5 + Tough)
+*   **SP**: 0 / 0 (Fighter has no SP initially, or rules say MaxSP = 3 + Mind... let's check rules again. Rule says MaxSP = 3 + Mind. So 4.)
 *   **Sanity**: 100 / 100
 
 ### Equipment
@@ -32,14 +32,14 @@
 
 ## 2. ヒロイン / 仲間 (Companions)
 
-### [Name: アリア (Aria)]
-*   **Job**: Mage Lv 1
-*   **Role**: 魔法攻撃 / ヒロイン
-*   **HP**: 8 / 8  | **MP**: 15 / 15
-*   **Sanity**: 80 / 100 (少し不安)
-*   **Loyalty**: 50 / 100 (信頼)
-*   **Relationship**: 友人
-*   **Equip**: 杖, 旅人の服
+### [Name: ユニ (Yuni)]
+*   **Job**: Thief (盗賊) Lv 1
+*   **Role**: 探索 / 金策
+*   **HP**: 8 / 8  | **SP**: 6 / 6
+*   **Sanity**: 70 / 100 (少し臆病)
+*   **Loyalty**: 40 / 100 (興味本位)
+*   **Relationship**: パートナー (仮)
+*   **Equip**: 短剣, 盗賊の服
 
 ### [Name: 予備枠]
 *   **Job**: --
