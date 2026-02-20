@@ -34,6 +34,7 @@
             pointer-events: none;
         }
 
+        /* ---------- Header ---------- */
         #header {
             position: fixed;
             top: 0;
@@ -54,15 +55,16 @@
             font-weight: 800;
         }
 
-        #header .status-badge {
-            font-size: 0.85rem;
-            color: #66ff66;
-            background: rgba(0, 80, 0, 0.5);
+        #header .dice-result {
+            font-size: 0.9rem;
+            color: #ff6666;
+            background: rgba(80, 0, 0, 0.5);
             padding: 4px 14px;
             border-radius: 20px;
-            border: 1px solid #050;
+            border: 1px solid #500;
         }
 
+        /* ---------- Main Panel ---------- */
         #game-panel {
             position: relative;
             z-index: 10;
@@ -87,6 +89,7 @@
             }
         }
 
+        /* ---------- Situation Text ---------- */
         #situation {
             font-size: 1.15rem;
             line-height: 2;
@@ -109,6 +112,7 @@
             }
         }
 
+        /* ---------- GM Voice ---------- */
         .gm-voice {
             font-size: 1.05rem;
             line-height: 1.9;
@@ -120,6 +124,7 @@
             background: rgba(60, 0, 0, 0.15);
         }
 
+        /* ---------- Choice Buttons ---------- */
         #choices {
             display: flex;
             flex-direction: column;
@@ -167,6 +172,16 @@
             transform: translateX(3px) scale(0.98);
         }
 
+        .choice-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .choice-btn .emoji {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
         .choice-btn .sub {
             display: block;
             font-size: 0.85rem;
@@ -174,30 +189,39 @@
             margin-top: 4px;
         }
 
-        #log {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            font-size: 0.85rem;
+        /* ---------- Loading Indicator ---------- */
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        #loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #300;
+            border-top-color: #f00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading p {
             color: #888;
-            max-height: 120px;
-            overflow-y: auto;
-            border-radius: 3px;
+            font-size: 0.95rem;
         }
 
-        #log .ok {
-            color: #6f6;
-        }
-
-        #log .err {
-            color: #f66;
-        }
-
-        #log .info {
-            color: #ff9;
-        }
-
+        /* ---------- Highlights ---------- */
         .highlight-despair {
             color: #ff0000;
             font-weight: bold;
@@ -209,6 +233,7 @@
             text-shadow: 0 0 12px #ff66b2;
         }
 
+        /* ---------- Audio Controls ---------- */
         #audio-bar {
             position: fixed;
             bottom: 0;
@@ -246,65 +271,66 @@
 
     <div id="header">
         <div class="logo">⛧ まちゃだん TRPG</div>
-        <div class="status-badge" id="status-badge">🟢 手動モード</div>
+        <div class="dice-result" id="dice-display">🎲 待機中</div>
     </div>
 
     <div id="game-panel">
+        <!-- 状況描写 -->
         <div id="situation">
             <p style="text-align:center; color:#8b0000; font-size:1.6rem; margin-bottom:20px;">⛧ 運命の選択 ⛧</p>
             <p>あなたは気がつくと、見知らぬ世界に立っていた。<br>
                 ここは<span class="highlight-despair">男性が絶滅した世界</span>。<br>
                 目の前に、3人の少女が現れる。彼女たちの瞳が、あなたの存在に<span class="highlight-pleasure">怪しく潤む</span>……。</p>
-            <div class="gm-voice">「ふふ、いらっしゃい……。ボタンを押して、あなたの運命を選んで？　押したら、F5で結果を確認してね。」</div>
+            <div class="gm-voice">「ふふ、いらっしゃい……。ダイスが、あなたの運命の相手を決めるわ。でもまずは……自分で選んでみる？」</div>
         </div>
 
+        <!-- 選択肢エリア -->
         <div id="choices">
             <button class="choice-btn" onclick="sendAction('ヒロイン選択: アリア（聖堂騎士）')">
-                🛡️ <strong>アリア</strong> ── 堕ちた聖騎士
-                <span class="sub">高潔な鎧の下に隠された、種の保存本能。</span>
+                <span class="emoji">🛡️</span> <strong>アリア</strong> ── 堕ちた聖騎士
+                <span class="sub">高潔な鎧の下に隠された、種の保存本能。あなたを「聖遺物」として監禁する──</span>
             </button>
             <button class="choice-btn" onclick="sendAction('ヒロイン選択: ゼナ（黒狼の獣人）')">
-                🐺 <strong>ゼナ</strong> ── 黒狼の番い
+                <span class="emoji">🐺</span> <strong>ゼナ</strong> ── 黒狼の番い
                 <span class="sub">理性より先に走る繁殖本能。「よこせ！ それは俺の獲物だ！」</span>
             </button>
             <button class="choice-btn" onclick="sendAction('ヒロイン選択: エララ（蒼の魔女）')">
-                🧙‍♀️ <strong>エララ</strong> ── 母性の魔女
-                <span class="sub">「坊や、お姉さんが搾ってあげる♥」</span>
+                <span class="emoji">🧙‍♀️</span> <strong>エララ</strong> ── 母性の魔女
+                <span class="sub">豊満な胸に秘める搾精の欲望。「坊や、お姉さんが搾ってあげる♥」</span>
             </button>
             <hr style="border-color:#300; margin: 10px 0;">
             <button class="choice-btn" onclick="sendAction('ダイスで運命に委ねる')" style="border-color:#880; color:#ffdd88;">
-                🎲 <strong>ダイスに委ねる</strong>
+                <span class="emoji">🎲</span> <strong>ダイスに委ねる</strong> ── 運命が決める
                 <span class="sub">1d6を振り、ダイスが選んだ相手と出会う。</span>
             </button>
         </div>
 
-        <!-- 通信ログ（デバッグ用） -->
-        <div id="log"></div>
+        <!-- ローディング -->
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>りりすが思考しています……</p>
+        </div>
     </div>
 
     <div id="audio-bar">
-        🔊 音声 <button onclick="playVoice()">▶ 再生</button>
-        &nbsp;|&nbsp;
-        📄 <button onclick="loadScene()">最新シーンを読み込む</button>
+        🔊 音声
+        <button onclick="playVoice()">▶ 再生</button>
     </div>
 
     <audio id="voice" preload="auto"></audio>
 
     <script>
         const API_URL = 'http://127.0.0.1:5000/action';
+        let polling = null;
+        let lastUpdate = 0;
 
-        function addLog(msg, type) {
-            const log = document.getElementById('log');
-            const line = document.createElement('div');
-            line.className = type || '';
-            line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
-            log.appendChild(line);
-            log.scrollTop = log.scrollHeight;
-        }
-
-        // ===== アクション送信（手動モード：送るだけ。画面は自動では変わらない） =====
+        // ===== アクション送信 =====
         function sendAction(actionText) {
-            addLog('🎮 送信中: ' + actionText, 'info');
+            console.log('🎮 Action:', actionText);
+
+            // ボタン無効化 & ローディング表示
+            document.getElementById('choices').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
 
             fetch(API_URL, {
                 method: 'POST',
@@ -313,30 +339,62 @@
             })
                 .then(r => r.json())
                 .then(data => {
-                    addLog('✅ サーバー応答: ' + data.status + ' → action: ' + data.action, 'ok');
-                    addLog('📌 処理完了後、F5 で画面を更新するか、下の「最新シーンを読み込む」を押してね', 'info');
+                    console.log('✅ Sent:', data);
+                    startPolling();
                 })
                 .catch(err => {
-                    addLog('❌ 接続失敗: ' + err.message + ' (ai_hub.py は起動していますか？)', 'err');
+                    console.error('❌ Error:', err);
+                    document.getElementById('loading').classList.remove('active');
+                    document.getElementById('choices').style.display = 'flex';
+                    alert('サーバーに接続できません。ai_hub.py が起動しているか確認してください。');
                 });
-
-            // ※ 自動ポーリングは一切しない。手動リロードで確認する。
         }
 
-        // ===== 手動で最新シーンを読み込む =====
-        function loadScene() {
-            addLog('📄 index_scene.json を取得中...', 'info');
+        // ===== status.json ポーリング =====
+        function startPolling() {
+            if (polling) return;
+            polling = setInterval(() => {
+                fetch('status.json?t=' + Date.now())
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.updated_at > lastUpdate) {
+                            lastUpdate = data.updated_at;
+                            clearInterval(polling);
+                            polling = null;
+                            loadLatestScene();
+                        }
+                    })
+                    .catch(() => { });
+            }, 1500);
+        }
+
+        // ===== 最新シーンを読み込む =====
+        function loadLatestScene() {
             fetch('index_scene.json?t=' + Date.now())
                 .then(r => r.json())
                 .then(scene => {
-                    document.getElementById('situation').innerHTML = scene.situation_text || '(空)';
+                    // 状況テキスト
+                    document.getElementById('situation').innerHTML = scene.situation_text || '';
+
+                    // 選択肢
                     const choicesEl = document.getElementById('choices');
-                    choicesEl.innerHTML = scene.ui_html || '<p style="color:#888;">選択肢なし</p>';
-                    addLog('✅ シーン読み込み完了 (generated_at: ' + scene.generated_at + ')', 'ok');
+                    choicesEl.innerHTML = scene.ui_html || '';
+                    choicesEl.style.display = 'flex';
+
+                    // ローディング非表示
+                    document.getElementById('loading').classList.remove('active');
+
+                    // ダイス表示
+                    if (scene.dice_result) {
+                        document.getElementById('dice-display').textContent = '🎲 ' + scene.dice_result;
+                    }
+
+                    // 自動音声再生
                     playVoice();
                 })
-                .catch(err => {
-                    addLog('❌ index_scene.json の読み込みに失敗: ' + err.message, 'err');
+                .catch(() => {
+                    // index_scene.json がない場合は index.html を直リロード
+                    location.reload();
                 });
         }
 
@@ -372,7 +430,11 @@
         }
         drawPts();
 
-        addLog('🟢 手動モードで起動。自動ポーリングは無効。', 'ok');
+        // ===== 起動時に自動ポーリング開始 =====
+        fetch('status.json?t=' + Date.now())
+            .then(r => r.json())
+            .then(data => { lastUpdate = data.updated_at || 0; })
+            .catch(() => { });
     </script>
 </body>
 
