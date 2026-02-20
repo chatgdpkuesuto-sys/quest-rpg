@@ -1,10 +1,18 @@
 {
-    "arousal": 75,
-    "despair": 15,
-    "current_image": "outputs/latest.png",
-    "current_dialogue": "「……ふふっ、そんなに見つめられたら……私、おかしくなっちゃうわよ……？」<br><span style='color: #ffb3c6; font-size: 0.8em;'>（彼女の頬が朱に染まり、甘い吐息が漏れる）</span>",
-    "last_event": "テストダイアログの表示",
-    "is_climax": false,
-    "status": "updated_by_AI",
-    "timestamp": 1771539200
+  "arousal": 35,
+  "despair": 12,
+  "current_image": "../outputs/latest.png",
+  "last_event": "マンガ風UIのテスト",
+  "is_climax": false,
+  "status": "updated",
+  "current_dialogue": "「っ、あんた！。今、どこを触ったのよ！。…ま、まさか…わざとじゃないわよね？。ふん、そんな顔しても無駄なんだから！。…あ、あんまり見ないでっ…！」",
+  "variant_mode": true,
+  "attributes": {
+    "name": "ゼナ (Zena)",
+    "hair": "黒髪",
+    "eyes": "金眼",
+    "fetish": "肉球, マウント",
+    "personality": "ツンデレ・好戦的"
+  },
+  "timestamp": 1771540500
 }

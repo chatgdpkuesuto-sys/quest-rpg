@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 🌟 NEW: 魚眼レンズ（球面）フィルター定義 🌟 -->
+    <svg style="position: fixed; width: 0; height: 0;">
+        <filter id="fisheye-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G"
+                id="fisheye-map" />
+            <!-- 球面歪みをシンプルに再現するために matrix と scale を組み合わせる（後ほどJSで制御） -->
+        </filter>
+    </svg>
+
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: 三連・蓄積ゲージ（三つの発展） 🌟 -->
+    <div id="buildup-container">
+        <!-- 嗜虐：右クリック -->
+        <div class="buildup-bar">
+            <div id="fill-lust" class="buildup-fill lust"></div><span class="gauge-label">LUST / CHAOS</span>
+        </div>
+        <!-- 管理：中クリック -->
+        <div class="buildup-bar">
+            <div id="fill-special" class="buildup-fill special"></div><span class="gauge-label">SENSE / OBSERVE</span>
+        </div>
+        <!-- 慈愛：左クリック -->
+        <div class="buildup-bar">
+            <div id="fill-love" class="buildup-fill love"></div><span class="gauge-label">LOVE / CARESS</span>
+        </div>
+    </div>
+
+    <!-- 🌟 NEW: クライマックス発動ボタン（手動） 🌟 -->
+    <button id="climax-trigger" onclick="triggerClimax()">CLIMAX!!</button>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <script>
+        async function sendAction(actionName, x = 0, y = 0) {
+            console.log(`Action Sent: ${actionName} at (${x}%, ${y}%)`);
+
+            // 視覚的フィードバック（クリック時）
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    body: JSON.stringify({
+                        action: actionName,
+                        x: x,
+                        y: y,
+                        time: Date.now()
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 🌟 NEW: クリックエフェクト（視覚的ギミック）
+        function createClickEffect(x, y, type = 'heart') {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + '%';
+            effect.style.top = y + '%';
+
+            // タイプによってアイコンを変える
+            if (type === 'heart') effect.innerHTML = '❤️';
+            else if (type === 'blue-sparkle') effect.innerHTML = '✨';
+            else effect.innerHTML = '🔥';
+
+            document.body.appendChild(effect);
+
+            // 効果音の再生（ある場合）
+            const se = document.getElementById('se-player');
+            se.src = 'sounds/hit.mp3';
+            se.play().catch(e => console.log("SE Play blocked"));
+
+            setTimeout(() => effect.remove(), 800);
+        }
+
+        // 🌟 NEW: フルスクリーン・マウスクリック制御 (座標取得版) 🌟
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 🌟 NEW: 三連・蓄積ゲージの状態管理
+        let gauges = {
+            love: 0,
+            lust: 0,
+            special: 0
+        };
+
+        // 🌟 NEW: 円運動・魚眼の状態管理
+        let time = 0;
+        let mirrorScale = 1; // 1 or -1 for instant flip
+        let pendingClimax = null; // 蓄積されたコマンドを一時保持
+
+        function triggerClimax() {
+            if (!pendingClimax) return;
+
+            console.log("🚀 TRIGGERING MANUAL CLIMAX!");
+
+            // 🌟 イラスト切り替え時にランダムで左右反転 (50% chance)
+            mirrorScale = Math.random() > 0.5 ? 1 : -1;
+
+            // 1. AIへ送信
+            sendAction(pendingClimax.action, pendingClimax.x, pendingClimax.y);
+
+            // 2. 立ち絵切り替え
+            if (typeof cycleVariant === "function") cycleVariant();
+
+            // 3. UIリセット
+            const btn = document.getElementById('climax-trigger');
+            btn.style.display = 'none';
+            for (let k in gauges) gauges[k] = 0;
+            document.querySelectorAll('.buildup-fill').forEach(el => el.style.width = '0%');
+
+            pendingClimax = null;
+        }
+
+        function updateVisuals() {
+            // ゲージの平均値を計算（0.0 ~ 1.0）
+            const avgGauge = (gauges.love + gauges.lust + gauges.special) / 300;
+
+            // 速度アップ（蓄積量に応じて呼吸が激しくなるイメージ）
+            const speed = 0.02 + (avgGauge * 0.1);
+            time += speed;
+
+            const bg = document.getElementById('bg-container');
+
+            // 1. 滑らかなズーム基準点の移動 (Lerp)
+            currentOriginX += (targetOriginX - currentOriginX) * 0.1;
+            currentOriginY += (targetOriginY - currentOriginY) * 0.1;
+            bg.style.transformOrigin = `${currentOriginX}% ${currentOriginY}%`;
+
+            // 2. ズームブーストの減衰
+            zoomBoost *= 0.95;
+
+            // 3. 自然な浮遊・呼吸運動 (Physical sway)
+            const radius = 5 + (avgGauge * 30); // 動きが大きすぎると端が見えるので少し抑える
+            const x = Math.sin(time * 0.8) * (radius / 2);
+            const y = Math.cos(time * 1.1) * radius;
+
+            // 4. スケール計算 (Base + Gauge + Boost + Breathing)
+            const scale = 1.1 + (avgGauge * 0.1) + zoomBoost + (Math.sin(time) * 0.02);
+
+            // 全てを統合して適用
+            bg.style.transform = `
+                scaleX(${mirrorScale}) 
+                translate(${x}px, ${y}px) 
+                scale(${scale})
+            `;
+
+            requestAnimationFrame(updateVisuals);
+        }
+        updateVisuals();
+
+        // 🌟 ゲージの自動減少（Decay）ロジック
+        setInterval(() => {
+            for (let key in gauges) {
+                if (gauges[key] > 0) {
+                    gauges[key] -= 0.3; // ゆっくり戻る（秒間約3%減少）
+                    if (gauges[key] < 0) gauges[key] = 0;
+                    const fill = document.getElementById(`fill-${key}`);
+                    if (fill) fill.style.width = gauges[key] + '%';
+                }
+            }
+        }, 100);
+
+        document.addEventListener('mousedown', (event) => {
+            if (event.target.id === 'init-audio') return;
+
+            // 1. 座標計算
+            const xPercent = (event.clientX / window.innerWidth) * 100;
+            const yPercent = (event.clientY / window.innerHeight) * 100;
+
+            // 🌟 NEW: クリック座標に向かってズーム基準点を移動 & ブースト
+            targetOriginX = xPercent;
+            targetOriginY = yPercent;
+            zoomBoost = 0.15; // 瞬間的に15%拡大
+
+            let clickType = 'heart';
+            let gaugeKey = 'love';
+            let actionIntent = "左クリック（肯定／愛撫）";
+
+            if (event.button === 2) {
+                clickType = 'fire';
+                gaugeKey = 'lust';
+                actionIntent = "右クリック（嗜虐／ハプニング）";
+            } else if (event.button === 1) {
+                clickType = 'blue-sparkle';
+                gaugeKey = 'special';
+                actionIntent = "ホイールクリック（特殊行動／観察）";
+            }
+
+            // 1. ゲージの蓄積 (+15% per click, 減少があるため少し多めに設定)
+            gauges[gaugeKey] += 15;
+            if (gauges[gaugeKey] > 100) gauges[gaugeKey] = 100;
+
+            // 2. ゲージの視覚的更新
+            document.getElementById(`fill-${gaugeKey}`).style.width = gauges[gaugeKey] + '%';
+
+            // 3. エフェクトの表示のみ（反転はここでは行わない）
+            createClickEffect(xPercent, yPercent, clickType);
+
+            // 4. ゲージが100%になったら「発展ボタン」を表示！
+            if (gauges[gaugeKey] >= 100) {
+                console.log(`🔥 ${gaugeKey.toUpperCase()} GAUGE PENDING CLIMAX! 🔥`);
+
+                // ルートに応じたド派手な演出名
+                const pathNames = { love: "慈愛・調教ルート", lust: "淫靡・嗜虐ルート", special: "特殊・覚醒ルート" };
+                const finalAction = `${pathNames[gaugeKey]} [深淵への発展]`;
+
+                // ボタンの表示と設定
+                const btn = document.getElementById('climax-trigger');
+                btn.className = gaugeKey; // 色替え用
+                btn.innerText = "DEVOUR " + gaugeKey.toUpperCase();
+                btn.style.display = 'block';
+
+                // 実行待ちとして保存
+                pendingClimax = {
+                    action: finalAction,
+                    x: xPercent,
+                    y: yPercent
+                };
+
+                // ド派手なエフェクト
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => createClickEffect(50 + (Math.random() - 0.5) * 40, 50 + (Math.random() - 0.5) * 40, clickType), i * 40);
+                }
+            }
+        });
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

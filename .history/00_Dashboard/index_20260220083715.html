@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 🌟 NEW: 魚眼レンズ（球面）フィルター定義 🌟 -->
+    <svg style="position: fixed; width: 0; height: 0;">
+        <filter id="fisheye-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G"
+                id="fisheye-map" />
+            <!-- 球面歪みをシンプルに再現するために matrix と scale を組み合わせる（後ほどJSで制御） -->
+        </filter>
+    </svg>
+
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: 三連・蓄積ゲージ（三つの発展） 🌟 -->
+    <div id="buildup-container">
+        <!-- 嗜虐：右クリック -->
+        <div class="buildup-bar">
+            <div id="fill-lust" class="buildup-fill lust"></div><span class="gauge-label">LUST / CHAOS</span>
+        </div>
+        <!-- 管理：中クリック -->
+        <div class="buildup-bar">
+            <div id="fill-special" class="buildup-fill special"></div><span class="gauge-label">SENSE / OBSERVE</span>
+        </div>
+        <!-- 慈愛：左クリック -->
+        <div class="buildup-bar">
+            <div id="fill-love" class="buildup-fill love"></div><span class="gauge-label">LOVE / CARESS</span>
+        </div>
+    </div>
+
+    <!-- 🌟 NEW: クライマックス発動ボタン（手動） 🌟 -->
+    <button id="climax-trigger" onclick="triggerClimax()">CLIMAX!!</button>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <!-- 🌟 NEW: 分割されたスクリプトの読み込み 🌟 -->
+    <script src="js/fx.js"></script>
+    <script src="js/motion.js"></script>
+    <script src="js/interaction.js"></script>
+
+    <script>
+        // --- グローバル状態管理 (各モジュールで共有) ---
+        window.gauges = { love: 0, lust: 0, special: 0 };
+        window.time = 0;
+        window.mirrorScale = 1;
+        window.pendingClimax = null;
+        window.currentOriginX = 50;
+        window.currentOriginY = 50;
+        window.targetOriginX = 50;
+        window.targetOriginY = 50;
+        window.zoomBoost = 0;
+
+        // API連携関数
+        async function sendAction(actionName, x = 0, y = 0) {
+            console.log(`Action Sent: ${actionName} at (${x}%, ${y}%)`);
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: actionName, x: x, y: y, time: Date.now() })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', () => {
+            updateVisuals();
+            kineticAnimationLoop();
+            startDecayLoop();
+            setupInteraction();
+        });
+    </script>
+
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

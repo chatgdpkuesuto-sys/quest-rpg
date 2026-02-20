@@ -1,0 +1,494 @@
+/* ==============================================
+   00_Dashboard: OBS Overlay CSS
+============================================== */
+
+/* ========================================================== */
+/* Manga Speech Bubbles (NEW Gimmick) */
+/* ========================================================== */
+
+#bubble-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.manga-bubble {
+    position: absolute;
+    background: #fff0f5;
+    /* パステルピンク */
+    border: 3px solid #ff33aa;
+    border-radius: 40px 40px 40px 5px;
+    padding: 15px 25px;
+    font-family: 'Shippori Mincho', "Noto Serif JP", serif;
+    font-weight: 900;
+    color: #440022;
+    font-size: 1.6rem;
+    max-width: 300px;
+    box-shadow: 5px 5px 15px rgba(255, 51, 170, 0.3);
+    animation: bubble-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        bubble-wiggle 3s ease-in-out infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 60;
+}
+
+@keyframes bubble-wiggle {
+    0% {
+        transform: translate(-50%, -50%) rotate(-2deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(2deg);
+    }
+}
+
+/* 吹き出しのしっぽ（丸みを帯びたキュートな形へ） */
+.manga-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    background: #fff0f5;
+    border-right: 3px solid #ff33aa;
+    border-bottom: 3px solid #ff33aa;
+    border-radius: 0 0 100% 0;
+    transform: rotate(45deg);
+}
+
+@keyframes bubble-pop {
+    0% {
+        transform: scale(0) rotate(-5deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.manga-bubble.fade-out {
+    animation: bubble-fade 0.8s ease-in forwards;
+}
+
+@keyframes bubble-fade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+
+/* ========================================================== */
+/* Action Panel (Neural Bridge UI) */
+/* ========================================================== */
+
+:root {
+    --neon-pink: #ff33aa;
+    --deep-red: #cc0000;
+    --bar-bg: rgba(20, 0, 5, 0.7);
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    /* OBSで透過させるため */
+    font-family: 'Shippori Mincho', "Noto Serif JP", serif;
+}
+
+/* --- BACKGROUND CG --- */
+#bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 🌟 cover から contain に変更：イラストを一切削らず全て表示する 🌟 */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #050000;
+    /* 背景色を落ち着いた漆黒に */
+}
+
+
+
+
+
+/* --- OVERLAYS --- */
+#blood-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 0px rgba(255, 0, 128, 0);
+    z-index: 5;
+    transition: box-shadow 0.5s ease;
+}
+
+#glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.1),
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 1px,
+            transparent 2px);
+    z-index: 6;
+    opacity: 0.5;
+}
+
+/* 常に発動する心音パルス（発情度MAX用） */
+.pulse-extreme {
+    animation: extremePulse 0.8s infinite alternate !important;
+}
+
+@keyframes extremePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: inset 0 0 50px rgba(255, 0, 128, 0.4);
+        filter: brightness(1);
+    }
+
+    100% {
+        transform: scale(1.03);
+        box-shadow: inset 0 0 150px rgba(255, 0, 50, 0.8);
+        filter: brightness(1.3) contrast(1.5);
+    }
+}
+
+/* --- STATUS BARS --- */
+#status-container {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 350px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 🌟 NEW: 三連・蓄積ゲージ（三つの発展） 🌟 */
+#buildup-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+}
+
+.buildup-bar {
+    width: 100%;
+    height: 12px;
+    /* 少し太く */
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.buildup-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    transition: width 0.15s ease-out;
+    /* 少し遊びを持たせる */
+}
+
+.gauge-label {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 3px black;
+    z-index: 2;
+    pointer-events: none;
+    letter-spacing: 2px;
+}
+
+.buildup-fill.love {
+    background: linear-gradient(90deg, #ff33aa, #ff80cc);
+    box-shadow: inset 0 0 10px #ff33aa;
+}
+
+.buildup-fill.lust {
+    background: linear-gradient(90deg, #ff0000, #ff5555);
+    box-shadow: inset 0 0 10px #ff0000;
+}
+
+.buildup-fill.special {
+    background: linear-gradient(90deg, #0080ff, #80ccff);
+    box-shadow: inset 0 0 10px #0080ff;
+}
+
+
+.status-box {
+    background: var(--bar-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.status-label {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px black;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 15px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-fill.arousal {
+    background: linear-gradient(90deg, #aa0055, var(--neon-pink));
+    box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.progress-fill.despair {
+    background: linear-gradient(90deg, #550000, var(--deep-red));
+    box-shadow: 0 0 10px var(--deep-red);
+}
+
+.status-value {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: white;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px black;
+}
+
+/* アラートアニメーション */
+.alert-glow {
+    animation: alertGlow 0.5s infinite alternate;
+}
+
+@keyframes alertGlow {
+    0% {
+        border-color: rgba(255, 51, 170, 0.5);
+        box-shadow: 0 0 10px rgba(255, 51, 170, 0.5);
+    }
+
+    100% {
+        border-color: rgba(255, 51, 170, 1);
+        box-shadow: 0 0 30px rgba(255, 51, 170, 1);
+    }
+}
+
+/* --- INIT BUTTON --- */
+#init-audio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    color: var(--neon-pink);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px 40px;
+    border: 2px solid var(--neon-pink);
+    border-radius: 10px;
+    animation: neon-btn 1.5s infinite alternate;
+}
+
+@keyframes neon-btn {
+    0% {
+        box-shadow: 0 0 10px var(--neon-pink);
+        text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-pink);
+    }
+
+    100% {
+        box-shadow: 0 0 30px var(--neon-pink);
+        text-shadow: 0 0 10px #fff, 0 0 30px var(--neon-pink);
+    }
+}
+
+/* ========================================================== */
+/* クリックエフェクト（ギミック） */
+/* ========================================================== */
+
+.click-effect {
+    position: absolute;
+    pointer-events: none;
+    font-size: 4rem;
+    z-index: 1000;
+    animation: click-rise 0.8s ease-out forwards;
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 15px rgba(255, 100, 200, 1));
+    text-shadow: 0 0 10px white, 0 0 20px #ff33aa;
+}
+
+
+/* 🌟 NEW: クライマックス確認ボタン 🌟 */
+#climax-trigger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    padding: 2.5rem 5rem;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.8);
+    border: 5px solid var(--neon-pink);
+    border-radius: 100px;
+    cursor: pointer;
+    z-index: 2000;
+    display: none;
+    /* 初期は非表示 */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 50px rgba(255, 51, 170, 0.5);
+    text-shadow: 0 0 20px #fff;
+    letter-spacing: 10px;
+    animation: pulse-climax 1.5s infinite;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#climax-trigger:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 80px var(--neon-pink);
+    filter: brightness(1.2);
+}
+
+#climax-trigger.lust {
+    border-color: #ff0000;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+}
+
+#climax-trigger.special {
+    border-color: #0080ff;
+    box-shadow: 0 0 50px rgba(0, 128, 255, 0.5);
+}
+
+#climax-trigger.love {
+    border-color: #ff33aa;
+    box-shadow: 0 0 50px rgba(255, 51, 170, 0.5);
+}
+
+@keyframes pulse-climax {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 1;
+        box-shadow: 0 0 100px var(--neon-pink);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+    }
+}
+
+
+/* 画面揺れアニメーションの実装 */
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}

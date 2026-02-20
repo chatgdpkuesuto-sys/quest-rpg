@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ -->
+    <div id="bg-container">
+        <!-- 初期画像。生成後は最新画像に置き換わります -->
+        <img id="bg-image" src="outputs/latest.png" alt="Current CG"
+            onerror="this.src=''; this.style.backgroundColor='#0a0000';">
+    </div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- BGM等制御用の初期化ボタン (ブラウザの自動再生ポリシー対策用) -->
+    <div id="init-audio" onclick="initEngine()">[CLICK TO IGNITION]</div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: ダイアログ（テキスト）ボックス 🌟 -->
+    <div id="dialogue-container">
+        <div id="dialogue-text">ここにAI（りりす）からの官能テキストや悲鳴が表示されます……。アクションを選択してください。</div>
+    </div>
+
+    <!-- Neural Bridge送信用スクリプト -->
+    <script>
+        async function sendAction(actionName) {
+            console.log("Action Sent:", actionName);
+
+            // 視覚的フィードバック（クリック時）
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    body: JSON.stringify({ action: actionName, time: Date.now() })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 🌟 NEW: フルスクリーン・マウスクリック制御 🌟
+        // 右クリックのコンテキストメニューを無効化
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 画面全体のクリックを検知
+        document.addEventListener('mousedown', (event) => {
+            // init-audio ボタンを押した時は無視する
+            if (event.target.id === 'init-audio') return;
+
+            if (event.button === 0) {
+                // 左クリック
+                sendAction("左クリック（物語を進める／肯定／愛撫する）");
+            } else if (event.button === 2) {
+                // 右クリック
+                sendAction("右クリック（拒否する／いじめる／特殊行動）");
+            }
+        });
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

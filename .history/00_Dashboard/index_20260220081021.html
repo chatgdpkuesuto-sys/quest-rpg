@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: 三連・蓄積ゲージ（溜まったらAIが動く） 🌟 -->
+    <div id="buildup-container">
+        <div class="buildup-bar">
+            <div id="fill-love" class="buildup-fill love"></div>
+        </div>
+        <div class="buildup-bar">
+            <div id="fill-lust" class="buildup-fill lust"></div>
+        </div>
+        <div class="buildup-bar">
+            <div id="fill-special" class="buildup-fill special"></div>
+        </div>
+    </div>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <script>
+        async function sendAction(actionName, x = 0, y = 0) {
+            console.log(`Action Sent: ${actionName} at (${x}%, ${y}%)`);
+
+            // 視覚的フィードバック（クリック時）
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    body: JSON.stringify({
+                        action: actionName,
+                        x: x,
+                        y: y,
+                        time: Date.now()
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 🌟 NEW: クリックエフェクト（視覚的ギミック）
+        function createClickEffect(x, y, type = 'heart') {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + '%';
+            effect.style.top = y + '%';
+
+            // タイプによってアイコンを変える
+            if (type === 'heart') effect.innerHTML = '❤️';
+            else if (type === 'blue-sparkle') effect.innerHTML = '✨';
+            else effect.innerHTML = '🔥';
+
+            document.body.appendChild(effect);
+
+            // 効果音の再生（ある場合）
+            const se = document.getElementById('se-player');
+            se.src = 'sounds/hit.mp3';
+            se.play().catch(e => console.log("SE Play blocked"));
+
+            setTimeout(() => effect.remove(), 800);
+        }
+
+        // 🌟 NEW: フルスクリーン・マウスクリック制御 (座標取得版) 🌟
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 🌟 NEW: 蓄積ゲージの状態管理
+        let buildupGauge = 0;
+
+        document.addEventListener('mousedown', (event) => {
+            if (event.target.id === 'init-audio') return;
+
+            const xPercent = Math.round((event.clientX / window.innerWidth) * 100);
+            const yPercent = Math.round((event.clientY / window.innerHeight) * 100);
+
+            // 1. ゲージの蓄積 (+10% per click)
+            buildupGauge += 10;
+            if (buildupGauge > 100) buildupGauge = 100;
+
+            // 2. ゲージの視覚的更新
+            document.getElementById('buildup-fill').style.width = buildupGauge + '%';
+
+            // 3. クリックの種類に応じたエフェクトと立ち絵の切り替え
+            let clickType = 'heart';
+            let actionIntent = "左クリック（肯定／愛撫）";
+
+            if (event.button === 2) {
+                clickType = 'fire';
+                actionIntent = "右クリック（嗜虐／ハプニング）";
+            } else if (event.button === 1) {
+                clickType = 'blue-sparkle';
+                actionIntent = "ホイールクリック（特殊行動／観察）";
+            }
+
+            createClickEffect(xPercent, yPercent, clickType);
+            if (typeof cycleVariant === "function") cycleVariant();
+
+            // 4. ゲージが100%になったらAIに送信！
+            if (buildupGauge >= 100) {
+                console.log("🔥 GAUGE FULL! TRIGGERING AI ACTION 🔥");
+
+                // ド派手なエフェクト
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => createClickEffect(50 + (Math.random() - 0.5) * 20, 50 + (Math.random() - 0.5) * 20, 'blue-sparkle'), i * 50);
+                }
+
+                sendAction(actionIntent + " [ゲージMAX発動]", xPercent, yPercent);
+
+                // ゲージのリセット
+                setTimeout(() => {
+                    buildupGauge = 0;
+                    document.getElementById('buildup-fill').style.width = '0%';
+                }, 500);
+            }
+        });
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

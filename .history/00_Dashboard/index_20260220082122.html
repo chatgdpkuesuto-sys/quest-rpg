@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: 三連・蓄積ゲージ（三つの発展） 🌟 -->
+    <div id="buildup-container">
+        <!-- 嗜虐：右クリック -->
+        <div class="buildup-bar">
+            <div id="fill-lust" class="buildup-fill lust"></div><span class="gauge-label">LUST / CHAOS</span>
+        </div>
+        <!-- 管理：中クリック -->
+        <div class="buildup-bar">
+            <div id="fill-special" class="buildup-fill special"></div><span class="gauge-label">SENSE / OBSERVE</span>
+        </div>
+        <!-- 慈愛：左クリック -->
+        <div class="buildup-bar">
+            <div id="fill-love" class="buildup-fill love"></div><span class="gauge-label">LOVE / CARESS</span>
+        </div>
+    </div>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <script>
+        async function sendAction(actionName, x = 0, y = 0) {
+            console.log(`Action Sent: ${actionName} at (${x}%, ${y}%)`);
+
+            // 視覚的フィードバック（クリック時）
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    body: JSON.stringify({
+                        action: actionName,
+                        x: x,
+                        y: y,
+                        time: Date.now()
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 🌟 NEW: クリックエフェクト（視覚的ギミック）
+        function createClickEffect(x, y, type = 'heart') {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + '%';
+            effect.style.top = y + '%';
+
+            // タイプによってアイコンを変える
+            if (type === 'heart') effect.innerHTML = '❤️';
+            else if (type === 'blue-sparkle') effect.innerHTML = '✨';
+            else effect.innerHTML = '🔥';
+
+            document.body.appendChild(effect);
+
+            // 効果音の再生（ある場合）
+            const se = document.getElementById('se-player');
+            se.src = 'sounds/hit.mp3';
+            se.play().catch(e => console.log("SE Play blocked"));
+
+            setTimeout(() => effect.remove(), 800);
+        }
+
+        // 🌟 NEW: フルスクリーン・マウスクリック制御 (座標取得版) 🌟
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 🌟 NEW: 三連・蓄積ゲージの状態管理
+        let gauges = {
+            love: 0,
+            lust: 0,
+            special: 0
+        };
+
+        // 🌟 ゲージの自動減少（Decay）ロジック
+        setInterval(() => {
+            for (let key in gauges) {
+                if (gauges[key] > 0) {
+                    gauges[key] -= 0.3; // ゆっくり戻る（秒間約3%減少）
+                    if (gauges[key] < 0) gauges[key] = 0;
+                    const fill = document.getElementById(`fill-${key}`);
+                    if (fill) fill.style.width = gauges[key] + '%';
+                }
+            }
+        }, 100);
+
+        document.addEventListener('mousedown', (event) => {
+            if (event.target.id === 'init-audio') return;
+
+            const xPercent = Math.round((event.clientX / window.innerWidth) * 100);
+            const yPercent = Math.round((event.clientY / window.innerHeight) * 100);
+
+            let clickType = 'heart';
+            let gaugeKey = 'love';
+            let actionIntent = "左クリック（肯定／愛撫）";
+
+            if (event.button === 2) {
+                clickType = 'fire';
+                gaugeKey = 'lust';
+                actionIntent = "右クリック（嗜虐／ハプニング）";
+            } else if (event.button === 1) {
+                clickType = 'blue-sparkle';
+                gaugeKey = 'special';
+                actionIntent = "ホイールクリック（特殊行動／観察）";
+            }
+
+            // 1. ゲージの蓄積 (+15% per click, 減少があるため少し多めに設定)
+            gauges[gaugeKey] += 15;
+            if (gauges[gaugeKey] > 100) gauges[gaugeKey] = 100;
+
+            // 2. ゲージの視覚的更新
+            document.getElementById(`fill-${gaugeKey}`).style.width = gauges[gaugeKey] + '%';
+
+            // 3. エフェクトと立ち絵の切り替え
+            createClickEffect(xPercent, yPercent, clickType);
+            // 🌟 削除：クリックのたびに立ち絵を切り替えないように変更
+            // if (typeof cycleVariant === "function") cycleVariant();
+
+            // 4. ゲージが100%になったら各ルートの「発展（クライマックス）」を発動！
+            if (gauges[gaugeKey] >= 100) {
+                console.log(`🔥 ${gaugeKey.toUpperCase()} GAUGE CLIMAX! 🔥`);
+
+                // 🌟 ここで初めて画像を切り替える（発展した感じを出す）
+                if (typeof cycleVariant === "function") cycleVariant();
+
+                // ルートに応じたド派手な演出名
+                const pathNames = { love: "慈愛・調教ルート", lust: "淫靡・嗜虐ルート", special: "特殊・覚醒ルート" };
+                const finalAction = `${pathNames[gaugeKey]} [深淵への発展]`;
+
+                // ド派手なエフェクト
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => createClickEffect(50 + (Math.random() - 0.5) * 40, 50 + (Math.random() - 0.5) * 40, clickType), i * 40);
+                }
+
+                sendAction(finalAction, xPercent, yPercent);
+
+                // 🌟 ゲージを空にする (Immediate Reset)
+                for (let k in gauges) gauges[k] = 0;
+
+                // 視覚的な反映に少しだけディレイ（演出のため）
+                setTimeout(() => {
+                    document.querySelectorAll('.buildup-fill').forEach(el => el.style.width = '0%');
+                }, 100);
+            }
+        });
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

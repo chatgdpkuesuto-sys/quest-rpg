@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- BGM等制御用の初期化ボタン (ブラウザの自動再生ポリシー対策用) -->
+    <div id="init-audio" onclick="initEngine()">[CLICK TO IGNITION]</div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <script>
+        async function sendAction(actionName, x = 0, y = 0) {
+            console.log(`Action Sent: ${actionName} at (${x}%, ${y}%)`);
+
+            // 視覚的フィードバック（クリック時）
+            document.body.style.animation = "shake 0.1s";
+            setTimeout(() => document.body.style.animation = "none", 100);
+
+            try {
+                // URLパラメータにタイムスタンプをつけてキャッシュを完全に無効化する
+                await fetch(`http://localhost:5000/action?t=${Date.now()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    body: JSON.stringify({
+                        action: actionName,
+                        x: x,
+                        y: y,
+                        time: Date.now()
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to send action:", e);
+            }
+        }
+
+        // 🌟 NEW: クリックエフェクト（視覚的ギミック）
+        function createClickEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + '%';
+            effect.style.top = y + '%';
+            effect.innerHTML = '❤️'; // または '✨'
+            document.body.appendChild(effect);
+
+            // 効果音の再生（ある場合）
+            const se = document.getElementById('se-player');
+            se.src = 'sounds/hit.mp3';
+            se.play().catch(e => console.log("SE Play blocked"));
+
+            setTimeout(() => effect.remove(), 800);
+        }
+
+        // 🌟 NEW: フルスクリーン・マウスクリック制御 (座標取得版) 🌟
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.addEventListener('mousedown', (event) => {
+            if (event.target.id === 'init-audio') return;
+
+            const xPercent = Math.round((event.clientX / window.innerWidth) * 100);
+            const yPercent = Math.round((event.clientY / window.innerHeight) * 100);
+
+            // エフェクト表示 & 立ち絵の切り替え（連動）
+            createClickEffect(xPercent, yPercent);
+            if (typeof cycleVariant === "function") {
+                cycleVariant();
+            }
+
+            if (event.button === 0) {
+                // 左クリック
+                sendAction("左クリック（部位指定アクション）", xPercent, yPercent);
+            } else if (event.button === 2) {
+                // 右クリック
+                sendAction("右クリック（部位指定ハプニング）", xPercent, yPercent);
+            }
+        });
+    </script>
+
+    <!-- 設定ファイル読込 -->
+    <script src="status.js"></script>
+    <!-- エンジンロジック読込 -->
+    <script src="engine.js"></script>
+</body>
+
+</html>

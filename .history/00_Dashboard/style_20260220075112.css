@@ -1,0 +1,239 @@
+/* ==============================================
+   00_Dashboard: OBS Overlay CSS
+============================================== */
+
+/* ========================================================== */
+/* Dialogue Box (Visual Novel Style) */
+/* ========================================================== */
+
+#dialogue-container {
+    display: none;
+    /* User requested to hide text and rely on voice */
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 1000px;
+    background: rgba(10, 0, 5, 0.85);
+    border: 2px solid #ff0055;
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.5), inset 0 0 10px rgba(255, 0, 85, 0.3);
+    z-index: 40;
+}
+
+#dialogue-text {
+    font-family: 'Times New Roman', serif;
+    color: #ffb3c6;
+    font-size: 24px;
+    line-height: 1.6;
+    text-shadow: 0 0 5px rgba(255, 0, 85, 0.8);
+    min-height: 120px;
+}
+
+/* ========================================================== */
+/* Action Panel (Neural Bridge UI) */
+/* ========================================================== */
+
+:root {
+    --neon-pink: #ff33aa;
+    --deep-red: #cc0000;
+    --bar-bg: rgba(20, 0, 5, 0.7);
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    /* OBSで透過させるため */
+    font-family: 'Shippori Mincho', "Noto Serif JP", serif;
+}
+
+/* --- BACKGROUND CG --- */
+#bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bg-image {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    /* 好みに応じて調整。透過チャット画面の後ろで輝く */
+    filter: brightness(0.7) contrast(1.2);
+    transition: all 0.5s ease;
+}
+
+/* --- OVERLAYS --- */
+#blood-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 0px rgba(255, 0, 128, 0);
+    z-index: 5;
+    transition: box-shadow 0.5s ease;
+}
+
+#glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.1),
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 1px,
+            transparent 2px);
+    z-index: 6;
+    opacity: 0.5;
+}
+
+/* 常に発動する心音パルス（発情度MAX用） */
+.pulse-extreme {
+    animation: extremePulse 0.8s infinite alternate !important;
+}
+
+@keyframes extremePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: inset 0 0 50px rgba(255, 0, 128, 0.4);
+        filter: brightness(1);
+    }
+
+    100% {
+        transform: scale(1.03);
+        box-shadow: inset 0 0 150px rgba(255, 0, 50, 0.8);
+        filter: brightness(1.3) contrast(1.5);
+    }
+}
+
+/* --- STATUS BARS --- */
+#status-container {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 350px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.status-box {
+    background: var(--bar-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.status-label {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px black;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 15px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-fill.arousal {
+    background: linear-gradient(90deg, #aa0055, var(--neon-pink));
+    box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.progress-fill.despair {
+    background: linear-gradient(90deg, #550000, var(--deep-red));
+    box-shadow: 0 0 10px var(--deep-red);
+}
+
+.status-value {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: white;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px black;
+}
+
+/* アラートアニメーション */
+.alert-glow {
+    animation: alertGlow 0.5s infinite alternate;
+}
+
+@keyframes alertGlow {
+    0% {
+        border-color: rgba(255, 51, 170, 0.5);
+        box-shadow: 0 0 10px rgba(255, 51, 170, 0.5);
+    }
+
+    100% {
+        border-color: rgba(255, 51, 170, 1);
+        box-shadow: 0 0 30px rgba(255, 51, 170, 1);
+    }
+}
+
+/* --- INIT BUTTON --- */
+#init-audio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    color: var(--neon-pink);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px 40px;
+    border: 2px solid var(--neon-pink);
+    border-radius: 10px;
+    animation: neon-btn 1.5s infinite alternate;
+}
+
+@keyframes neon-btn {
+    0% {
+        box-shadow: 0 0 10px var(--neon-pink);
+        text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-pink);
+    }
+
+    100% {
+        box-shadow: 0 0 30px var(--neon-pink);
+        text-shadow: 0 0 10px #fff, 0 0 30px var(--neon-pink);
+    }
+}
