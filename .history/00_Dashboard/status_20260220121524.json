@@ -1,10 +1,10 @@
 {
   "arousal": 15,
   "despair": 10,
-  "current_image": "../outputs/latest.png",
+  "current_image": "outputs/latest.png",
   "last_event": "アリア・プロローグ：聖女の受難",
   "is_climax": false,
-  "status": "updated",
+  "status": "updated_by_AI",
   "current_dialogue": "……っ。その……あなたが救世主様……なのですね？ その荒々しいまでの気配（筋力3）……直視するのが、少し……恐ろしゅうございます……。",
   "current_monologue": "厳かな聖堂の最奥、ステンドグラスの光が銀髪の聖女『アリア』を照らしている。<br>彼女はあなたから放たれる暴力的なまでの強者の気配に、祈りを捧げる指を微かに震わせた。<br>神への信仰と、目の前の圧倒的な「力」への畏怖……彼女の運命は、今あなたの手に委ねられた。",
   "variant_mode": true,
@@ -29,5 +29,5 @@
       "label": "（無言で彼女の聖衣に触れ、神聖な理性を揺さぶる）"
     }
   ],
-  "timestamp": 1771557348
+  "timestamp": 1771556950
 }

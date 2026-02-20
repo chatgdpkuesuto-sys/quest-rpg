@@ -1,0 +1,33 @@
+{
+  "arousal": 15,
+  "despair": 10,
+  "current_image": "../outputs/Zena/Normal/variant_1.png",
+  "last_event": "ゼナ・プロローグ：闇の契約",
+  "is_climax": false,
+  "status": "updated",
+  "current_dialogue": "……あなたが、私の新しい『主君』様？ ふふ、随分と……太そうな魔力を持っているのね……。",
+  "current_monologue": "地下牢の最奥。魔法の鎖で繋がれた女騎士『ゼナ』が、不敵な笑みを浮かべてあなたを見上げている。<br>彼女の瞳には強いプライドと、それを凌駕するほどの激しい渇きが宿っていた。<br>今、あなたの筋力（3）という圧倒的な力によって、彼女を縛る鎖が砕かれる。",
+  "variant_mode": true,
+  "attributes": {
+    "name": "ゼナ",
+    "hair": "銀髪",
+    "eyes": "碧眼",
+    "fetish": "強気",
+    "personality": "ドS/騎士"
+  },
+  "choices": [
+    {
+      "id": "zena_release",
+      "label": "「鎖を解いてやる。俺に従い、剣を振るえ」"
+    },
+    {
+      "id": "zena_shame",
+      "label": "「まずはその傲慢な態度を矯正してやろう」"
+    },
+    {
+      "id": "zena_contract",
+      "label": "（無言で彼女の首筋に紋章を刻み、隷従を誓わせる）"
+    }
+  ],
+  "timestamp": 1771556700
+}

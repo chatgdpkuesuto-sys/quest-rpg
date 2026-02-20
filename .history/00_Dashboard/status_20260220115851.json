@@ -1,0 +1,33 @@
+{
+  "arousal": 10,
+  "despair": 5,
+  "current_image": "../outputs/Mia/Normal/variant_1.png",
+  "last_event": "プロローグ：運命の契約",
+  "is_climax": false,
+  "status": "updated",
+  "current_dialogue": "あの……こんな場所で私と契約するなんて、本当にいいんですか？私、ドジだし、何も持ってないですけど……。",
+  "current_monologue": "霧深い森の入り口。あなたが救い出した奴隷の少女『ミア』は、震える手でボロボロの杖を握りしめている。<br>彼女の瞳には、あなたへの深い感謝と、これからの過酷な旅への隠しきれない不安が混ざり合っている。",
+  "variant_mode": true,
+  "attributes": {
+    "name": "ミア",
+    "hair": "白髪",
+    "eyes": "赤眼",
+    "fetish": "従順",
+    "personality": "健気"
+  },
+  "choices": [
+    {
+      "id": "path_trust",
+      "label": "「案ずるな、俺がお前を守ってやる」"
+    },
+    {
+      "id": "path_dominate",
+      "label": "「お前は俺の所有物だ。黙って従え」"
+    },
+    {
+      "id": "path_observe",
+      "label": "（何も言わず、彼女の震える肩を抱き寄せる）"
+    }
+  ],
+  "timestamp": 1771550600
+}

@@ -1,8 +1,8 @@
 {
   "arousal": 15,
   "despair": 10,
-  "current_image": "../outputs/latest.png",
-  "last_event": "アリア・プロローグ：聖女の受難",
+  "current_image": "../outputs/Aria/Normal/variant_1.png",
+  "last_event": "アリア・プロローグ：救世主の顕現",
   "is_climax": false,
   "status": "updated",
   "current_dialogue": "……っ。その……あなたが救世主様……なのですね？ その荒々しいまでの気配（筋力3）……直視するのが、少し……恐ろしゅうございます……。",
@@ -29,5 +29,5 @@
       "label": "（無言で彼女の聖衣に触れ、神聖な理性を揺さぶる）"
     }
   ],
-  "timestamp": 1771557348
+  "timestamp": 1771556880
 }
