@@ -91,7 +91,7 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 2000;
+    z-index: 10;
     pointer-events: none;
     /* UIの裏でクリック判定するため */
     display: flex;
@@ -331,61 +331,6 @@ html {
     }
 }
 
-/* --- 選択肢 (Choices) --- */
-#choice-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1001;
-    width: 60%;
-    max-width: 600px;
-    pointer-events: auto;
-}
-
-.choice-btn {
-    background: rgba(10, 0, 5, 0.9);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    padding: 20px 30px;
-    font-size: 1.4rem;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border-radius: 4px;
-    text-shadow: 0 0 5px #000;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    animation: choice-appear 0.5s ease-out backwards;
-}
-
-.choice-btn:hover {
-    background: rgba(255, 51, 170, 0.15);
-    border-color: var(--neon-pink);
-    transform: scale(1.03);
-    box-shadow: 0 0 20px var(--neon-pink);
-}
-
-.choice-btn:active {
-    transform: scale(0.98);
-}
-
-@keyframes choice-appear {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-        filter: blur(5px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0px);
-    }
-}
-
 
 /* ========================================================== */
 /* インタラクション (クリックレイヤー) */
@@ -476,14 +421,6 @@ html {
     background: rgba(255, 51, 170, 0.4);
     box-shadow: 0 0 20px rgba(255, 51, 170, 0.8);
     transform: scale(1.05);
-}
-
-.char-select-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 25px;
-    width: 100%;
 }
 
 .stat-grid {

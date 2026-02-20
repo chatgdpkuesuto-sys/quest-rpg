@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACHADUN - Ultimate Eroge TRPG Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Shippori Mincho for a cinematic novel feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- 🌟 Browser Audio Autoplay Policy Button & Character Selection 🌟 -->
+    <div id="init-overlay">
+        <div class="init-dialog">
+            <h1 class="init-title">MACHADUN</h1>
+            <p class="init-sub">- Choose your Target -</p>
+            <div class="char-select-grid">
+                <button class="char-btn" onclick="startGame('Zena', 'ゼナ')">ゼナ (Zena)</button>
+                <button class="char-btn" onclick="startGame('Elara', 'エララ')">エララ (Elara)</button>
+                <button class="char-btn" onclick="startGame('Yuni', 'ユニ')">ユニ (Yuni)</button>
+                <button class="char-btn" onclick="startGame('Mia', 'ミア')">ミア (Mia)</button>
+            </div>
+            <p class="init-hint">※ クリックで音声が有効化され、シナリオが開始します。</p>
+        </div>
+    </div>
+
+    <!-- 動的な背景CG/イラストコンテナ -->
+    <div id="bg-container"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- 音声プレイヤー -->
+    <audio id="voice-player" preload="none"></audio>
+
+    <!-- UI レイヤー -->
+    <div id="ui-layer">
+
+        <!-- 左上：キャラクター情報＆ステータス簡易表示 -->
+        <div id="character-info-panel">
+            <h2 id="char-name">No Data</h2>
+            <div id="char-attributes"></div>
+        </div>
+
+        <!-- 右上：ゲージ系装飾（侵食度、絶望度など） -->
+        <div id="status-panel">
+            <div class="status-bar-container">
+                <span class="status-label">快感 / LUST</span>
+                <div class="progress-bar">
+                    <div id="arousal-fill" class="progress-fill arousal"></div>
+                </div>
+            </div>
+            <div class="status-bar-container">
+                <span class="status-label">絶望 / DESPAIR</span>
+                <div class="progress-bar">
+                    <div id="despair-fill" class="progress-fill despair"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 画面中央〜下部：シネマティックなモノローグ（GMテキスト） -->
+        <div id="monologue-container">
+            <!-- JavaScriptでテキストが流し込まれる -->
+        </div>
+
+        <!-- 画面下部：キャラクターのセリフ（ノベルゲーム風フルテキスト） -->
+        <div id="dialogue-box">
+            <div id="dialogue-name"></div>
+            <div id="dialogue-text"></div>
+        </div>
+
+    </div>
+
+    <!-- インタラクション層（クリック取得用、透明） -->
+    <!-- ユーザーの要望通り、クリックで画像を変えず、状態を投げるだけに特化する -->
+    <div id="interaction-layer"></div>
+
+    <!-- スクリプト群 -->
+    <script src="js/engine.js"></script>
+    <script src="js/interaction.js"></script>
+</body>
+
+</html>

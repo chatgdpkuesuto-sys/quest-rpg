@@ -165,6 +165,7 @@ async function pollGameState() {
             "ミア": "Mia"
         };
 
+        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
         let charFolder = "Default";
 
         // カッコ内の英名抽出を廃止し、マッピングを使用

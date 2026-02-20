@@ -5,21 +5,16 @@
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 window.initEngine = function () {
-    if (!window.engineRunning) {
-        setInterval(pollGameState, 1000); // 監視間隔を調整
-        pollGameState();
-        window.engineRunning = true;
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
     }
-}
-// 初回読み込み時にステータスをチェック
-window.addEventListener('load', () => {
-    // 最初の一回だけ即座に状態を確認し、ゲーム中ならオーバーレイを消すために実行
+    const initOverlay = document.getElementById('init-overlay');
+    if (initOverlay) initOverlay.style.display = 'none';
+
+    // 0.5秒おきにステータスを監視
+    setInterval(pollGameState, 500);
     pollGameState();
-    // 音声許可のために一度どこでもいいのでクリックしたらエンジン始動
-    document.addEventListener('click', () => {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-    }, { once: true });
-});
+}
 
 // 🌟 主人公ステータス割り振り処理
 window.allocatedStats = { power: 0, speed: 0, tough: 0, mind: 0, charm: 0, skill: 0 };
@@ -28,7 +23,6 @@ window.time = 0;
 window.zoomBoost = 0;
 window.currentCharacterName = "なし";
 window.isDefaultBG = false;
-window.engineRunning = false;
 let remainingPoints = 3;
 
 // html内でのonclickに反応するためwindowオブジェクトにアタッチ
@@ -63,18 +57,9 @@ window.backToStats = function () {
 
 // 🌟 キャラクター選択時の処理
 window.startGame = function (charKey, charName) {
-    // Audio Contextの再開
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
-
-    // ポーリングが開始されていなければ開始
-    if (!window.engineRunning) {
-        setInterval(pollGameState, 500);
-        pollGameState();
-        window.engineRunning = true;
-    }
-
     const initOverlay = document.getElementById('init-overlay');
     if (initOverlay) initOverlay.style.display = 'none';
 
@@ -140,14 +125,6 @@ async function pollGameState() {
         if (!response.ok) return;
         const state = await response.json();
 
-        // キャラクターが設定されている場合はオーバーレイを自動消去
-        const initOverlay = document.getElementById('init-overlay');
-        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
-
-        if (charNameRaw !== "なし" && initOverlay && initOverlay.style.display !== 'none') {
-            initOverlay.style.display = 'none';
-        }
-
         // タイムスタンプが更新されていなければスキップ
         if (state.timestamp === lastTimestamp) return;
         lastTimestamp = state.timestamp;
@@ -165,6 +142,7 @@ async function pollGameState() {
             "ミア": "Mia"
         };
 
+        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
         let charFolder = "Default";
 
         // カッコ内の英名抽出を廃止し、マッピングを使用

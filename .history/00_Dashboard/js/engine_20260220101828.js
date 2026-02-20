@@ -5,30 +5,19 @@
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 window.initEngine = function () {
-    if (!window.engineRunning) {
-        setInterval(pollGameState, 1000); // 監視間隔を調整
-        pollGameState();
-        window.engineRunning = true;
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
     }
-}
-// 初回読み込み時にステータスをチェック
-window.addEventListener('load', () => {
-    // 最初の一回だけ即座に状態を確認し、ゲーム中ならオーバーレイを消すために実行
+    const initOverlay = document.getElementById('init-overlay');
+    if (initOverlay) initOverlay.style.display = 'none';
+
+    // 0.5秒おきにステータスを監視
+    setInterval(pollGameState, 500);
     pollGameState();
-    // 音声許可のために一度どこでもいいのでクリックしたらエンジン始動
-    document.addEventListener('click', () => {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-    }, { once: true });
-});
+}
 
 // 🌟 主人公ステータス割り振り処理
 window.allocatedStats = { power: 0, speed: 0, tough: 0, mind: 0, charm: 0, skill: 0 };
-window.gauges = { love: 0, lust: 0, special: 0 };
-window.time = 0;
-window.zoomBoost = 0;
-window.currentCharacterName = "なし";
-window.isDefaultBG = false;
-window.engineRunning = false;
 let remainingPoints = 3;
 
 // html内でのonclickに反応するためwindowオブジェクトにアタッチ
@@ -56,25 +45,11 @@ window.confirmStats = function () {
     document.getElementById('target-dialog').style.display = 'block';
 }
 
-window.backToStats = function () {
-    document.getElementById('stat-dialog').style.display = 'block';
-    document.getElementById('target-dialog').style.display = 'none';
-}
-
 // 🌟 キャラクター選択時の処理
 window.startGame = function (charKey, charName) {
-    // Audio Contextの再開
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
-
-    // ポーリングが開始されていなければ開始
-    if (!window.engineRunning) {
-        setInterval(pollGameState, 500);
-        pollGameState();
-        window.engineRunning = true;
-    }
-
     const initOverlay = document.getElementById('init-overlay');
     if (initOverlay) initOverlay.style.display = 'none';
 
@@ -104,31 +79,6 @@ window.startGame = function (charKey, charName) {
     }
 }
 
-// 🌟 選択肢が選ばれた時の処理
-window.selectChoice = function (choiceId, label) {
-    console.log(`🔘 Choice Selected: ${label} (${choiceId})`);
-
-    // UIを即座に消す（二重クリック防止）
-    const choiceContainer = document.getElementById('choice-container');
-    if (choiceContainer) {
-        choiceContainer.style.display = 'none';
-        choiceContainer.innerHTML = '';
-    }
-
-    const payload = {
-        action: 'CHOICE_MADE',
-        choice_id: choiceId,
-        choice_label: label,
-        time: Date.now()
-    };
-
-    fetch('http://127.0.0.1:5000/action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    }).catch(err => console.error("Communication error with bridge:", err));
-}
-
 let lastTimestamp = 0;
 let lastMonologue = "";
 let lastDialogue = "";
@@ -140,14 +90,6 @@ async function pollGameState() {
         if (!response.ok) return;
         const state = await response.json();
 
-        // キャラクターが設定されている場合はオーバーレイを自動消去
-        const initOverlay = document.getElementById('init-overlay');
-        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
-
-        if (charNameRaw !== "なし" && initOverlay && initOverlay.style.display !== 'none') {
-            initOverlay.style.display = 'none';
-        }
-
         // タイムスタンプが更新されていなければスキップ
         if (state.timestamp === lastTimestamp) return;
         lastTimestamp = state.timestamp;
@@ -155,25 +97,20 @@ async function pollGameState() {
         // ----------------------------------------------------
         // 1. キャラクター情報と画像パスの管理
         // ----------------------------------------------------
-        // 日本語名から英名（フォルダ名）へのマッピング
-        const NAME_MAP = {
-            "アリア": "Aria",
-            "ゼナ": "Zena",
-            "エララ": "Elara",
-            "エリーゼ": "Elize",
-            "ユニ": "Yuni",
-            "ミア": "Mia"
-        };
-
+        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
         let charFolder = "Default";
 
-        // カッコ内の英名抽出を廃止し、マッピングを使用
+        // "ゼナ (Zena)" のようなフォーマットから英語名(フォルダ名)を抽出
         if (charNameRaw !== "なし") {
-            const cleanName = charNameRaw.split(' ')[0].split('(')[0];
-            charFolder = NAME_MAP[cleanName] || cleanName;
+            const match = charNameRaw.match(/\((.*?)\)/);
+            if (match && match[1]) {
+                charFolder = match[1];
+            } else {
+                charFolder = charNameRaw;
+            }
         }
 
-        document.getElementById('char-name').innerText = charNameRaw.split('(')[0];
+        document.getElementById('char-name').innerText = charNameRaw;
 
         if (state.attributes) {
             document.getElementById('char-attributes').innerHTML =
@@ -188,18 +125,13 @@ async function pollGameState() {
         let targetImagePath = state.current_image; // デフォルトはJSONのパス
 
         if (state.variant_mode && charNameRaw !== "なし") {
-            // 例: ../outputs/Zena/Normal/variant_1.png
+            // 例: outputs/Zena/Normal/variant_1.png
             const stateFolder = state.arousal >= 70 ? "Ero" : "Normal";
-            targetImagePath = `../outputs/${charFolder}/${stateFolder}/variant_1.png`;
+            targetImagePath = `outputs/${charFolder}/${stateFolder}/variant_1.png`;
         } else if (state.current_image && state.current_image.includes("BG_")) {
             // 背景の場合はそのまま
             targetImagePath = state.current_image;
-            window.isDefaultBG = true;
-        } else {
-            window.isDefaultBG = false;
         }
-
-        window.currentCharacterName = charNameRaw;
 
         if (lastImage !== targetImagePath) {
             bgContainer.style.backgroundImage = `url('${targetImagePath}?t=${state.timestamp}')`;
@@ -274,40 +206,10 @@ async function pollGameState() {
         if (arousalFill) arousalFill.style.width = Math.min(100, state.arousal || 0) + '%';
         if (despairFill) despairFill.style.width = Math.min(100, state.despair || 0) + '%';
 
-        // Motion Engine用の値同期 (love/lust/specialに擬似分配)
-        window.gauges.lust = state.arousal || 0;
-        window.gauges.special = state.despair || 0;
-        window.gauges.love = 0; // 適宜
-
         if (state.arousal >= 80) {
             document.body.classList.add('pulse-extreme');
         } else {
             document.body.classList.remove('pulse-extreme');
-        }
-
-        // ----------------------------------------------------
-        // 5. 選択肢の表示
-        // ----------------------------------------------------
-        const choiceContainer = document.getElementById('choice-container');
-        if (state.choices && state.choices.length > 0) {
-            // 現在の表示と異なる場合のみ更新
-            const currentChoices = Array.from(choiceContainer.children).map(c => c.innerText).join('|');
-            const newChoices = state.choices.map(c => c.label).join('|');
-
-            if (currentChoices !== newChoices) {
-                choiceContainer.innerHTML = '';
-                state.choices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'choice-btn';
-                    btn.innerText = choice.label;
-                    btn.onclick = () => window.selectChoice(choice.id, choice.label);
-                    choiceContainer.appendChild(btn);
-                });
-                choiceContainer.style.display = 'flex';
-            }
-        } else {
-            choiceContainer.innerHTML = '';
-            choiceContainer.style.display = 'none';
         }
 
     } catch (err) {

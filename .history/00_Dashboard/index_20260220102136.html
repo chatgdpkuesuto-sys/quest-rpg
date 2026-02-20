@@ -16,32 +16,32 @@
     <div id="init-overlay">
         <!-- Step 1: Stat Allocation -->
         <div class="init-dialog" id="stat-dialog">
-            <h1 class="init-title">まちゃだん</h1>
-            <p class="init-sub">- 主人公作成：能力値の割り振り -</p>
+            <h1 class="init-title">CHARACTER CREATION</h1>
+            <p class="init-sub">- Allocate Your Stats -</p>
             <p class="init-hint">残りポイント: <span id="remaining-points">3</span></p>
 
             <div class="stat-grid">
-                <div class="stat-row"><span>筋力</span> <button onclick="adjStat('power', -1)">-</button> <span
+                <div class="stat-row"><span>Power</span> <button onclick="adjStat('power', -1)">-</button> <span
                         id="val-power">0</span> <button onclick="adjStat('power', 1)">+</button></div>
-                <div class="stat-row"><span>敏捷</span> <button onclick="adjStat('speed', -1)">-</button> <span
+                <div class="stat-row"><span>Speed</span> <button onclick="adjStat('speed', -1)">-</button> <span
                         id="val-speed">0</span> <button onclick="adjStat('speed', 1)">+</button></div>
-                <div class="stat-row"><span>耐久</span> <button onclick="adjStat('tough', -1)">-</button> <span
+                <div class="stat-row"><span>Tough</span> <button onclick="adjStat('tough', -1)">-</button> <span
                         id="val-tough">0</span> <button onclick="adjStat('tough', 1)">+</button></div>
-                <div class="stat-row"><span>知性</span> <button onclick="adjStat('mind', -1)">-</button> <span
+                <div class="stat-row"><span>Mind</span> <button onclick="adjStat('mind', -1)">-</button> <span
                         id="val-mind">0</span> <button onclick="adjStat('mind', 1)">+</button></div>
-                <div class="stat-row"><span>魅力</span> <button onclick="adjStat('charm', -1)">-</button> <span
+                <div class="stat-row"><span>Charm</span> <button onclick="adjStat('charm', -1)">-</button> <span
                         id="val-charm">0</span> <button onclick="adjStat('charm', 1)">+</button></div>
-                <div class="stat-row"><span>技巧</span> <button onclick="adjStat('skill', -1)">-</button> <span
+                <div class="stat-row"><span>Skill</span> <button onclick="adjStat('skill', -1)">-</button> <span
                         id="val-skill">0</span> <button onclick="adjStat('skill', 1)">+</button></div>
             </div>
 
-            <button class="char-btn" style="margin-top: 20px; width: 100%;" onclick="confirmStats()">決定</button>
+            <button class="char-btn" style="margin-top: 20px; width: 100%;" onclick="confirmStats()">決定 (Next)</button>
         </div>
 
         <!-- Step 2: Target Selection -->
         <div class="init-dialog" id="target-dialog" style="display: none;">
-            <h1 class="init-title">まちゃだん</h1>
-            <p class="init-sub">- 攻略対象を選択せよ -</p>
+            <h1 class="init-title">MACHADUN</h1>
+            <p class="init-sub">- Choose your Target -</p>
             <div class="char-select-grid">
                 <button class="char-btn" onclick="startGame('Aria', 'アリア')">アリア</button>
                 <button class="char-btn" onclick="startGame('Zena', 'ゼナ')">ゼナ</button>
@@ -50,8 +50,6 @@
                 <button class="char-btn" onclick="startGame('Yuni', 'ユニ')">ユニ</button>
                 <button class="char-btn" onclick="startGame('Mia', 'ミア')">ミア</button>
             </div>
-            <button class="char-btn back-btn" style="margin-top: 20px; width: 100%; opacity: 0.7;"
-                onclick="backToStats()">戻る</button>
             <p class="init-hint">※ クリックで音声が有効化され、シナリオが開始します。</p>
         </div>
     </div>
@@ -78,13 +76,13 @@
         <!-- 右上：ゲージ系装飾（侵食度、絶望度など） -->
         <div id="status-panel">
             <div class="status-bar-container">
-                <span class="status-label">快感</span>
+                <span class="status-label">快感 / LUST</span>
                 <div class="progress-bar">
                     <div id="arousal-fill" class="progress-fill arousal"></div>
                 </div>
             </div>
             <div class="status-bar-container">
-                <span class="status-label">絶望</span>
+                <span class="status-label">絶望 / DESPAIR</span>
                 <div class="progress-bar">
                     <div id="despair-fill" class="progress-fill despair"></div>
                 </div>
@@ -101,9 +99,6 @@
             <div id="dialogue-name"></div>
             <div id="dialogue-text"></div>
         </div>
-
-        <!-- 選択肢コンテナ -->
-        <div id="choice-container"></div>
 
     </div>
 

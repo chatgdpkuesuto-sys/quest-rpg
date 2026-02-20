@@ -35,7 +35,7 @@
                         id="val-skill">0</span> <button onclick="adjStat('skill', 1)">+</button></div>
             </div>
 
-            <button class="char-btn" style="margin-top: 20px; width: 100%;" onclick="confirmStats()">決定</button>
+            <button class="char-btn" style="margin-top: 20px; width: 100%;" onclick="confirmStats()">決定 (Next)</button>
         </div>
 
         <!-- Step 2: Target Selection -->
@@ -51,7 +51,7 @@
                 <button class="char-btn" onclick="startGame('Mia', 'ミア')">ミア</button>
             </div>
             <button class="char-btn back-btn" style="margin-top: 20px; width: 100%; opacity: 0.7;"
-                onclick="backToStats()">戻る</button>
+                onclick="backToStats()">戻る (Back)</button>
             <p class="init-hint">※ クリックで音声が有効化され、シナリオが開始します。</p>
         </div>
     </div>
@@ -78,13 +78,13 @@
         <!-- 右上：ゲージ系装飾（侵食度、絶望度など） -->
         <div id="status-panel">
             <div class="status-bar-container">
-                <span class="status-label">快感</span>
+                <span class="status-label">快感 / LUST</span>
                 <div class="progress-bar">
                     <div id="arousal-fill" class="progress-fill arousal"></div>
                 </div>
             </div>
             <div class="status-bar-container">
-                <span class="status-label">絶望</span>
+                <span class="status-label">絶望 / DESPAIR</span>
                 <div class="progress-bar">
                     <div id="despair-fill" class="progress-fill despair"></div>
                 </div>
@@ -101,9 +101,6 @@
             <div id="dialogue-name"></div>
             <div id="dialogue-text"></div>
         </div>
-
-        <!-- 選択肢コンテナ -->
-        <div id="choice-container"></div>
 
     </div>
 

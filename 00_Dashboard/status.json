@@ -1,19 +1,19 @@
 {
   "arousal": 0,
   "despair": 0,
-  "current_image": "../99_Ero_Library/Images/BG_Default.jpg",
-  "last_event": "ダンジョン探索開始",
+  "current_image": "../outputs/Mia/Prologue/prologue_1.png",
+  "last_event": "プロローグ開始",
   "is_climax": false,
   "status": "updated",
-  "current_dialogue": "",
-  "current_monologue": "薄暗いダンジョンの奥深く。<br>あなたの目の前には、淫靡な罠と狂気が待ち受けている。一歩間違えれば、待っているのは容赦のない<span class=\"despair-text\">敗北</span>…そして、果てしない<strong>凌辱</strong>の日々。",
+  "current_dialogue": "ついに始まるのだ！覚悟はいいのだ？",
+  "current_monologue": "闇夜に包まれたダンジョンの入り口。<br>あなたの前には、まだ何も知らない『ミア』が立っている。<br>ここから、彼女の運命を左右する過酷なTRPGが幕を開ける。",
   "variant_mode": false,
   "attributes": {
-    "name": "なし",
-    "hair": "",
-    "eyes": "",
+    "name": "ミア",
+    "hair": "白髪",
+    "eyes": "赤眼",
     "fetish": "",
-    "personality": ""
+    "personality": "健気"
   },
-  "timestamp": 1771540502
+  "timestamp": 1771550533
 }

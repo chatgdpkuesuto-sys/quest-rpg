@@ -1,4 +1,13 @@
 {
-    "action": "待機",
-    "time": 0
+    "action": "START_GAME",
+    "target": "Elara",
+    "protagonist_stats": {
+        "power": 3,
+        "speed": 0,
+        "tough": 0,
+        "mind": 0,
+        "charm": 0,
+        "skill": 0
+    },
+    "time": 1771556131833
 }
