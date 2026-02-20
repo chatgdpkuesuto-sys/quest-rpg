@@ -4,7 +4,6 @@ import json
 import os
 import time
 import random
-import re
 
 VOICEVOX_URL = "http://127.0.0.1:50021"
 
@@ -13,20 +12,15 @@ VOICEVOX_URL = "http://127.0.0.1:50021"
 SPEAKER_LIST = [2, 3, 8, 14, 16, 20, 23, 29] 
 OUTPUT_PATH = r"c:\Users\kuesu\GEM_Project_Root\00_Dashboard\outputs\voice.wav"
 
-def strip_html(text):
-    return re.sub(r'<[^>]*>', '', text)
-
 def generate_voice(text):
-    # HTMLタグを除去
-    clean_text = strip_html(text)
-    print(f"🎙️ 音声生成リクエスト: {clean_text}")
+    print(f"🎙️ 音声生成リクエスト: {text}")
     
     # 🌟 NEW: キャラクターをランダムに決定
     speaker_id = random.choice(SPEAKER_LIST)
     print(f"🗣️ 選択されたスピーカーID: {speaker_id}")
     
     # 1. 音声合成用のクエリを作成
-    query_payload = {"text": clean_text, "speaker": speaker_id}
+    query_payload = {"text": text, "speaker": speaker_id}
     try:
         query_response = requests.post(f"{VOICEVOX_URL}/audio_query", params=query_payload)
         query_response.raise_for_status()

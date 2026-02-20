@@ -82,24 +82,7 @@ let currentVariantIndex = 1;
 window.cycleVariant = function () {
     const bgContainer = document.getElementById('bg-container');
     currentVariantIndex = (currentVariantIndex % 10) + 1;
-
-    // 現在のキャラクター名からフォルダパスを推定 (例: "ゼナ (Zena)" -> "Zena")
-    let charName = "variants"; // デフォルト
-    if (window.currentCharacterName && window.currentCharacterName !== "なし") {
-        const match = window.currentCharacterName.match(/\((.*?)\)/);
-        if (match && match[1]) {
-            charName = match[1];
-        } else {
-            charName = window.currentCharacterName;
-        }
-    }
-
-    // Ero, Normal などの状態は現在のArousal等から判定するロジック（仮でNormalとするが、状況に応じて変えることも可能）
-    let stateFolder = window.currentArousal > 70 ? "Ero" : "Normal";
-
-    // 互換性のため、特定のフォルダ構造が見つからなければ従来の variants フォルダを見るように組むこともできるが、
-    // 今回の指定に合わせて構築
-    bgContainer.style.backgroundImage = `url('outputs/${charName}/${stateFolder}/variant_${currentVariantIndex}.png?t=${Date.now()}')`;
+    bgContainer.style.backgroundImage = `url('outputs/variants/variant_${currentVariantIndex}.png?t=${Date.now()}')`;
 
     // 🌟 視覚的フィードバック（弾けるようなスケール）
     bgContainer.animate([
@@ -108,7 +91,7 @@ window.cycleVariant = function () {
         { transform: 'scale(1)' }
     ], { duration: 150, easing: 'ease-out' });
 
-    console.log(`Manual Cycle: ${charName}/${stateFolder}/Variant ${currentVariantIndex}`);
+    console.log(`Manual Cycle: Variant ${currentVariantIndex}`);
 }
 
 // ダッシュボード更新関数
@@ -198,27 +181,15 @@ async function pollGameState() {
                 const timeStr = "?t=" + (state.timestamp || new Date().getTime());
 
                 // 画像更新
+                // bgImage.src = state.current_image + timeStr; // Original line, replaced by new logic below
+
+                // 音声更新と再生
                 // 🌟 画像の更新処理
                 const bgContainer = document.getElementById('bg-container');
-                window.currentCharacterName = state.attributes ? state.attributes.name : "なし";
-
-                // BG_Defaultが含まれるか等でデフォルト背景か判定
-                window.isDefaultBG = false;
-                if (state.current_image && state.current_image.includes("BG_")) {
-                    window.isDefaultBG = true;
-                }
-
-                if (state.variant_mode && !window.isDefaultBG) {
+                if (state.variant_mode) {
                     // バリエーションモード：初期表示を設定（以後はクリックで切り替わる）
                     if (!window.lastImageTimestamp) {
-                        let charName = "variants";
-                        if (window.currentCharacterName !== "なし") {
-                            const match = window.currentCharacterName.match(/\((.*?)\)/);
-                            if (match && match[1]) charName = match[1];
-                            else charName = window.currentCharacterName;
-                        }
-                        let stateFolder = state.arousal > 70 ? "Ero" : "Normal";
-                        bgContainer.style.backgroundImage = `url('outputs/${charName}/${stateFolder}/variant_1.png?t=${Date.now()}')`;
+                        bgContainer.style.backgroundImage = `url('outputs/variants/variant_1.png?t=${Date.now()}')`;
                     }
                 } else {
                     // 通常モード：最新の1枚を表示

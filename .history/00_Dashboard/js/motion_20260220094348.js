@@ -14,16 +14,6 @@ window.updateVisuals = function () {
     const bg = document.getElementById('bg-container');
     if (!bg) return;
 
-    // キャラクターではなく完全な背景画像（BG_Defaultなど）の場合は、
-    // ズームやスウェイ（視線の揺れ）をさせずに静止させる
-    if (window.isDefaultBG || window.currentCharacterName === "なし" || window.currentCharacterName === undefined) {
-        bg.style.transformOrigin = `50% 50%`;
-        bg.style.backgroundPosition = `50% 50%`;
-        bg.style.transform = `scale(1)`;
-        requestAnimationFrame(window.updateVisuals);
-        return;
-    }
-
     // 1. ズーム基準点の固定
     bg.style.transformOrigin = `50% 50%`;
 
@@ -48,14 +38,20 @@ window.updateVisuals = function () {
 
     const finalScale = baseScale - zDepth;
 
-    // 5. 3Dモニターのような「視線に合わせた画面の傾き」
-    // 「２が大正解」と仰っていた、パンニングに合わせて画面が少し奥に傾く3Dパース表現（rotateX）に戻します
-    const tiltX = (yPercent - 50) * -0.1; // 視線移動に合わせてわずかにお辞儀・見上げるような傾き（Max 3度程度）
+    // 5. 3Dレンズのような「四隅の湾曲（立体的な曲がり）」
+    // 影（もや）ではなく、画像自体を物理的に曲げるためにSVGのFisheyeフィルター（index.htmlにあるもの）を適用します
+    // 🌟 リクエストにより、歪みを極限まで強く！
+    const bendAmount = 0.5 + (avgGauge * 0.8); // ベースの歪みを上げ、ゲージMAXでさらに激しく曲がる
 
-    // perspectiveを入れてrotateXすることで、四隅が曲がって奥行きがあるような3D感を出します
-    // ぐにゃぐにゃ歪ませるSVGフィルターは完全削除しました
-    bg.style.filter = 'none';
-    bg.style.transform = `perspective(800px) rotateX(${tiltX}deg) scale(${finalScale})`;
+    // SVGのfeDisplacementMapの scale を動的に更新して曲がり具合を変える
+    const feMap = document.getElementById('fisheye-map');
+    if (feMap) {
+        feMap.setAttribute('scale', bendAmount * 1500); // 🌟 乗数も大幅アップ（画面端がグニャッと曲がる）
+    }
+
+    // CSS filterでSVGを適用し、同時にズームを行う
+    bg.style.filter = `url(#fisheye-filter)`;
+    bg.style.transform = `scale(${finalScale})`;
 
     requestAnimationFrame(window.updateVisuals);
 }

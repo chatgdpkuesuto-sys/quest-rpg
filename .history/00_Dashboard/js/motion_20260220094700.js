@@ -14,16 +14,6 @@ window.updateVisuals = function () {
     const bg = document.getElementById('bg-container');
     if (!bg) return;
 
-    // キャラクターではなく完全な背景画像（BG_Defaultなど）の場合は、
-    // ズームやスウェイ（視線の揺れ）をさせずに静止させる
-    if (window.isDefaultBG || window.currentCharacterName === "なし" || window.currentCharacterName === undefined) {
-        bg.style.transformOrigin = `50% 50%`;
-        bg.style.backgroundPosition = `50% 50%`;
-        bg.style.transform = `scale(1)`;
-        requestAnimationFrame(window.updateVisuals);
-        return;
-    }
-
     // 1. ズーム基準点の固定
     bg.style.transformOrigin = `50% 50%`;
 

@@ -12,19 +12,12 @@
 </head>
 
 <body>
-    <!-- 🌟 Browser Audio Autoplay Policy Button & Character Selection 🌟 -->
+    <!-- 🌟 Browser Audio Autoplay Policy Button 🌟 -->
     <div id="init-overlay">
-        <div class="init-dialog">
-            <h1 class="init-title">MACHADUN</h1>
-            <p class="init-sub">- Choose your Target -</p>
-            <div class="char-select-grid">
-                <button class="char-btn" onclick="startGame('Zena', 'ゼナ')">ゼナ (Zena)</button>
-                <button class="char-btn" onclick="startGame('Elara', 'エララ')">エララ (Elara)</button>
-                <button class="char-btn" onclick="startGame('Yuni', 'ユニ')">ユニ (Yuni)</button>
-                <button class="char-btn" onclick="startGame('Mia', 'ミア')">ミア (Mia)</button>
-            </div>
-            <p class="init-hint">※ クリックで音声が有効化され、シナリオが開始します。</p>
-        </div>
+        <button id="init-audio" onclick="initEngine()">
+            <span class="init-title">SYSTEM START</span><br>
+            <span class="init-sub">Click to dive into the Abyss</span>
+        </button>
     </div>
 
     <!-- 動的な背景CG/イラストコンテナ -->

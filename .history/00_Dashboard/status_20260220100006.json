@@ -1,0 +1,19 @@
+{
+  "arousal": 0,
+  "despair": 0,
+  "current_image": "../outputs/latest.png",
+  "last_event": "ダンジョン探索開始",
+  "is_climax": false,
+  "status": "updated",
+  "current_dialogue": "「……ふんっ、こんな薄暗いダンジョン、私一人でも余裕なんだから。<br>あんたはただ私の後ろについて、荷物でも持ってればいいのよ。<br>……っ、ちょっと、あんまりくっつかないでよね！」",
+  "current_monologue": "薄暗いダンジョンの奥深く。<br>あなたの目の前には、淫靡な罠と狂気が待ち受けている。一歩間違えれば、待っているのは容赦のない<span class=\"despair-text\">敗北</span>…そして、果てしない<strong>凌辱</strong>の日々。",
+  "variant_mode": true,
+  "attributes": {
+    "name": "ゼナ (Zena)",
+    "hair": "黒髪",
+    "eyes": "金眼",
+    "fetish": "肉球, マウント",
+    "personality": "ツンデレ・好戦的"
+  },
+  "timestamp": 1771540501
+}

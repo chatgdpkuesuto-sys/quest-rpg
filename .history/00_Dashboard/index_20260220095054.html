@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machadun Dashboard (OBS Overlay)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景CG用コンテナ (engine.js で background-image を動的に制御) -->
+    <div id="bg-container"></div>
+
+    <!-- 🌟 NEW: 角をくっきり丸くするマスク（もや無し） 🌟 -->
+    <div id="corner-mask"></div>
+
+    <!-- 狂気・発情エフェクト用オーバーレイ -->
+    <div id="blood-overlay"></div>
+    <div id="glitch-overlay"></div>
+
+    <!-- Zundamon Voice Player -->
+    <audio id="voice-player" src="outputs/voice.wav" preload="none"></audio>
+    <!-- Sound Effects Player -->
+    <audio id="se-player" preload="none"></audio>
+
+    <!-- 🌟 NEW: 三連・蓄積ゲージ（三つの発展） 🌟 -->
+    <div id="buildup-container">
+        <!-- 嗜虐：右クリック -->
+        <div class="buildup-bar">
+            <div id="fill-lust" class="buildup-fill lust"></div><span class="gauge-label">LUST / CHAOS</span>
+        </div>
+        <!-- 管理：中クリック -->
+        <div class="buildup-bar">
+            <div id="fill-special" class="buildup-fill special"></div><span class="gauge-label">SENSE / OBSERVE</span>
+        </div>
+        <!-- 慈愛：左クリック -->
+        <div class="buildup-bar">
+            <div id="fill-love" class="buildup-fill love"></div><span class="gauge-label">LOVE / CARESS</span>
+        </div>
+    </div>
+
+    <!-- 🌟 NEW: クライマックス発動ボタン（手動） 🌟 -->
+    <button id="climax-trigger" onclick="triggerClimax()">CLIMAX!!</button>
+
+    <!-- 🌟 NEW: マンガ風 吹き出しコンテナ 🌟 -->
+    <div id="bubble-container"></div>
+
+    <!-- 🌟 NEW: 分割されたスクリプトのモジュール読み込み 🌟 -->
+    <script src="js/state.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/motion.js"></script>
+    <script src="js/interaction.js"></script>
+    <script src="engine.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+
+</html>
