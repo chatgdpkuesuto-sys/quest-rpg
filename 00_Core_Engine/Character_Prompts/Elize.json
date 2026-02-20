@@ -1,0 +1,8 @@
+{
+    "name": "Elize",
+    "base_prompt": "1girl, mature female, dark elf, dark chocolate skin, very long silver hair covering one eye, crimson red eyes, long pointy elf ears with many piercings, large breasts, black scientist lab coat with wide sleeves, tight high slit skirt, black pantyhose, high heels, (sweat:0.8)",
+    "negative_prompt": "weapon, syringe, holding, holding things",
+    "route_love": "masterpiece, highly detailed, expressive, scientist posture, analytical but affectionate expression, blushing, looking down at viewer, soft lighting",
+    "route_lust": "masterpiece, highly detailed, dramatic shadow, heavy sweat, heavy breathing, dynamic angle, slightly messy hair, glowing red eyes, arousing atmosphere, sadistic smile, looking down",
+    "route_special": "masterpiece, dark fantasy, dynamic angle, raw physical beauty, mad scientist, glowing magical tattoos on dark skin, glowing crimson eyes"
+}

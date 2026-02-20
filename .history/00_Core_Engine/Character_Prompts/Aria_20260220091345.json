@@ -1,0 +1,8 @@
+{
+    "name": "Aria",
+    "base_prompt": "1girl, young adult female, porcelain white skin, long platinum blonde hair, ponytail, blue ribbon in hair, deep sapphire blue eyes, fit body, large breasts, shiny silver half plate armor, white and blue cape, armor skirt, white thighhighs, (zettai ryouiki), (sweat:0.8)",
+    "negative_prompt": "weapon, sword, holding, holding things, helmet",
+    "route_love": "masterpiece, highly detailed, expressive, noble knight posture, innocent expression, heavy blushing, looking at viewer, hand on chest, soft cinematic lighting",
+    "route_lust": "masterpiece, highly detailed, dramatic shadow, heavy sweat, heavy breathing, dynamic angle, slightly messy hair, glowing eyes, arousing atmosphere, broken armor, submissive posture, lewd crest on lower belly",
+    "route_special": "masterpiece, dark fantasy, dynamic angle, raw physical beauty, corrupted knight, glowing sapphire eyes, corrupted aura"
+}

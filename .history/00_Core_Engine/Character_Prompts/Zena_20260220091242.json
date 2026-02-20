@@ -1,0 +1,8 @@
+{
+    "name": "Zena",
+    "base_prompt": "1girl, mature female, dark tan skin, short black hair, animal ears on head, golden animal eyes, (fluffy black wolf tail:1.2), fit body, light muscular, visible abs, multiple small body scars, very short hotpants, black tube top, open short jacket, thigh strap, (sweat:0.8)",
+    "negative_prompt": "weapon, sword, holding, holding things",
+    "route_love": "masterpiece, highly detailed, expressive, cinematic lighting, looking at viewer, tsundere expression, blushing, angry blushing, dog pose, begging pose, soft lighting",
+    "route_lust": "masterpiece, highly detailed, dramatic shadow, heavy sweat, heavy breathing, dynamic angle, slightly messy hair, glowing eyes, arousing atmosphere, submissive posture, leash, collar",
+    "route_special": "masterpiece, dark fantasy, dynamic angle, raw physical beauty, fierce expression mixed with lust, detailed scars, glowing golden eyes"
+}

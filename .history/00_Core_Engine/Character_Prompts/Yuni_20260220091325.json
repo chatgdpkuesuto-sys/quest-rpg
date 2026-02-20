@@ -1,0 +1,8 @@
+{
+    "name": "Yuni",
+    "base_prompt": "1girl, teen female, sun-kissed skin, ginger hair, bob cut, tiger ears on head, golden cat eyes, (striped tiger tail:1.2), flat chest, fit body, tube top, short pants, thigh pouch, gold bell choker, (sweat:0.8)",
+    "negative_prompt": "weapon, dagger, holding, holding things",
+    "route_love": "masterpiece, highly detailed, expressive, cat pose, innocent expression, blushing, kneeling, looking up at viewer, soft lighting",
+    "route_lust": "masterpiece, highly detailed, dramatic shadow, heavy sweat, heavy breathing, dynamic angle, slightly messy hair, glowing eyes, arousing atmosphere, submissive posture, leash, collar, bondage",
+    "route_special": "masterpiece, dark fantasy, dynamic angle, raw physical beauty, playful but dangerous expression, glowing golden eyes"
+}

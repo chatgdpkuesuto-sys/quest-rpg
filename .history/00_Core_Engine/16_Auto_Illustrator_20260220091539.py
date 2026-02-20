@@ -184,19 +184,19 @@ if __name__ == "__main__":
 
         # 2. ルート分岐とプロンプトの動的生成
         if "慈愛" in action:
-            route_prompt = str(char_data.get("route_love", "gentle smile, blushing"))
+            route_prompt = char_data.get("route_love", "gentle smile, blushing")
             print("  💕 慈愛・調教ルート を検知。")
         elif "淫靡" in action:
-            route_prompt = str(char_data.get("route_lust", "ahegao, intense passion"))
+            route_prompt = char_data.get("route_lust", "ahegao, intense passion")
             print("  😈 淫靡・嗜虐ルート を検知。")
         elif "特殊" in action:
-            route_prompt = str(char_data.get("route_special", "glowing eyes, trance state"))
+            route_prompt = char_data.get("route_special", "glowing eyes, trance state")
             print("  👁️ 特殊・覚醒ルート を検知。")
         else:
             route_prompt = "standing, looking at viewer"
             print(f"  ℹ️ 特定ルート非検知: デフォルトプロンプトを使用 ({action})")
 
-        prompt_arg = str(base_prompt) + route_prompt
+        prompt_arg = base_prompt + route_prompt
 
         # 3. 指定パスへ生成
         generate_image(prompt_arg, output_path=live_output, is_sync_mode=True)
@@ -211,11 +211,10 @@ if __name__ == "__main__":
         print(f"📂 保存先: {char_output_dir}\n")
 
         for scene in SCENES:
-            prefix = str(scene.get("prefix", "img"))
+            prefix = scene["prefix"]
             count = int(scene.get("count", 1))
-            scene_key = str(scene.get("key", ""))
-            route_prompt = str(char_data.get(scene_key, "standing, looking at viewer"))
-            full_prompt = str(base_prompt) + route_prompt
+            route_prompt = char_data.get(scene["key"], "standing, looking at viewer")
+            full_prompt = base_prompt + route_prompt
             
             for i in range(1, count + 1):
                  save_filename = os.path.join(char_output_dir, f"{prefix}_{i}.png")

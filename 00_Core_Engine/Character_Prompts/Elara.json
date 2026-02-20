@@ -1,0 +1,8 @@
+{
+    "name": "Elara",
+    "base_prompt": "1girl, mature female, milf, high elf, porcelain white skin, very long silver blue hair, deep amethyst eyes, looking down, large breasts, motherly, dark blue star robe, starry theme, deep cleavage, leg slit, bare legs, (sweat:0.8)",
+    "negative_prompt": "weapon, staff, holding, holding things",
+    "route_love": "masterpiece, highly detailed, expressive, doting smile, affectionate expression, blushing, kneeling, motherly posture, soft cinematic lighting, warm atmosphere",
+    "route_lust": "masterpiece, highly detailed, dramatic shadow, heavy sweat, heavy breathing, dynamic angle, slightly messy hair, glowing amethyst eyes, arousing atmosphere, revealing robe, dominant yet submissive expression",
+    "route_special": "masterpiece, dark fantasy, dynamic angle, raw physical beauty, grand wizard, glowing magical aura, glowing amethyst eyes, otherworldly"
+}

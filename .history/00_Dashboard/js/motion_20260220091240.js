@@ -14,24 +14,24 @@ window.updateVisuals = function () {
     const bg = document.getElementById('bg-container');
     if (!bg) return;
 
-    // 1. ズーム基準点の固定 (目の高さをロック：上から30%の位置に固定)
-    // これにより顔の位置が画面内でブレず、視点だけが動くような3D演出の軸ができる
-    bg.style.transformOrigin = `50% 30%`;
+    bg.style.transformOrigin = `50% 50%`;
 
     // 2. ズームブーストの減衰
     window.zoomBoost *= 0.95;
 
-    // 3. イラスト自体の円満な円運動 (Restrained Circular Translation)
-    // 🌟 これが「同じ形（円を描くように）」の元の動きです
-    const moveRadius = 15 + (avgGauge * 30); // ゲージMAX時でも45px程度に抑える
+    // 3. イラスト自体の上下運動 (Vertical Panning)
+    // 🌟 ユーザー要望により「上と下を見るような感じ」に特化させる
+    // ゲージMAX時は大きく上下にパンニングする
+    const moveRadiusY = 40 + (avgGauge * 180); // 上下（縦）の動きを非常に大きく
+    const moveRadiusX = 10 + (avgGauge * 20);  // 左右（横）の揺れは少しだけ（自然さを残す）
 
-    // X軸とY軸で同じ周期のsin/cosを使うことで、きれいな「円」を描かせます
-    const x = Math.sin(window.time * 1.5) * moveRadius;
-    const y = Math.cos(window.time * 1.5) * moveRadius;
+    // 縦（Y軸）メインで動き、横（X軸）は少しだけ揺らす
+    const x = Math.sin(window.time * 0.8) * moveRadiusX;
+    const y = Math.cos(window.time * 1.2) * moveRadiusY;
 
     // 4. スケール計算 (Base + Gauge + Boost)
-    // 🌟 動きが減った分、ズームも自然なレベルに抑える
-    const scale = 1.3 + (avgGauge * 0.05) + window.zoomBoost;
+    // 🌟 大きく動く分、黒枠が見えないように初期ズームをかなり大きくしておく
+    const scale = 1.6 + (avgGauge * 0.1) + window.zoomBoost;
 
     // 全てを統合して適用（物理的な移動のみ）
     bg.style.transform = `

@@ -22,10 +22,10 @@ window.updateVisuals = function () {
     window.zoomBoost *= 0.95;
 
     // 3. イラスト自体の円満な円運動 (Restrained Circular Translation)
-    // 🌟 これが「同じ形（円を描くように）」の元の動きです
+    // 🌟 物理的にイラストが円を描いて動くが、「動きすぎない」ように半径を絞る
     const moveRadius = 15 + (avgGauge * 30); // ゲージMAX時でも45px程度に抑える
 
-    // X軸とY軸で同じ周期のsin/cosを使うことで、きれいな「円」を描かせます
+    // X軸とY軸で円を描くように物理的に移動（translate）
     const x = Math.sin(window.time * 1.5) * moveRadius;
     const y = Math.cos(window.time * 1.5) * moveRadius;
 
