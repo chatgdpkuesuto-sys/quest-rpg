@@ -26,6 +26,8 @@ window.updateVisuals = function () {
     const swayAmplitude = 20 + (avgGauge * 30); // ゲージがあがると±幅が大きくなり、全身を舐め回すようになる
     const yPercent = 50 + (Math.sin(window.time * 0.8) * swayAmplitude);
 
+    const yPercent = 50 + (Math.sin(window.time * 0.8) * swayAmplitude);
+
     // 画像位置を更新（X軸は常に中央の50%で固定）
     bg.style.backgroundPosition = `50% ${yPercent}%`;
 

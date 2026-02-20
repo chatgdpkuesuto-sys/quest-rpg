@@ -29,17 +29,15 @@ window.updateVisuals = function () {
     // 画像位置を更新（X軸は常に中央の50%で固定）
     bg.style.backgroundPosition = `50% ${yPercent}%`;
 
-    // 4. スケールで「手前・奥（接近・後退）」を表現する
-    // yPercent（上下スライド）に連動して、顔が近づく（下にスライドする）時は大きく、
-    // 体を引く（上にスライドする）時は少し小さくなるように設定
-    const baseScale = 1.1 + (avgGauge * 0.05) + window.zoomBoost;
-    // Math.sin(time*0.8) を使って、上下スライドと同じ周期で息遣い（前後）を表現
-    const zDepth = Math.sin(window.time * 0.8) * 0.08;
+    // 4. スケールと傾き（Tilt）計算
+    // コンテナ全体を少しだけズームしておく（迫力用）
+    const scale = 1.05 + (avgGauge * 0.05) + window.zoomBoost;
+    // 🌟 ユーザーリクエスト：少しだけ傾ける（左右へかすかに揺れる）
+    const tiltMax = 1 + (avgGauge * 2); // ゲージがあがると最大3度くらいまで傾く
+    const tilt = Math.cos(window.time * 0.5) * tiltMax;
 
-    const finalScale = baseScale - zDepth;
-
-    // 物理的な移動（translateやrotate）は一切せず、純粋なズームのみ適用
-    bg.style.transform = `scale(${finalScale})`;
+    // 物理的な移動（translate）は一切せず、純粋なズームと傾きのみ適用
+    bg.style.transform = `scale(${scale}) rotate(${tilt}deg)`;
 
     requestAnimationFrame(window.updateVisuals);
 }
