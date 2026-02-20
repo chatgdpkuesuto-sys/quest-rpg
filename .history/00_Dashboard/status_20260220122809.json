@@ -1,0 +1,20 @@
+{
+  "arousal": 25,
+  "despair": 0,
+  "current_image": "outputs/latest.png",
+  "last_event": "アリア・イベント：救済の誓い",
+  "is_climax": false,
+  "status": "waiting_for_input",
+  "current_dialogue": "……っ！ その……あなたが私に跪き、守護を誓ってくださるなんて……。驚きましたわ。\n救世主様は、もっと……その、恐ろしい方なのだと思っておりましたから……。",
+  "current_monologue": "聖女アリアの瞳に、戸惑いと微かな安堵が浮かぶ。<br>圧倒的な筋力（3）を持ちながら、力によって従わせるのではなく敬意を払ったあなたに、彼女の警戒の心（Despair -5）が解けていく。<br>アリアはゆっくりとあなたの手を取り、柔らかな微笑みを浮かべた。物語は、静かに進展の刻を待っている。",
+  "variant_mode": false,
+  "attributes": {
+    "name": "アリア",
+    "hair": "銀髪",
+    "eyes": "碧眼",
+    "fetish": "お清楚/聖女",
+    "personality": "慈愛"
+  },
+  "choices": [],
+  "timestamp": 1771558100
+}

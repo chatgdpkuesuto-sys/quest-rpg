@@ -1,0 +1,20 @@
+{
+    "arousal": 0,
+    "despair": 0,
+    "current_image": "outputs/latest.png",
+    "last_event": "HERO_CONFIRMED",
+    "is_climax": false,
+    "status": "hero_confirmed",
+    "current_dialogue": "能力値の確定を確認しましたわ。剛力（筋力3）を有するあなたは、一振りの剣で巨岩をも砕くことでしょう。",
+    "current_monologue": "魂の器が形作られた。剛腕なる救世主よ、汝が導くヒロインを選びなさい。その選択が、絶望と快楽の物語の第一歩となる。",
+    "variant_mode": false,
+    "attributes": {
+        "name": "なし",
+        "hair": "-",
+        "eyes": "-",
+        "fetish": "-",
+        "personality": "-"
+    },
+    "choices": [],
+    "timestamp": 1771558450
+}

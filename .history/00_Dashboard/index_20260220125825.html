@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACHADUN - 救世主メイキング</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="screen">
+        <!-- ステータス画面 -->
+        <div id="stat-screen">
+            <h1>まちゃだん</h1>
+            <p class="sub">救世主の属性を定義せよ</p>
+            <div class="stat-grid">
+                <div class="stat-row"><span>筋力</span><button onclick="adj('power',-1)">-</button><span
+                        id="val-power">0</span><button onclick="adj('power',1)">+</button></div>
+                <div class="stat-row"><span>敏捷</span><button onclick="adj('speed',-1)">-</button><span
+                        id="val-speed">0</span><button onclick="adj('speed',1)">+</button></div>
+                <div class="stat-row"><span>耐久</span><button onclick="adj('tough',-1)">-</button><span
+                        id="val-tough">0</span><button onclick="adj('tough',1)">+</button></div>
+                <div class="stat-row"><span>知性</span><button onclick="adj('mind',-1)">-</button><span
+                        id="val-mind">0</span><button onclick="adj('mind',1)">+</button></div>
+                <div class="stat-row"><span>魅力</span><button onclick="adj('charm',-1)">-</button><span
+                        id="val-charm">0</span><button onclick="adj('charm',1)">+</button></div>
+                <div class="stat-row"><span>技巧</span><button onclick="adj('skill',-1)">-</button><span
+                        id="val-skill">0</span><button onclick="adj('skill',1)">+</button></div>
+            </div>
+            <p>残りポイント: <span id="remaining">3</span></p>
+            <button id="confirm-btn" onclick="confirmStats()">確定</button>
+        </div>
+
+        <!-- 結果画面 (確定後に表示) -->
+        <div id="result-screen" style="display:none">
+            <h1>魂の器、確定</h1>
+            <div id="result-text"></div>
+            <p id="result-voice-status"></p>
+        </div>
+    </div>
+
+    <audio id="voice-player" preload="auto"></audio>
+    <script src="js/engine.js"></script>
+</body>
+
+</html>

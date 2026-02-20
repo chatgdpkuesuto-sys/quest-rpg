@@ -1,0 +1,20 @@
+{
+    "arousal": 0,
+    "despair": 0,
+    "current_image": "outputs/latest.png",
+    "last_event": "BACK_TO_STATS_ACCEPTED",
+    "is_climax": false,
+    "status": "making_hero",
+    "current_dialogue": "リバートを受け付けました。再度、能力を定義してください。",
+    "current_monologue": "時は巻き戻された。汝の魂、その真なる形を今一度問い掛ける時だ。",
+    "variant_mode": false,
+    "attributes": {
+        "name": "救世主",
+        "hair": "-",
+        "eyes": "-",
+        "fetish": "-",
+        "personality": "-"
+    },
+    "choices": [],
+    "timestamp": 1771558950
+}

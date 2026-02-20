@@ -1,0 +1,333 @@
+// ==============================================
+// 00_Dashboard: engine.js (Core Data Polling)
+// ==============================================
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+window.initEngine = function () {
+    if (!window.engineRunning) {
+        setInterval(pollGameState, 1000); // 監視間隔を調整
+        pollGameState();
+        window.engineRunning = true;
+    }
+}
+// 初回読み込み時にステータスをチェック
+window.addEventListener('load', async () => {
+    // 最初の1回チェック
+    await pollGameState();
+
+    // もし既にキャラが選択されている（オーバーレイが消える条件）なら、監視を開始する
+    const initOverlay = document.getElementById('init-overlay');
+    if (initOverlay && initOverlay.style.display === 'none') {
+        window.initEngine();
+    }
+
+    // 音声許可のために一度どこでもいいのでクリックしたらエンジン始動 (audioContextのレジューム用)
+    document.addEventListener('click', () => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+    }, { once: true });
+});
+
+// 🌟 主人公ステータス割り振り処理
+window.allocatedStats = { power: 0, speed: 0, tough: 0, mind: 0, charm: 0, skill: 0 };
+window.gauges = { love: 0, lust: 0, special: 0 };
+window.time = 0;
+window.zoomBoost = 0;
+window.currentCharacterName = "なし";
+window.isDefaultBG = false;
+window.engineRunning = false;
+let remainingPoints = 3;
+
+// html内でのonclickに反応するためwindowオブジェクトにアタッチ
+window.adjStat = function (stat, delta) {
+    if (delta > 0 && remainingPoints <= 0) return; // ポイントがない
+    if (delta < 0 && window.allocatedStats[stat] <= 0) return; // 0未満にはできない
+    if (delta > 0 && window.allocatedStats[stat] >= 3) return; // 上限は3まで
+
+    window.allocatedStats[stat] += delta;
+    remainingPoints -= delta;
+
+    document.getElementById('val-' + stat).innerText = window.allocatedStats[stat];
+    document.getElementById('remaining-points').innerText = remainingPoints;
+}
+
+window.confirmStats = function () {
+    if (remainingPoints > 0) {
+        if (!confirm(`まだポイントが ${remainingPoints} 残っていますが、このまま進みますか？`)) {
+            return;
+        }
+    }
+
+    // ステータス割り振り画面を隠し、ターゲット選択画面を表示
+    document.getElementById('stat-dialog').style.display = 'none';
+    document.getElementById('target-dialog').style.display = 'block';
+}
+
+window.backToStats = function () {
+    document.getElementById('stat-dialog').style.display = 'block';
+    document.getElementById('target-dialog').style.display = 'none';
+}
+
+// 🌟 キャラクター選択時の処理
+window.startGame = function (charKey, charName) {
+    // Audio Contextの再開
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+
+    // ポーリングが開始されていなければ開始
+    if (!window.engineRunning) {
+        setInterval(pollGameState, 500);
+        pollGameState();
+        window.engineRunning = true;
+    }
+
+    const initOverlay = document.getElementById('init-overlay');
+    if (initOverlay) initOverlay.style.display = 'none';
+
+    // 音声を強制再生
+    const voicePlayer = document.getElementById('voice-player');
+    if (voicePlayer && voicePlayer.src) {
+        voicePlayer.play().catch(e => console.log("Audio play error:", e));
+    }
+
+    console.log(`🚀 Game Started with character: ${charName} (${charKey}), Stats:`, window.allocatedStats);
+
+    // バックエンドにキャラクタ情報とステータスを送信
+    if (typeof sendAction === 'function') {
+        // payloadとして送るために、interaction.jsのsendActionの使われ方を少し拡張して呼び出すか、
+        // 独自のfetchを行う
+        const payload = {
+            action: 'START_GAME',
+            target: charKey,
+            protagonist_stats: window.allocatedStats,
+            time: Date.now()
+        };
+        fetch('http://127.0.0.1:5000/action', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(err => console.error("Communication error with bridge:", err));
+    }
+}
+
+window.isProcessingChoice = false;
+
+window.selectChoice = function (choiceId, label) {
+    if (window.isProcessingChoice) return;
+    window.isProcessingChoice = true;
+
+    console.log(`🔘 Choice Selected: ${label} (${choiceId})`);
+
+    // UIを即座に消す
+    const choiceContainer = document.getElementById('choice-container');
+    if (choiceContainer) {
+        choiceContainer.style.display = 'none';
+        choiceContainer.innerHTML = '';
+    }
+
+    const payload = {
+        action: 'CHOICE_MADE',
+        choice_id: choiceId,
+        choice_label: label,
+        time: Date.now()
+    };
+
+    fetch('http://127.0.0.1:5000/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(err => {
+        console.error("Communication error with bridge:", err);
+        window.isProcessingChoice = false;
+    });
+}
+
+let lastTimestamp = 0;
+let lastMonologue = "";
+let lastDialogue = "";
+let lastImage = "";
+
+async function pollGameState() {
+    try {
+        const response = await fetch('status.json?t=' + Date.now());
+        if (!response.ok) return;
+        const state = await response.json();
+
+        // キャラクターが設定されている場合はオーバーレイを自動消去
+        const initOverlay = document.getElementById('init-overlay');
+        const charNameRaw = state.attributes && state.attributes.name ? state.attributes.name : "なし";
+
+        if (charNameRaw !== "なし" && initOverlay && initOverlay.style.display !== 'none') {
+            initOverlay.style.display = 'none';
+        }
+
+        // タイムスタンプが更新されていなければスキップ
+        if (state.timestamp === lastTimestamp) return;
+        lastTimestamp = state.timestamp;
+
+        // 処理完了としてロックを解除
+        window.isProcessingChoice = false;
+
+        // ----------------------------------------------------
+        // 1. キャラクター情報と画像パスの管理
+        // ----------------------------------------------------
+        // 日本語名から英名（フォルダ名）へのマッピング
+        const NAME_MAP = {
+            "アリア": "Aria",
+            "ゼナ": "Zena",
+            "エララ": "Elara",
+            "エリーゼ": "Elize",
+            "ユニ": "Yuni",
+            "ミア": "Mia"
+        };
+
+        let charFolder = "Default";
+
+        // カッコ内の英名抽出を廃止し、マッピングを使用
+        if (charNameRaw !== "なし") {
+            const cleanName = charNameRaw.split(' ')[0].split('(')[0];
+            charFolder = NAME_MAP[cleanName] || cleanName;
+        }
+
+        document.getElementById('char-name').innerText = charNameRaw.split('(')[0];
+
+        if (state.attributes) {
+            document.getElementById('char-attributes').innerHTML =
+                `特徴: ${state.attributes.fetish || "-"}<br>性格: ${state.attributes.personality || "-"}`;
+        }
+
+        // 画像の設定 (キャラ名と状態フォルダで管理)
+        // state.current_image に直接パス（BG等）が入っている場合はそれを優先、
+        // そうでなければ outputs/キャラ名/状態/ を構築
+        const bgContainer = document.getElementById('bg-container');
+
+        let targetImagePath = state.current_image; // デフォルトはJSONのパス
+
+        if (state.variant_mode && charNameRaw !== "なし") {
+            // 例: ../outputs/Zena/Normal/variant_1.png
+            const stateFolder = state.arousal >= 70 ? "Ero" : "Normal";
+            targetImagePath = `../outputs/${charFolder}/${stateFolder}/variant_1.png`;
+        } else if (state.current_image && state.current_image.includes("BG_")) {
+            // 背景の場合はそのまま
+            targetImagePath = state.current_image;
+            window.isDefaultBG = true;
+        } else {
+            window.isDefaultBG = false;
+        }
+
+        window.currentCharacterName = charNameRaw;
+
+        if (lastImage !== targetImagePath) {
+            bgContainer.style.backgroundImage = `url('${targetImagePath}?t=${state.timestamp}')`;
+            lastImage = targetImagePath;
+        }
+
+        // ----------------------------------------------------
+        // 2. モノローグ / GMテキスト（シネマティック表示）
+        // ----------------------------------------------------
+        const monoContainer = document.getElementById('monologue-container');
+        if (state.current_monologue && state.current_monologue !== lastMonologue) {
+            lastMonologue = state.current_monologue;
+            monoContainer.innerHTML = ''; // クリア
+
+            // パラグラフ単位で分割して表示
+            const chunks = state.current_monologue.split(/<br>/i).filter(s => s.trim().length > 0);
+
+            chunks.forEach((text, i) => {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'monologue-text';
+                    el.innerHTML = text;
+                    monoContainer.appendChild(el);
+
+                    // 12秒で消える
+                    setTimeout(() => {
+                        el.classList.add('fade-out');
+                        setTimeout(() => el.remove(), 2000);
+                    }, 10000);
+
+                }, i * 2500); // 2.5秒おきに出現
+            });
+        }
+
+        // ----------------------------------------------------
+        // 3. キャラクターセリフ（ノベルゲーム風）
+        // ----------------------------------------------------
+        const dialogBox = document.getElementById('dialogue-box');
+        const dialogName = document.getElementById('dialogue-name');
+        const dialogText = document.getElementById('dialogue-text');
+
+        if (state.current_dialogue && state.current_dialogue !== lastDialogue) {
+            lastDialogue = state.current_dialogue;
+
+            if (charNameRaw === "なし") {
+                dialogName.innerText = "System";
+            } else {
+                // 日本語部分だけ表示する (ゼナ)
+                dialogName.innerText = charNameRaw.split(' ')[0];
+            }
+
+            dialogText.innerHTML = state.current_dialogue;
+            dialogBox.style.display = 'block';
+
+            // 音声再生
+            const voicePlayer = document.getElementById('voice-player');
+            if (voicePlayer) {
+                voicePlayer.src = `outputs/voice.wav?t=${state.timestamp}`;
+                voicePlayer.play().catch(e => console.log("Audio play error:", e));
+            }
+
+        } else if (!state.current_dialogue) {
+            dialogBox.style.display = 'none';
+        }
+
+        // ----------------------------------------------------
+        // 4. ステータスとエフェクト
+        // ----------------------------------------------------
+        const arousalFill = document.getElementById('arousal-fill');
+        const despairFill = document.getElementById('despair-fill');
+
+        if (arousalFill) arousalFill.style.width = Math.min(100, state.arousal || 0) + '%';
+        if (despairFill) despairFill.style.width = Math.min(100, state.despair || 0) + '%';
+
+        // Motion Engine用の値同期 (love/lust/specialに擬似分配)
+        window.gauges.lust = state.arousal || 0;
+        window.gauges.special = state.despair || 0;
+        window.gauges.love = 0; // 適宜
+
+        if (state.arousal >= 80) {
+            document.body.classList.add('pulse-extreme');
+        } else {
+            document.body.classList.remove('pulse-extreme');
+        }
+
+        // ----------------------------------------------------
+        // 5. 選択肢の表示
+        // ----------------------------------------------------
+        const choiceContainer = document.getElementById('choice-container');
+        if (state.choices && state.choices.length > 0) {
+            // 現在の表示と異なる場合のみ更新
+            const currentChoices = Array.from(choiceContainer.children).map(c => c.innerText).join('|');
+            const newChoices = state.choices.map(c => c.label).join('|');
+
+            if (currentChoices !== newChoices) {
+                choiceContainer.innerHTML = '';
+                state.choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.innerText = choice.label;
+                    btn.onclick = () => window.selectChoice(choice.id, choice.label);
+                    choiceContainer.appendChild(btn);
+                });
+                choiceContainer.style.display = 'flex';
+            }
+        } else {
+            choiceContainer.innerHTML = '';
+            choiceContainer.style.display = 'none';
+        }
+
+    } catch (err) {
+        console.error("Dashboard fetch error:", err);
+    }
+}

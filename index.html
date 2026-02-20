@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>まちゃだん TRPG Engine</title>
+    <link rel="stylesheet" href="machadun_style.css">
+    <style>
+        body {
+            background-color: #1a0505;
+            color: #e0d0d0;
+            font-family: 'Serif', 'Mincho', serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #game-container {
+            width: 80%;
+            max-width: 800px;
+            background: rgba(40, 10, 10, 0.8);
+            border: 2px solid #800000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        #situation {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            min-height: 200px;
+            border-bottom: 1px solid #500000;
+            padding-bottom: 20px;
+        }
+
+        #ui {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(180deg, #400000 0%, #200000 100%);
+            color: #ffcccc;
+            border: 1px solid #ff0000;
+            padding: 15px;
+            font-size: 1.1em;
+            font-family: 'Serif', 'Mincho', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(180deg, #600000 0%, #400000 100%);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transform: scale(1.02);
+        }
+
+        .highlight-despair {
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .highlight-pleasure {
+            color: #ff66b2;
+            text-shadow: 0 0 10px #ff66b2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-container">
+        <div id="situation">
+            {{ SITUATION }}
+        </div>
+
+        <div id="ui">
+            
+                <div class="choices">
+                    <button onclick="sendAction('冒険に出る')">冒険に出る</button>
+                    <button onclick="sendAction('ステータス確認')">ステータス確認</button>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        // プレイヤーのアクションを送信する関数
+        function sendAction(actionText) {
+            console.log("Action Triggered:", actionText);
+
+            fetch('http://127.0.0.1:5000/action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: actionText, timestamp: Date.now() })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Action Sent:", data);
+                    document.getElementById('situation').innerHTML = "<p style='text-align:center; color:#888;'>システムが応答を生成中……</p>";
+                    document.getElementById('ui').innerHTML = "";
+                })
+                .catch(error => {
+                    console.error("Error sending action:", error);
+                });
+        }
+
+        // status.json を監視して画面を自動更新する仕組み (簡易版)
+        let lastUpdate = 0;
+        setInterval(() => {
+            fetch('status.json?t=' + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    if (data.updated_at > lastUpdate) {
+                        lastUpdate = data.updated_at;
+                        location.reload(); // 画面をリロードして index.html の変更を反映
+                    }
+                })
+                .catch(e => console.log("Waiting for status info..."));
+        }, 2000);
+    </script>
+
+</body>
+
+</html>

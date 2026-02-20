@@ -1,0 +1,8 @@
+{
+    "situation_text": "（APIキー未設定）あなたは「???: ????????」と行動した。ダイス目は 5 だ。コアエンジンに従い、世界の歯車が回りだす……。<br><span class='highlight-despair'>【絶望レッド（赤・太字）】</span>を確認せよ。",
+    "ui_html": "\n                <div class=\"choices\">\n                    <button onclick=\"sendAction('冒険に出る')\">冒険に出る</button>\n                    <button onclick=\"sendAction('ステータス確認')\">ステータス確認</button>\n                </div>\n                ",
+    "image_prompt": "1girl, dark fantasy, core engine interface, magical grimoire",
+    "voice_text": "ふふふ、私の用意した世界へようこそ……。APIキーを忘れないでね？",
+    "dice_result": "",
+    "generated_at": 1771591753.10327
+}

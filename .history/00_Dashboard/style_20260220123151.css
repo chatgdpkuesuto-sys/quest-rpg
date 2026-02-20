@@ -1,0 +1,337 @@
+/* ==========================================
+   MACHADUN: Ultimate Dark Fantasy UI
+   ========================================== */
+
+:root {
+    --bg-dark: #050505;
+    --accent-red: #8b0000;
+    --accent-pink: #ff1493;
+    --text-main: #e0e0e0;
+    --font-serif: 'Shippori Mincho', serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-serif);
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Background CG */
+#bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1.5s ease-in-out;
+    z-index: 1;
+}
+
+#vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* UI Layer */
+#ui-layer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+#ui-layer * {
+    pointer-events: auto;
+}
+
+/* Panels */
+#character-info-panel {
+    align-self: flex-start;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+    padding: 20px;
+    border-left: 4px solid var(--accent-red);
+}
+
+#char-name {
+    margin: 0;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px var(--accent-red);
+}
+
+#char-attributes {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+#status-panel {
+    align-self: flex-end;
+    width: 300px;
+}
+
+.status-bar-container {
+    margin-bottom: 15px;
+}
+
+.status-label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s ease;
+}
+
+.arousal {
+    background: var(--accent-pink);
+    box-shadow: 0 0 10px var(--accent-pink);
+}
+
+.despair {
+    background: var(--accent-red);
+    box-shadow: 0 0 10px var(--accent-red);
+}
+
+/* Monologue */
+#monologue-container {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 80%;
+    pointer-events: none;
+}
+
+.monologue-text {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 2s forwards;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 1), 0 0 5px var(--accent-red);
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Dialogue */
+#dialogue-box {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid #333;
+    padding: 25px 40px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+#dialogue-name {
+    color: var(--accent-pink);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#dialogue-text {
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+/* Choices */
+#choice-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.choice-btn {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #444;
+    color: #fff;
+    padding: 15px 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: var(--font-serif);
+    min-width: 400px;
+}
+
+.choice-btn:hover {
+    background: var(--accent-red);
+    border-color: #ff0000;
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+}
+
+/* Overlays */
+#init-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.init-dialog {
+    background: #111;
+    border: 1px solid var(--accent-red);
+    padding: 40px;
+    width: 450px;
+}
+
+.init-title {
+    font-size: 3rem;
+    text-align: center;
+    color: var(--accent-red);
+    margin: 0;
+}
+
+.init-sub {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0.7;
+}
+
+.stat-grid {
+    margin-bottom: 30px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-row button {
+    background: #333;
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.char-btn {
+    background: var(--accent-red);
+    border: none;
+    color: #fff;
+    padding: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.char-btn:hover {
+    background: #ff0000;
+}
+
+.char-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Interaction */
+#interaction-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    cursor: default;
+}
+
+/* Ripple */
+.click-ripple {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999;
+    animation: rippleEffect 0.6s linear;
+}
+
+.ripple-love {
+    background: rgba(255, 20, 147, 0.4);
+    border: 1px solid var(--accent-pink);
+}
+
+.ripple-lust {
+    background: rgba(139, 0, 0, 0.4);
+    border: 1px solid var(--accent-red);
+}
+
+.ripple-special {
+    background: rgba(147, 0, 255, 0.4);
+    border: 1px solid #9300ff;
+}
+
+@keyframes rippleEffect {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+    }
+}

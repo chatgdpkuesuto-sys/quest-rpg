@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>まちゃだん TRPG - LIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0005;
+            color: #e0d0d0;
+            font-family: 'Shippori Mincho', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        canvas#particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ---------- Header ---------- */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(180deg, rgba(10, 0, 0, 0.95), rgba(10, 0, 0, 0));
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #header .logo {
+            font-size: 1.4rem;
+            color: #8b0000;
+            text-shadow: 0 0 15px #8b0000;
+            font-weight: 800;
+        }
+
+        #header .dice-result {
+            font-size: 0.9rem;
+            color: #ff6666;
+            background: rgba(80, 0, 0, 0.5);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid #500;
+        }
+
+        /* ---------- Main Panel ---------- */
+        #game-panel {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 700px;
+            background: rgba(15, 2, 2, 0.92);
+            border: 1px solid #400;
+            box-shadow: 0 0 60px rgba(139, 0, 0, 0.25), inset 0 0 40px rgba(0, 0, 0, 0.6);
+            padding: 40px 35px;
+            border-radius: 4px;
+            margin: 80px auto 40px;
+            animation: panelGlow 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes panelGlow {
+            from {
+                box-shadow: 0 0 60px rgba(139, 0, 0, 0.2), inset 0 0 40px rgba(0, 0, 0, 0.6);
+            }
+
+            to {
+                box-shadow: 0 0 90px rgba(139, 0, 0, 0.45), inset 0 0 50px rgba(30, 0, 0, 0.4);
+            }
+        }
+
+        /* ---------- Situation Text ---------- */
+        #situation {
+            font-size: 1.15rem;
+            line-height: 2;
+            margin-bottom: 30px;
+            min-height: 120px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 0, 0, 0.4);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- GM Voice ---------- */
+        .gm-voice {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #ff9999;
+            font-style: italic;
+            border-left: 3px solid #8b0000;
+            padding: 10px 15px;
+            margin-bottom: 25px;
+            background: rgba(60, 0, 0, 0.15);
+        }
+
+        /* ---------- Choice Buttons ---------- */
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .choice-btn {
+            background: linear-gradient(180deg, #2a0008 0%, #180004 100%);
+            color: #ffcccc;
+            border: 1px solid #600;
+            padding: 16px 22px;
+            font-size: 1.1rem;
+            font-family: 'Shippori Mincho', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #8b0000;
+            transition: width 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(180deg, #450010 0%, #2a0008 100%);
+            border-color: #f00;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.25);
+            transform: translateX(6px);
+        }
+
+        .choice-btn:hover::before {
+            width: 6px;
+        }
+
+        .choice-btn:active {
+            transform: translateX(3px) scale(0.98);
+        }
+
+        .choice-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .choice-btn .emoji {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
+        .choice-btn .sub {
+            display: block;
+            font-size: 0.85rem;
+            color: #aa8888;
+            margin-top: 4px;
+        }
+
+        /* ---------- Loading Indicator ---------- */
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        #loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #300;
+            border-top-color: #f00;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* ---------- Highlights ---------- */
+        .highlight-despair {
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 0 0 8px #ff0000;
+        }
+
+        .highlight-pleasure {
+            color: #ff66b2;
+            text-shadow: 0 0 12px #ff66b2;
+        }
+
+        /* ---------- Audio Controls ---------- */
+        #audio-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 0, 0, 0.9);
+            border-top: 1px solid #300;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        #audio-bar button {
+            background: none;
+            border: 1px solid #500;
+            color: #ff6666;
+            padding: 4px 14px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-family: 'Shippori Mincho', serif;
+            border-radius: 3px;
+            transition: 0.2s;
+        }
+
+        #audio-bar button:hover {
+            background: #300;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles"></canvas>
+
+    <div id="header">
+        <div class="logo">⛧ まちゃだん TRPG</div>
+        <div class="dice-result" id="dice-display">🎲 待機中</div>
+    </div>
+
+    <div id="game-panel">
+        <!-- 状況描写 -->
+        <div id="situation">
+            <p style="text-align:center; color:#8b0000; font-size:1.6rem; margin-bottom:20px;">⛧ 運命の選択 ⛧</p>
+            <p>あなたは気がつくと、見知らぬ世界に立っていた。<br>
+                ここは<span class="highlight-despair">男性が絶滅した世界</span>。<br>
+                目の前に、3人の少女が現れる。彼女たちの瞳が、あなたの存在に<span class="highlight-pleasure">怪しく潤む</span>……。</p>
+            <div class="gm-voice">「ふふ、いらっしゃい……。ダイスが、あなたの運命の相手を決めるわ。でもまずは……自分で選んでみる？」</div>
+        </div>
+
+        <!-- 選択肢エリア -->
+        <div id="choices">
+            <button class="choice-btn" onclick="sendAction('ヒロイン選択: アリア（聖堂騎士）')">
+                <span class="emoji">🛡️</span> <strong>アリア</strong> ── 堕ちた聖騎士
+                <span class="sub">高潔な鎧の下に隠された、種の保存本能。あなたを「聖遺物」として監禁する──</span>
+            </button>
+            <button class="choice-btn" onclick="sendAction('ヒロイン選択: ゼナ（黒狼の獣人）')">
+                <span class="emoji">🐺</span> <strong>ゼナ</strong> ── 黒狼の番い
+                <span class="sub">理性より先に走る繁殖本能。「よこせ！ それは俺の獲物だ！」</span>
+            </button>
+            <button class="choice-btn" onclick="sendAction('ヒロイン選択: エララ（蒼の魔女）')">
+                <span class="emoji">🧙‍♀️</span> <strong>エララ</strong> ── 母性の魔女
+                <span class="sub">豊満な胸に秘める搾精の欲望。「坊や、お姉さんが搾ってあげる♥」</span>
+            </button>
+            <hr style="border-color:#300; margin: 10px 0;">
+            <button class="choice-btn" onclick="sendAction('ダイスで運命に委ねる')" style="border-color:#880; color:#ffdd88;">
+                <span class="emoji">🎲</span> <strong>ダイスに委ねる</strong> ── 運命が決める
+                <span class="sub">1d6を振り、ダイスが選んだ相手と出会う。</span>
+            </button>
+        </div>
+
+        <!-- ローディング -->
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>りりすが思考しています……</p>
+        </div>
+    </div>
+
+    <div id="audio-bar">
+        🔊 音声
+        <button onclick="playVoice()">▶ 再生</button>
+    </div>
+
+    <audio id="voice" preload="auto"></audio>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000/action';
+        let polling = null;
+        let lastUpdate = 0;
+
+        // ===== アクション送信 =====
+        function sendAction(actionText) {
+            console.log('🎮 Action:', actionText);
+
+            // ボタン無効化 & ローディング表示
+            document.getElementById('choices').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+
+            fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: actionText, timestamp: Date.now() })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    console.log('✅ Sent:', data);
+                    startPolling();
+                })
+                .catch(err => {
+                    console.error('❌ Error:', err);
+                    document.getElementById('loading').classList.remove('active');
+                    document.getElementById('choices').style.display = 'flex';
+                    alert('サーバーに接続できません。ai_hub.py が起動しているか確認してください。');
+                });
+        }
+
+        // ===== status.json ポーリング =====
+        function startPolling() {
+            if (polling) return;
+            polling = setInterval(() => {
+                fetch('status.json?t=' + Date.now())
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.updated_at > lastUpdate) {
+                            lastUpdate = data.updated_at;
+                            clearInterval(polling);
+                            polling = null;
+                            loadLatestScene();
+                        }
+                    })
+                    .catch(() => { });
+            }, 1500);
+        }
+
+        // ===== 最新シーンを読み込む =====
+        function loadLatestScene() {
+            fetch('index_scene.json?t=' + Date.now())
+                .then(r => r.json())
+                .then(scene => {
+                    // 状況テキスト
+                    document.getElementById('situation').innerHTML = scene.situation_text || '';
+
+                    // 選択肢
+                    const choicesEl = document.getElementById('choices');
+                    choicesEl.innerHTML = scene.ui_html || '';
+                    choicesEl.style.display = 'flex';
+
+                    // ローディング非表示
+                    document.getElementById('loading').classList.remove('active');
+
+                    // ダイス表示
+                    if (scene.dice_result) {
+                        document.getElementById('dice-display').textContent = '🎲 ' + scene.dice_result;
+                    }
+
+                    // 自動音声再生
+                    playVoice();
+                })
+                .catch(() => {
+                    // index_scene.json がない場合は index.html を直リロード
+                    location.reload();
+                });
+        }
+
+        // ===== 音声再生 =====
+        function playVoice() {
+            const v = document.getElementById('voice');
+            v.src = '04_Assets/voice_out.wav?t=' + Date.now();
+            v.play().catch(() => { });
+        }
+
+        // ===== パーティクル =====
+        const cvs = document.getElementById('particles'), ctx = cvs.getContext('2d');
+        let pts = [];
+        function resizeCvs() { cvs.width = innerWidth; cvs.height = innerHeight; }
+        resizeCvs(); addEventListener('resize', resizeCvs);
+        for (let i = 0; i < 60; i++) {
+            pts.push({
+                x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+                r: Math.random() * 2 + 0.3,
+                dx: (Math.random() - 0.5) * 0.2, dy: -Math.random() * 0.4 - 0.1,
+                a: Math.random() * 0.4 + 0.05
+            });
+        }
+        function drawPts() {
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            pts.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(139,0,0,${p.a})`; ctx.fill();
+                p.x += p.dx; p.y += p.dy;
+                if (p.y < -10) { p.y = cvs.height + 10; p.x = Math.random() * cvs.width; }
+            });
+            requestAnimationFrame(drawPts);
+        }
+        drawPts();
+
+        // ===== 起動時に自動ポーリング開始 =====
+        fetch('status.json?t=' + Date.now())
+            .then(r => r.json())
+            .then(data => { lastUpdate = data.updated_at || 0; })
+            .catch(() => { });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{
+  "arousal": 15,
+  "despair": 10,
+  "current_image": "outputs/latest.png",
+  "last_event": "アリア・プロローグ：救世主の顕現",
+  "is_climax": false,
+  "status": "updated_by_AI",
+  "current_dialogue": "……っ。その……あなたが救世主様……なのですね？ その荒々しいまでの気配（筋力3）……直視するのが、少し……恐ろしゅうございます……。",
+  "current_monologue": "厳かな聖堂の最奥、ステンドグラスの光が銀髪の聖女『アリア』を照らしている。<br>彼女はあなたから放たれる暴力的なまでの強者の気配に、祈りを捧げる指を微かに震わせた。<br>神への信仰と、目の前の圧倒的な「力」への畏怖……彼女の運命は、今あなたの手に委ねられた。",
+  "variant_mode": false,
+  "attributes": {
+    "name": "アリア",
+    "hair": "銀髪",
+    "eyes": "碧眼",
+    "fetish": "お清楚/聖女",
+    "personality": "慈愛"
+  },
+  "choices": [
+    {
+      "id": "aria_kneel",
+      "label": "（聖女の前に跪き、忠誠と守護を誓う）"
+    },
+    {
+      "id": "aria_threaten",
+      "label": "「祈りなど無意味だ。この力でお前を屈服させてやる」"
+    },
+    {
+      "id": "aria_corruption",
+      "label": "（無言で彼女の聖衣に触れ、神聖な理性を揺さぶる）"
+    }
+  ],
+  "timestamp": 1771557450
+}

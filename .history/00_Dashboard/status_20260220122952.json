@@ -1,0 +1,33 @@
+{
+  "arousal": 35,
+  "despair": 0,
+  "current_image": "outputs/latest.png",
+  "last_event": "アリア・リアクション：禁じられた接触",
+  "is_climax": false,
+  "status": "active",
+  "current_dialogue": "あ……っ。救世主様……？ その、お手をお離しください……。神聖な場所で、このような……恥ずかしい真似は……。",
+  "current_monologue": "聖女の胸元に触れた瞬間、彼女の細い肩が大きく跳ね上がった。<br>あなたはアリアの薄い衣服越しに、早鐘を打つ鼓動を確かに感じ取る。<br>「汚らわしい」と拒絶すべき理性は、あなたの放つ力（筋力3）の呪縛の前に、甘い痺れを伴って溶け始めていた。彼女の肌が、朱に染まっていく。",
+  "variant_mode": false,
+  "attributes": {
+    "name": "アリア",
+    "hair": "銀髪",
+    "eyes": "碧眼",
+    "fetish": "お清楚/聖女",
+    "personality": "慈愛"
+  },
+  "choices": [
+    {
+      "id": "aria_embrace",
+      "label": "（動揺する彼女を無言で抱き寄せ、耳元で愛を囁く）"
+    },
+    {
+      "id": "aria_logic",
+      "label": "「これが俺の『守護』の形だ。全てを委ねろと言ったはずだ」"
+    },
+    {
+      "id": "aria_tease",
+      "label": "「聖女様ともあろうお方が、これしきの刺激に耐えられないのか？」"
+    }
+  ],
+  "timestamp": 1771558150
+}

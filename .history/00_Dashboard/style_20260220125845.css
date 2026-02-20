@@ -1,0 +1,94 @@
+/* ステータス画面のみ */
+:root {
+    --bg: #050505;
+    --red: #8b0000;
+    --text: #e0e0e0;
+    --font: 'Shippori Mincho', serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#screen {
+    width: 450px;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    color: var(--red);
+    margin: 0 0 10px;
+}
+
+.sub {
+    text-align: center;
+    opacity: 0.7;
+    margin-bottom: 30px;
+}
+
+.stat-grid {
+    margin-bottom: 20px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.stat-row button {
+    background: #333;
+    border: none;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.stat-row button:hover {
+    background: var(--red);
+}
+
+#confirm-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--red);
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-family: var(--font);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#confirm-btn:hover {
+    background: #ff0000;
+}
+
+#confirm-btn:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+#result-screen {
+    text-align: center;
+}
+
+#result-text {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin: 30px 0;
+}

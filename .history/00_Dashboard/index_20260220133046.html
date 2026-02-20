@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MACHADUN - ジョブ選択</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #e0e0e0;
+            font-family: 'Shippori Mincho', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas#particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        #screen {
+            position: relative;
+            z-index: 10;
+            width: 520px;
+            padding: 40px;
+            background: rgba(10, 0, 0, 0.85);
+            border: 1px solid #300;
+            box-shadow: 0 0 60px rgba(139, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: panelGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes panelGlow {
+            from {
+                box-shadow: 0 0 60px rgba(139, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 80px rgba(139, 0, 0, 0.6), inset 0 0 40px rgba(50, 0, 0, 0.3);
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #8b0000;
+            text-shadow: 0 0 20px #8b0000, 0 0 40px #500;
+            margin-bottom: 15px;
+        }
+
+        .narration {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 25px;
+            animation: fadeIn 2s ease-out;
+            text-align: justify;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gm-voice {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #ff9999;
+            font-style: italic;
+            border-left: 3px solid #8b0000;
+            padding-left: 15px;
+            margin-bottom: 30px;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .job-list {
+            list-style: none;
+        }
+
+        .job-item {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: rgba(50, 0, 0, 0.3);
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: slideIn 0.5s ease-out backwards;
+        }
+
+        .job-item:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .job-item:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .job-item:nth-child(3) {
+            animation-delay: 0.9s;
+        }
+
+        .job-item:nth-child(4) {
+            animation-delay: 1.1s;
+        }
+
+        .job-item:nth-child(5) {
+            animation-delay: 1.3s;
+        }
+
+        .job-item:nth-child(6) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .job-item:hover {
+            background: rgba(139, 0, 0, 0.4);
+            border-color: #f00;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .job-item.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .job-item .name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff4444;
+        }
+
+        .job-item .desc {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .job-item .req {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .job-item.locked .name {
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles"></canvas>
+
+    <div id="screen">
+        <h1>ジョブ選択</h1>
+
+        <div class="narration">
+            あなたの魂の器が形作られた。<br>
+            【筋力3】── 純粋な剛力を宿す、一点特化の救世主。<br>
+            その力に相応しい「役割」を選び取れ。
+        </div>
+
+        <div class="gm-voice" id="gm-text">
+            「筋力3の魂が確定しました。次はジョブの選択です。あなたの筋力を活かせるのは、戦士の道。他にも、条件を満たせば別の道を選ぶこともできます。」
+        </div>
+
+        <ul class="job-list">
+            <li class="job-item" onclick="selectJob('warrior','戦士')">
+                <div class="name">⚔️ 戦士</div>
+                <div class="desc">剣と力で敵を粉砕する前衛の要。初期装備：剣(dmg2), 革鎧(AC1)</div>
+                <div class="req">必要：筋力1+ ✅</div>
+            </li>
+            <li class="job-item locked">
+                <div class="name">🗡️ 盗賊</div>
+                <div class="desc">俊敏な身のこなしで急所を突く。</div>
+                <div class="req">必要：敏捷1+ ❌</div>
+            </li>
+            <li class="job-item locked">
+                <div class="name">🔮 魔術師</div>
+                <div class="desc">禁断の知識で世界を書き換える。</div>
+                <div class="req">必要：知性1+ ❌</div>
+            </li>
+            <li class="job-item locked">
+                <div class="name">🎵 吟遊詩人</div>
+                <div class="desc">歌声で味方を鼓舞し、敵を惑わす。</div>
+                <div class="req">必要：魅力1+ ❌</div>
+            </li>
+            <li class="job-item locked">
+                <div class="name">🛡️ 重装兵</div>
+                <div class="desc">鉄壁の守りで仲間を護る盾。</div>
+                <div class="req">必要：耐久1+ ❌</div>
+            </li>
+            <li class="job-item locked">
+                <div class="name">⚙️ 技師</div>
+                <div class="desc">罠と道具で戦場を支配する策士。</div>
+                <div class="req">必要：技巧1+ ❌</div>
+            </li>
+        </ul>
+    </div>
+
+    <audio id="voice" preload="auto"></audio>
+
+    <script>
+        // パーティクル
+        const cvs = document.getElementById('particles');
+        const ctx = cvs.getContext('2d');
+        let pts = [];
+        function resizeCvs() { cvs.width = innerWidth; cvs.height = innerHeight; }
+        resizeCvs(); addEventListener('resize', resizeCvs);
+        for (let i = 0; i < 80; i++) {
+            pts.push({
+                x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+                r: Math.random() * 2 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: -Math.random() * 0.5 - 0.1,
+                a: Math.random() * 0.5 + 0.1
+            });
+        }
+        function drawPts() {
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            pts.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(139,0,0,${p.a})`; ctx.fill();
+                p.x += p.dx; p.y += p.dy;
+                if (p.y < -10) { p.y = cvs.height + 10; p.x = Math.random() * cvs.width; }
+            });
+            requestAnimationFrame(drawPts);
+        }
+        drawPts();
+
+        // ボイス自動再生
+        window.addEventListener('load', () => {
+            const v = document.getElementById('voice');
+            v.src = 'outputs/voice.wav?t=' + Date.now();
+            v.play().catch(() => {
+                document.addEventListener('click', () => v.play(), { once: true });
+            });
+        });
+
+        // ジョブ選択
+        function selectJob(key, name) {
+            // UIロック
+            document.querySelectorAll('.job-item').forEach(el => el.style.pointerEvents = 'none');
+
+            fetch('http://127.0.0.1:5000/action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'SELECT_JOB', job_key: key, job_name: name, time: Date.now() })
+            }).then(() => {
+                document.getElementById('gm-text').innerHTML = `「${name}の道を選んだのですね……了解しました。」`;
+            }).catch(() => { });
+        }
+    </script>
+</body>
+
+</html>

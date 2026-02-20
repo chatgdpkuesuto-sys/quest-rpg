@@ -1,13 +1,4 @@
 {
-    "action": "START_GAME",
-    "target": "Aria",
-    "protagonist_stats": {
-        "power": 3,
-        "speed": 0,
-        "tough": 0,
-        "mind": 0,
-        "charm": 0,
-        "skill": 0
-    },
-    "time": 1771557400415
+    "action": "???: ????????",
+    "timestamp": 1234567890
 }

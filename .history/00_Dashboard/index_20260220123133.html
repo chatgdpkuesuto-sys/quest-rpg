@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACHADUN - Dark Fantasy TRPG Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- 初期設定オーバーレイ -->
+    <div id="init-overlay">
+        <!-- 主人公メイキング -->
+        <div class="init-dialog" id="stat-dialog">
+            <h1 class="init-title">まちゃだん</h1>
+            <p class="init-sub">救世主の属性を定義せよ</p>
+            <div class="stat-grid">
+                <div class="stat-row"><span>筋力</span> <button onclick="window.adjStat('power', -1)">-</button><span
+                        id="val-power">0</span><button onclick="window.adjStat('power', 1)">+</button></div>
+                <div class="stat-row"><span>敏捷</span> <button onclick="window.adjStat('speed', -1)">-</button><span
+                        id="val-speed">0</span><button onclick="window.adjStat('speed', 1)">+</button></div>
+                <div class="stat-row"><span>耐久</span> <button onclick="window.adjStat('tough', -1)">-</button><span
+                        id="val-tough">0</span><button onclick="window.adjStat('tough', 1)">+</button></div>
+                <div class="stat-row"><span>知性</span> <button onclick="window.adjStat('mind', -1)">-</button><span
+                        id="val-mind">0</span><button onclick="window.adjStat('mind', 1)">+</button></div>
+                <div class="stat-row"><span>魅力</span> <button onclick="window.adjStat('charm', -1)">-</button><span
+                        id="val-charm">0</span><button onclick="window.adjStat('charm', 1)">+</button></div>
+                <div class="stat-row"><span>技巧</span> <button onclick="window.adjStat('skill', -1)">-</button><span
+                        id="val-skill">0</span><button onclick="window.adjStat('skill', 1)">+</button></div>
+            </div>
+            <p class="init-hint">残りポイント: <span id="remaining-points">3</span></p>
+            <button class="char-btn" style="width:100%" onclick="window.confirmStats()">確定</button>
+        </div>
+
+        <!-- ターゲット選択 -->
+        <div class="init-dialog" id="target-dialog" style="display:none">
+            <h1 class="init-title">まちゃだん</h1>
+            <p class="init-sub">契約するヒロインを選択せよ</p>
+            <div class="char-select-grid">
+                <button class="char-btn" onclick="window.startGame('Aria', 'アリア')">アリア</button>
+                <button class="char-btn" onclick="window.startGame('Zena', 'ゼナ')">ゼナ</button>
+                <button class="char-btn" onclick="window.startGame('Elara', 'エララ')">エララ</button>
+                <button class="char-btn" onclick="window.startGame('Elize', 'エリーゼ')">エリーゼ</button>
+                <button class="char-btn" onclick="window.startGame('Yuni', 'ユニ')">ユニ</button>
+                <button class="char-btn" onclick="window.startGame('Mia', 'ミア')">ミア</button>
+            </div>
+            <button class="char-btn back-btn" style="width:100%; opacity:0.5" onclick="window.backToStats()">戻る</button>
+        </div>
+    </div>
+
+    <!-- メイン背景 -->
+    <div id="bg-container"></div>
+    <div id="vignette"></div>
+
+    <!-- UI -->
+    <div id="ui-layer">
+        <div id="character-info-panel">
+            <h2 id="char-name">Wait for selection...</h2>
+            <div id="char-attributes"></div>
+        </div>
+
+        <div id="status-panel">
+            <div class="status-bar-container"><span class="status-label">快感</span>
+                <div class="progress-bar">
+                    <div id="arousal-fill" class="progress-fill arousal"></div>
+                </div>
+            </div>
+            <div class="status-bar-container"><span class="status-label">絶望</span>
+                <div class="progress-bar">
+                    <div id="despair-fill" class="progress-fill despair"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="monologue-container"></div>
+
+        <div id="dialogue-box">
+            <div id="dialogue-name"></div>
+            <div id="dialogue-text"></div>
+        </div>
+
+        <div id="choice-container"></div>
+    </div>
+
+    <!-- インタラクション層 (クリック取得) -->
+    <div id="interaction-layer"></div>
+
+    <audio id="voice-player" preload="auto"></audio>
+
+    <script src="js/engine.js"></script>
+    <script src="js/interaction.js"></script>
+</body>
+
+</html>

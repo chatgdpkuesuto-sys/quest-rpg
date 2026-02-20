@@ -1,0 +1,20 @@
+{
+  "arousal": 0,
+  "despair": 0,
+  "current_image": "outputs/latest.png",
+  "last_event": "INITIAL_BOOT",
+  "is_climax": false,
+  "status": "making_hero",
+  "current_dialogue": "",
+  "current_monologue": "",
+  "variant_mode": false,
+  "attributes": {
+    "name": "なし",
+    "hair": "-",
+    "eyes": "-",
+    "fetish": "-",
+    "personality": "-"
+  },
+  "choices": [],
+  "timestamp": 1771559100
+}

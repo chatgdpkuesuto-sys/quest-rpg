@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MACHADUN - 救世主メイキング</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #e0e0e0;
+            font-family: 'Shippori Mincho', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas#particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        #screen {
+            position: relative;
+            z-index: 10;
+            width: 480px;
+            padding: 40px;
+            background: rgba(10, 0, 0, 0.85);
+            border: 1px solid #300;
+            box-shadow: 0 0 60px rgba(139, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: panelGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes panelGlow {
+            from {
+                box-shadow: 0 0 60px rgba(139, 0, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 80px rgba(139, 0, 0, 0.6), inset 0 0 40px rgba(50, 0, 0, 0.3);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: #8b0000;
+            text-shadow: 0 0 20px #8b0000, 0 0 40px #500;
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 20px #8b0000, 0 0 40px #500;
+            }
+
+            50% {
+                text-shadow: 0 0 30px #ff0000, 0 0 60px #8b0000;
+            }
+        }
+
+        .sub {
+            text-align: center;
+            opacity: 0.6;
+            margin: 10px 0 5px;
+            font-size: 1rem;
+        }
+
+        .gm-voice {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #ff9999;
+            font-style: italic;
+            border-left: 3px solid #8b0000;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .stat-row span:first-child {
+            width: 60px;
+        }
+
+        .stat-row .val {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4444;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            min-width: 30px;
+            text-align: center;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .stat-row .val.bump {
+            transform: scale(1.5);
+            color: #ff0;
+        }
+
+        .stat-row button {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: 0.2s;
+        }
+
+        .stat-row button:hover {
+            background: #8b0000;
+            border-color: #f00;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .remaining {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .remaining .num {
+            color: #ff4444;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #8b0000, #500);
+            border: 1px solid #f00;
+            color: #fff;
+            font-size: 1.3rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        #confirm-btn:hover {
+            background: linear-gradient(135deg, #ff0000, #8b0000);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            transform: scale(1.02);
+        }
+
+        #confirm-btn:disabled {
+            opacity: 0.4;
+            cursor: wait;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles"></canvas>
+    <div id="screen">
+        <h1>まちゃだん</h1>
+        <p class="sub">救世主の属性を定義せよ</p>
+        <div class="gm-voice">「救世主の属性を定義してください。3ポイントを自由に割り振れます。」</div>
+        <div class="stat-row"><span>筋力</span><button onclick="adj('power',-1)">−</button><span class="val"
+                id="v-power">0</span><button onclick="adj('power',1)">＋</button></div>
+        <div class="stat-row"><span>敏捷</span><button onclick="adj('speed',-1)">−</button><span class="val"
+                id="v-speed">0</span><button onclick="adj('speed',1)">＋</button></div>
+        <div class="stat-row"><span>耐久</span><button onclick="adj('tough',-1)">−</button><span class="val"
+                id="v-tough">0</span><button onclick="adj('tough',1)">＋</button></div>
+        <div class="stat-row"><span>知性</span><button onclick="adj('mind',-1)">−</button><span class="val"
+                id="v-mind">0</span><button onclick="adj('mind',1)">＋</button></div>
+        <div class="stat-row"><span>魅力</span><button onclick="adj('charm',-1)">−</button><span class="val"
+                id="v-charm">0</span><button onclick="adj('charm',1)">＋</button></div>
+        <div class="stat-row"><span>技巧</span><button onclick="adj('skill',-1)">−</button><span class="val"
+                id="v-skill">0</span><button onclick="adj('skill',1)">＋</button></div>
+        <p class="remaining">残りポイント: <span class="num" id="rem">3</span></p>
+        <button id="confirm-btn" onclick="confirmStats()">確 定</button>
+    </div>
+    <audio id="voice" preload="auto"></audio>
+    <script>
+        const cvs = document.getElementById('particles'), ctx = cvs.getContext('2d'); let pts = [];
+        function resizeCvs() { cvs.width = innerWidth; cvs.height = innerHeight; } resizeCvs(); addEventListener('resize', resizeCvs);
+        for (let i = 0; i < 80; i++)pts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 2 + .5, dx: (Math.random() - .5) * .3, dy: -Math.random() * .5 - .1, a: Math.random() * .5 + .1 });
+        function drawPts() { ctx.clearRect(0, 0, cvs.width, cvs.height); pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(139,0,0,${p.a})`; ctx.fill(); p.x += p.dx; p.y += p.dy; if (p.y < -10) { p.y = cvs.height + 10; p.x = Math.random() * cvs.width; } }); requestAnimationFrame(drawPts); } drawPts();
+
+        const S = { power: 0, speed: 0, tough: 0, mind: 0, charm: 0, skill: 0 }; let rem = 3;
+        function adj(k, d) { if (d > 0 && rem <= 0) return; if (d < 0 && S[k] <= 0) return; S[k] += d; rem -= d; const el = document.getElementById('v-' + k); el.innerText = S[k]; el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 200); document.getElementById('rem').innerText = rem; }
+
+        function confirmStats() {
+            const btn = document.getElementById('confirm-btn'); btn.disabled = true; btn.innerText = '通信中...';
+            fetch('http://127.0.0.1:5000/action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'CONFIRM_STATS', stats: S, time: Date.now() }) })
+                .then(() => { btn.innerText = 'GM応答待ち...'; })
+                .catch(() => { btn.disabled = false; btn.innerText = '確 定'; });
+        }
+
+        window.addEventListener('load', () => { const v = document.getElementById('voice'); v.src = 'outputs/voice.wav?t=' + Date.now(); v.play().catch(() => { document.addEventListener('click', () => v.play(), { once: true }); }); });
+    </script>
+</body>
+
+</html>

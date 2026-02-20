@@ -1,0 +1,20 @@
+{
+    "arousal": 0,
+    "despair": 0,
+    "current_image": "outputs/latest.png",
+    "last_event": "HERO_CONFIRMED",
+    "is_climax": false,
+    "status": "hero_confirmed",
+    "current_dialogue": "剛碗（筋力3）の魂を受理しました。汝が導くヒロインを選択しなさい。",
+    "current_monologue": "救世主の意志が確定した。剛力なるその魂が、最初に求める絆は何処にあるのか。",
+    "variant_mode": false,
+    "attributes": {
+        "name": "救世主",
+        "hair": "-",
+        "eyes": "-",
+        "fetish": "-",
+        "personality": "-"
+    },
+    "choices": [],
+    "timestamp": 1771558880
+}

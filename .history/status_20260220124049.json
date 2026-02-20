@@ -1,0 +1,20 @@
+{
+    "arousal": 0,
+    "despair": 0,
+    "current_image": "outputs/latest.png",
+    "last_event": "READY_FOR_INTENT",
+    "is_climax": false,
+    "status": "making_hero",
+    "current_dialogue": "意志を示してください。",
+    "current_monologue": "救世主の魂、その属性を定義し、『確定』の意志を世界に刻みなさい。その結果として、道は開かれるでしょう。",
+    "variant_mode": false,
+    "attributes": {
+        "name": "なし",
+        "hair": "-",
+        "eyes": "-",
+        "fetish": "-",
+        "personality": "-"
+    },
+    "choices": [],
+    "timestamp": 1771558700
+}

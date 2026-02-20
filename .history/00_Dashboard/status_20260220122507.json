@@ -1,0 +1,33 @@
+{
+  "arousal": 20,
+  "despair": 5,
+  "current_image": "outputs/latest.png",
+  "last_event": "アリア・イベント：忠誠の誓い",
+  "is_climax": false,
+  "status": "updated_by_AI",
+  "current_dialogue": "……っ！ その……あなたが私に跪き、守護を誓ってくださるなんて……。驚きましたわ。\n救世主様は、もっと……その、恐ろしい方なのだと思っておりましたから……。",
+  "current_monologue": "聖女アリアの瞳に、戸惑いと微かな安堵が浮かぶ。<br>圧倒的な筋力（3）を持ちながら、力によって従わせるのではなく敬意を払ったあなたに、彼女の警戒の心（Despair -3）が解けていく。<br>しかし、その安堵は同時に、彼女の中に新たな熱（Arousal +5）を灯し始めていた。",
+  "variant_mode": false,
+  "attributes": {
+    "name": "アリア",
+    "hair": "銀髪",
+    "eyes": "碧眼",
+    "fetish": "お清楚/聖女",
+    "personality": "慈愛"
+  },
+  "choices": [
+    {
+      "id": "aria_touch_hand",
+      "label": "（彼女の震える手を取り、優しく立ち上がらせる）"
+    },
+    {
+      "id": "aria_ask_duty",
+      "label": "「聖女として、この世界を救うために力を貸してほしい」"
+    },
+    {
+      "id": "aria_admire",
+      "label": "「そんなに怯えなくていい。君の美しさに、ただ見惚れていただけだ」"
+    }
+  ],
+  "timestamp": 1771557900
+}

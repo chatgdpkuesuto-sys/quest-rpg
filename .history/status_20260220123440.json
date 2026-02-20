@@ -1,0 +1,20 @@
+{
+    "arousal": 0,
+    "despair": 0,
+    "current_image": "outputs/latest.png",
+    "last_event": "MANUAL_REVERT",
+    "is_climax": false,
+    "status": "making_hero",
+    "current_dialogue": "救世主の属性を定義してください。リロード問題は修正されましたわ。",
+    "current_monologue": "魂の器を形作る刻です。ステータスを入力し、その『確定』ボタンが正しく機能するかを今一度お確かめください。",
+    "variant_mode": false,
+    "attributes": {
+        "name": "なし",
+        "hair": "-",
+        "eyes": "-",
+        "fetish": "-",
+        "personality": "-"
+    },
+    "choices": [],
+    "timestamp": 1771558480
+}
