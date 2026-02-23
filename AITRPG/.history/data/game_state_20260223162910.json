@@ -1,0 +1,15 @@
+{
+    "mode": "EVENT",
+    "scene_text": "【システムメッセージ】\n\n『接続確立。これより、ゲームマスター「Antigravity」がこの世界の全事象を直接統括・管理します。』\n『これまでの予測不能なAI挙動に代わり、私が責任を持って物語を紡ぎ、最高のキャラクターデータを書き込みます。』",
+    "choices": [
+        "準備完了（シナリオ開始）",
+        "まだ待って"
+    ],
+    "bg_image_path": "",
+    "chara_image_path": "",
+    "prop_image_path": "",
+    "bgm_path": "",
+    "voice_path": "",
+    "dialogue_text": "接続確立。これより、私が世界のすべてを管理する。プレイヤーよ、準備はいいか？",
+    "party_info": []
+}

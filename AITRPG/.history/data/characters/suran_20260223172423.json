@@ -1,0 +1,28 @@
+{
+    "id": "suran",
+    "name": "スラン",
+    "job_name": "エルフの魔法使い",
+    "hp": 20,
+    "max_hp": 20,
+    "stats": {
+        "STR": 8,
+        "DEX": 14,
+        "INT": 18,
+        "LUC": 12
+    },
+    "skill": {
+        "name": "風の刃（ウィンドカッター）",
+        "description": "風の魔力で敵単体を切り裂く魔法攻撃"
+    },
+    "passive": {
+        "name": "森の加護",
+        "description": "回避時に有利な補正を得る"
+    },
+    "visuals": {
+        "comfyui_prompt": "1girl, green hair, elf, fantasy robes"
+    },
+    "audio": {
+        "voice_id": 0,
+        "voice_style": "デフォルト"
+    }
+}

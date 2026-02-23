@@ -1,0 +1,28 @@
+{
+    "id": "haruhi",
+    "name": "ハルヒ",
+    "job_name": "SOS団団長",
+    "hp": 25,
+    "max_hp": 25,
+    "stats": {
+        "STR": 12,
+        "DEX": 16,
+        "INT": 14,
+        "LUC": 20
+    },
+    "skill": {
+        "name": "神人召喚（不完全）",
+        "description": "無意識のうちに謎の巨人を呼び出し、全体にダメージを与える"
+    },
+    "passive": {
+        "name": "超監督",
+        "description": "仲間に「命令」をした時のダイス成功率が上昇する"
+    },
+    "visuals": {
+        "comfyui_prompt": "1girl, brown hair, yellow headband, school uniform, confident smile, hands on hips"
+    },
+    "audio": {
+        "voice_id": 8,
+        "voice_style": "春日部つむぎ（元気・強気）"
+    }
+}

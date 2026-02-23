@@ -1,0 +1,38 @@
+{
+  "mode": "EXPLORATION",
+  "scene_text": "【冒険開始！ — 涼宮ハルヒをメインに出発！】\n\n『涼宮ハルヒを先頭に、3人のパーティーがダンジョンの入り口に足を踏み入れた。』\n『壁には不気味な青いルーン文字が浮かび上がり、冷たい風が奥から吹き抜けてくる……』\n\nハルヒ：「さあ、行くわよ！宇宙人も未来人も、ダンジョンの奥に隠れてるに決まってるじゃない！」\n\nセイバー：「マスター、背後は私にお任せを。……何か嫌な予感がします、油断なきよう。」\n\nスラン：「ふふ……賑やかなパーティーになりそうですね。私の風の魔法でサポートしますよ。」\n\n（さて、一行はどう行動するだろうか？）",
+  "choices": [
+    "慎重に奥へ進む",
+    "周囲を探索してアイテムを探す",
+    "まずは自己紹介をしよう"
+  ],
+  "bg_image_path": "C:\\Users\\kuesu\\OneDrive\\Desktop\\AITRPG\\assets\\generated\\scene_1771840042043.png",
+  "chara_image_path": "C:\\Users\\kuesu\\OneDrive\\Desktop\\AITRPG\\assets\\characters\\涼宮ハルヒ\\pose_smile.png",
+  "prop_image_path": "",
+  "bgm_path": "",
+  "voice_path": "C:\\Users\\kuesu\\OneDrive\\Desktop\\AITRPG\\assets\\audio\\voice_1771840043058.wav",
+  "dialogue_text": "マスター、涼宮ハルヒがメインに立ちます。よろしくお願いしますね。",
+  "party_info": [
+    {
+      "name": "涼宮ハルヒ",
+      "hp": 25,
+      "max_hp": 25,
+      "alive": true,
+      "status": "OK"
+    },
+    {
+      "name": "セイバー",
+      "hp": 35,
+      "max_hp": 35,
+      "alive": true,
+      "status": "OK"
+    },
+    {
+      "name": "スラン",
+      "hp": 20,
+      "max_hp": 20,
+      "alive": true,
+      "status": "OK"
+    }
+  ]
+}

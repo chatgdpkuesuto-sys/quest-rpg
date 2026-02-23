@@ -1,0 +1,28 @@
+{
+    "id": "saber",
+    "name": "セイバー",
+    "job_name": "クラス：セイバー",
+    "hp": 35,
+    "max_hp": 35,
+    "stats": {
+        "STR": 20,
+        "DEX": 15,
+        "INT": 12,
+        "LUC": 15
+    },
+    "skill": {
+        "name": "見えざる剣",
+        "description": "不可視の剣による回避困難な強力な一撃"
+    },
+    "passive": {
+        "name": "対魔力",
+        "description": "魔法や状態異常に対する抵抗力が非常に高い"
+    },
+    "visuals": {
+        "comfyui_prompt": "saber (fate), 1girl, blonde hair, green eyes, bun hair, braided bun, blue dress, silver shining armor, knight, dynamic combat pose, holding invisible sword radiating bright wind energy, bright sword slash effect, glowing golden particles, epic fantasy battlefield background, highly detailed, masterpiece, full body"
+    },
+    "audio": {
+        "voice_id": 14,
+        "voice_style": "威厳のある声"
+    }
+}

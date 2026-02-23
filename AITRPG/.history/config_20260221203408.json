@@ -1,0 +1,25 @@
+{
+    "lm_studio": {
+        "url": "http://127.0.0.1:1234/v1/chat/completions",
+        "model": "lmstudio-community/LFM2.5-1.2B-Thinking-GGUF"
+    },
+    "comfyui": {
+        "url": "http://127.0.0.1:8188",
+        "prompt_node_id": "6",
+        "negative_node_id": "7",
+        "output_dir": "assets/generated"
+    },
+    "voicevox": {
+        "url": "http://127.0.0.1:50021",
+        "speaker_id": 0,
+        "output_dir": "assets/audio"
+    },
+    "renderer": {
+        "fullscreen": true,
+        "text_speed": 50,
+        "font_size": 28
+    },
+    "game": {
+        "system_prompt_file": "system_prompt.txt"
+    }
+}

@@ -1,0 +1,108 @@
+{
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "12",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "14",
+        1
+      ],
+      "text": "masterpiece, best quality,\nultra detailed fantasy grassland,\nwide cinematic 16:9 composition,\nclear central foreground space for character placement,\ndense layered grass with visible blades,\nsubtle wildflowers,\ngentle rolling hills,\ndistant mountains with soft atmospheric perspective,\nearly blue morning light,\ncool blue sky with faint pale pink horizon,\nsoft cool-toned sunlight from low angle,\nlight ground mist,\ndew reflecting pale blue light,\nlong soft shadows,\nhigh air clarity,\nfresh cold morning atmosphere,\nnatural cool color grading,\nno people"
+    }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "14",
+        1
+      ],
+      "text": "people,\ncharacter,\ncrowded scene,\nlarge object in center,\nbuildings blocking center,\noversaturated,\nwarm orange light,\nstrong sunset colors,\nintense golden glow,\nharsh contrast,\nneon colors,\ncartoon style,\nanime style,\nlow quality,\nblurry,\ngrainy,\nnoisy texture,\nartifacts,\noverexposed,\nexcessive bloom,\nlens flare,\nwatermark,\ntext,\nlogo\npeople,\nperson,\nhuman,\nman,\nwoman,\ngirl,\nboy,\ncharacter,\nnpc,\nfigure,\ncrowd,\ngroup of people,\nsilhouette of person,\nface,\nportrait,\nstanding person,\nwalking person,\nbody,\nhands,\narms,\nlegs,\nhumanoid,\nadventurer,\nsoldier,\nvillager"
+    }
+  },
+  "5": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1920,
+      "height": 1080,
+      "batch_size": 1
+    }
+  },
+  "15": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "sdxlVae.jwfj.safetensors"
+    }
+  },
+  "14": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ],
+      "lora_name": "Hyper-SDXL-1step-lora.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "8",
+        0
+      ],
+      "filename_prefix": "ComfyUI"
+    }
+  },
+  "4": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "reproductionSDXL_2v12.safetensors"
+    }
+  },
+  "12": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "14",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ],
+      "seed": 747680854293479,
+      "steps": "randomize",
+      "cfg": 6,
+      "sampler_name": 1.8,
+      "scheduler": "lcm",
+      "denoise": "simple"
+    }
+  }
+}

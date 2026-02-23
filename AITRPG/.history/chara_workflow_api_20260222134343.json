@@ -1,0 +1,115 @@
+{
+    "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "waiIllustriousSDXL_v160.safetensors"
+        }
+    },
+    "19": {
+        "class_type": "LoraLoader",
+        "inputs": {
+            "model": [
+                "1",
+                0
+            ],
+            "clip": [
+                "1",
+                1
+            ],
+            "lora_name": "sdxl_lightning_4step_lora.safetensors",
+            "strength_model": 1,
+            "strength_clip": 1
+        }
+    },
+    "25": {
+        "class_type": "DPCombinatorialGenerator",
+        "inputs": {
+            "text": "masterpiece, best quality, newest, 1girl, solo, \nelf, pointy ears, silver hair, long flowing hair, blue eyes, fantasy white and gold robes, holding wooden staff, witch hat, \nfull body, boots, \n{ standing, looking at viewer, gentle smile | standing, looking at viewer, serious | standing, looking at viewer, surprised | standing, looking at viewer, sad, looking down | standing, looking at viewer, blush | action pose, casting magic | from behind, back, looking away | from behind, looking back at viewer }, \nsimple background, green background, chroma key",
+            "max_count": 8,
+            "seed": 0,
+            "autorefresh": "Yes"
+        }
+    },
+    "23": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "clip": [
+                "19",
+                1
+            ],
+            "text": [
+                "25",
+                0
+            ]
+        }
+    },
+    "4": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "clip": [
+                "19",
+                1
+            ],
+            "text": "cropped, out of frame, worst quality, low quality, oldest, early, displeasing, complex background, scenery, depth of field, drop shadow, 3d, realistic, blurry, bad anatomy, text, watermark"
+        }
+    },
+    "6": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "width": 768,
+            "height": 1024,
+            "batch_size": 1
+        }
+    },
+    "2": {
+        "class_type": "KSampler",
+        "inputs": {
+            "model": [
+                "19",
+                0
+            ],
+            "positive": [
+                "23",
+                0
+            ],
+            "negative": [
+                "4",
+                0
+            ],
+            "latent_image": [
+                "6",
+                0
+            ],
+            "seed": 270247233277201,
+            "control_after_generate": "randomize",
+            "steps": 8,
+            "cfg": 2,
+            "sampler_name": "lcm",
+            "scheduler": "normal",
+            "denoise": 1
+        }
+    },
+    "7": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": [
+                "2",
+                0
+            ],
+            "vae": [
+                "1",
+                2
+            ]
+        }
+    },
+    "9": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "filename_prefix": "chara_elf",
+            "images": [
+                "7",
+                0
+            ]
+        }
+    }
+}
